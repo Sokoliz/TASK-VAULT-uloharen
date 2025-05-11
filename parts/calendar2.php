@@ -66,7 +66,7 @@ if (isset($_SESSION['user'])) {
 							$end = $event['end_date'];
 						}
 					?>
-					{
+					,{
 						id: '<?php echo $event['id_event']; ?>',
 						title: '<?php echo $event['title']; ?>',
 						description: '<?php echo $event['description']; ?>',
