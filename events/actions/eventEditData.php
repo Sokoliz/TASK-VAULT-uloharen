@@ -2,6 +2,7 @@
 
 if (isset($_SESSION['user'])) {
 } else {
+	http_response_code(401);
 	header('Location: ../../login.php');
 	die();
 }
@@ -10,7 +11,11 @@ require_once('../../db/functions.php');
 	$database = new Database();
 	$db = $database->connection();
 
-	if (isset($_POST['Event'][0]) && isset($_POST['Event'][1]) && isset($_POST['Event'][2])){
+	if (!isset($_POST['title']) || !isset($_POST['description']) || !isset($_POST['start_date']) || !isset($_POST['end_date']) || !isset($_POST['colour'])) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Missing required fields.']);
+    exit();
+} else if (isset($_POST['Event'][0]) && isset($_POST['Event'][1]) && isset($_POST['Event'][2])){
 		
 		$id_event = $_POST['Event'][0];
 		$start_date = $_POST['Event'][1];

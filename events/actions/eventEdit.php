@@ -2,6 +2,7 @@
 
 if (isset($_SESSION['user'])) {
 } else {
+	http_response_code(401);
 	header('Location: ../../login.php');
 	die();
 }
@@ -19,12 +20,14 @@ if (isset($_POST['delete']) && isset($_POST['id_event'])){
 		$query = $db->prepare( $sql );
 		if ($query == false) {
 			print_r($db->errorInfo());
+			http_response_code(500);
 			die ('There was a problem while loading');
 		}
 
 		$res = $query->execute();
 		if ($res == false) {
 			print_r($query->errorInfo());
+			http_response_code(500);
 			die ('There was a problem while running the query');
 		}
 		
@@ -47,12 +50,14 @@ if (isset($_POST['delete']) && isset($_POST['id_event'])){
 		$query = $db->prepare( $sql );
 		if ($query == false) {
 			print_r($db->errorInfo());
+			http_response_code(500);
 			die ('There was a problem while loading');
 		}
 
 		$sth = $query->execute();
 		if ($sth == false) {
 			print_r($query->errorInfo());
+			http_response_code(500);
 			die ('There was a problem while running the query');
 		}
 
