@@ -11,6 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$password_form = filter_var(htmlspecialchars($_POST['password']), FILTER_SANITIZE_STRING);
 	$password_form = hash('sha512', $password_form);
 	$errors = '';
+	if (empty($user_form) || empty($password_form)) {
+		http_response_code(400);
+		echo 'Missing username or password';
+		exit();
+	}
 
 	// ----------------------- DATABASE CONNECTION ------------------------------------
 	include 'db/functions.php';

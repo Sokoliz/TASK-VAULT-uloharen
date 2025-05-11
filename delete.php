@@ -7,6 +7,7 @@ if (isset($_SESSION['user'])) {
 	$connection = $database->connection();
 
 } else {
+	http_response_code(401);
 	header('Location: login.php');
 	die();
 }
