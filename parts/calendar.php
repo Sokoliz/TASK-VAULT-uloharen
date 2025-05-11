@@ -1,3 +1,4 @@
+<?php include '../parts/header.php'; ?>
 <?php session_start();
 
 if (isset($_SESSION['user'])) {
@@ -20,3 +21,4 @@ require_once('db/functions.php');
 require_once 'views/calendar.view.php';
 
 ?>
+<?php include '../parts/footer.php'; ?>

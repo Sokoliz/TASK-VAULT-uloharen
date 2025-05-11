@@ -1,3 +1,4 @@
+<?php include '../parts/header.php'; ?>
 <?php session_start();
 
 if (isset($_SESSION['user'])) {
@@ -42,3 +43,4 @@ require 'views/today.view.php';
 
 
 ?>
+<?php include '../parts/footer.php'; ?>

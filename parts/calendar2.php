@@ -1,3 +1,4 @@
+<?php include '../parts/header.php'; ?>
 <?php 
 if (isset($_SESSION['user'])) {
 } else {
@@ -108,3 +109,4 @@ if (isset($_SESSION['user'])) {
 		});
 
 </script>
+<?php include '../parts/footer.php'; ?>

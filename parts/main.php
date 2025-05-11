@@ -1,3 +1,4 @@
+<?php include '../parts/header.php'; ?>
 <?php 
 if(isset($_SESSION['user'])) {
 	header('Location: content.php');
@@ -7,3 +8,4 @@ if(isset($_SESSION['user'])) {
 }
 
 ?>
+<?php include '../parts/footer.php'; ?>
