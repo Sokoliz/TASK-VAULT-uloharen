@@ -105,6 +105,11 @@ CREATE TABLE `users` (
   `password` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id_user`, `user`, `password`) VALUES (1, 'testuser', 'testpassword');
 
 --
 -- Índices para tablas volcadas
