@@ -1,5 +1,17 @@
 <?php
-if (isset($_SESSION['user'])) {
+// Start the session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Check if this is a public page (optional parameter)
+$public_page = isset($public_page) ? $public_page : false;
+
+// Only redirect if not a public page and user is not logged in
+if (!$public_page && !isset($_SESSION['user'])) {
+    header('Location: main.php');
+    die();
+}
 ?>	
 	
 <meta charset="UTF-8">
@@ -15,12 +27,5 @@ if (isset($_SESSION['user'])) {
 
 <!-- CSS STYLE-->
 <link rel="stylesheet" href="css/style.css">
-<title><?php $title ?></title>
-
-<?php 
-} else {
-	header('Location: main.php');
-	die();
-}
-?>
+<title><?php echo isset($title) ? $title : 'Productivity Hub'; ?></title>
 

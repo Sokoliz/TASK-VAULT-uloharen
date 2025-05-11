@@ -1,4 +1,3 @@
-<?php include '../parts/header.php'; ?>
 <?php session_start();
 
 if (isset($_SESSION['user'])) {
@@ -13,6 +12,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$password_form = filter_var(htmlspecialchars($_POST['password']), FILTER_SANITIZE_STRING);
 	$password2_form = filter_var(htmlspecialchars($_POST['password2']), FILTER_SANITIZE_STRING);
 	$errors = '';
+	if (empty($user_form) || empty($password_form)) {
+		http_response_code(400);
+		echo 'Missing username or password';
+		exit();
+	}
 
 	// Checking for empty spaces.
 	if (empty($user_form) or empty($password_form) or empty($password2_form)) {
@@ -52,11 +56,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 					':user' => $user_form,
 				':password' => $password_form
 			));
-		header('Location: login.php');
+		http_response_code(401);
+	header('Location: login.php');
 	}
 
 }
 
 require 'views/register.view.php';
 ?>
-<?php include '../parts/footer.php'; ?>

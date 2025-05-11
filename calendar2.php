@@ -1,4 +1,3 @@
-<?php include '../parts/header.php'; ?>
 <?php 
 if (isset($_SESSION['user'])) {
 } else {
@@ -66,7 +65,7 @@ if (isset($_SESSION['user'])) {
 							$end = $event['end_date'];
 						}
 					?>
-					,{
+					{
 						id: '<?php echo $event['id_event']; ?>',
 						title: '<?php echo $event['title']; ?>',
 						description: '<?php echo $event['description']; ?>',
@@ -109,4 +108,3 @@ if (isset($_SESSION['user'])) {
 		});
 
 </script>
-<?php include '../parts/footer.php'; ?>

@@ -1,4 +1,3 @@
-<?php include '../parts/header.php'; ?>
 <?php session_start();
 
 if (isset($_SESSION['user'])) {
@@ -275,4 +274,3 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 ?>
-<?php include '../parts/footer.php'; ?>

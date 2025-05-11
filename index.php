@@ -1,4 +1,3 @@
-<?php include '../parts/header.php'; ?>
 <?php session_start();
 
 if(isset($_SESSION['user'])) {
@@ -9,4 +8,3 @@ if(isset($_SESSION['user'])) {
 }
 
 ?>
-<?php include '../parts/footer.php'; ?>

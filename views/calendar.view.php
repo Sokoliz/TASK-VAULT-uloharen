@@ -3,7 +3,7 @@
 	
 <head>
 	<?php $title= "Calendar"; ?>
-	<?php require 'head.php'; ?>
+	<?php require 'parts/header.php'; ?>
 
 	<!-- FullCalendar -->
 	<link href='css/fullcalendar.css' rel='stylesheet' />
@@ -64,7 +64,7 @@
 	</div>
 </div>
 <!-- -------------------------- FOOTER --------------------------- -->
-<?php require 'footer.php'; ?>
+<?php require 'parts/footer.php'; ?>
 
 
 	<!-- jQuery  -->
@@ -73,9 +73,11 @@
 	<!-- Bootstrap Core JavaScript -->
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+	<!-- Moment.js -->
+	<script src="js/moment.min.js"></script>
+
 	<!-- FullCalendar -->
-	<script src='js/moment.min.js'></script>
-	<script src='js/fullcalendar.min.js'></script>
+	<script src="js/fullcalendar.min.js"></script>
 
 	<?php include ('calendar2.php'); ?>
 

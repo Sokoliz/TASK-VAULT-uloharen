@@ -1,5 +1,4 @@
-<?php http_response_code(404); ?>
-<?php include '../parts/header.php'; ?>
+
 <?php session_start();
 
 if (isset($_SESSION['user'])) {
@@ -8,6 +7,7 @@ if (isset($_SESSION['user'])) {
 	$connection = $database->connection();
 
 } else {
+	http_response_code(401);
 	header('Location: login.php');
 	die();
 }
@@ -15,4 +15,3 @@ $del_project_confirm = $connection->prepare('DELETE FROM projects WHERE id_proje
 $del_project_confirm->execute(array($id_project)); 
 
 ?>
-<?php include '../parts/footer.php'; ?>
