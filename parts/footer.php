@@ -1,6 +1,8 @@
 <?php
+// Kontrola, či je používateľ prihlásený
 if (isset($_SESSION['user'])) {
 ?>	
+<!-- Päta stránky s informáciami o autorských právach -->
 <footer>
 	<div class="row m-0 p-0 d-flex justify-content-center">
 		<div class="col-12">
@@ -15,6 +17,7 @@ if (isset($_SESSION['user'])) {
 
 <?php 
 } else {
+	// Presmerovanie neprihlásených používateľov na hlavnú stránku
 	header('Location: main.php');
 	die();
 }

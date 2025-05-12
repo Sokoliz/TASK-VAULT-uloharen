@@ -7,11 +7,13 @@
 
     <title><?php $title ?></title>
     <?php require 'events/modals/newProject.php'; ?> 
+    <!-- Import štýlov pre datepicker -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="bg">
 
+<!-- Navigačný panel -->
 <header class="m-0 p-0">
 	<nav class="navbar navbar-expand-lg pt-3 text-dark">
 		<div class="menu container">
@@ -33,12 +35,14 @@
 	</nav>
 </header>
 
+<!-- Hlavný obsah stránky - prehľad dnešných udalostí -->
 <div class="row d-flex m-4 mt-2 justify-content-center">
    <h2 class="col-12 text-center mb-4 text-primary">HAPPENING TODAY</h2>
 
+    <!-- Prvý stĺpec - udalosti -->
     <div class="col-3">
 
-        <!-- ---------------------------------  EVENTS STARTING TODAY --------------------------------- -->
+        <!-- Udalosti, ktoré dnes začínajú -->
         <div class="card-hover-shadow-2x mb-3 card text-dark">
             <div class="card-header-tab card-header">
                 <h5 class="card-header-title font-weight-normal"><i class="fa fa-suitcase mr-3"></i>STARTING EVENTS</h5>
@@ -74,7 +78,7 @@
             </div>
         </div>
 
-        <!-- ---------------------------------  EVENTS ENDING TODAY --------------------------------- -->
+        <!-- Udalosti, ktoré dnes končia -->
         <div class="card-hover-shadow-2x mb-3 card text-dark">
             <div class="card-header-tab card-header">
                 <h5 class="card-header-title font-weight-normal"><i class="fa fa-suitcase mr-3"></i>ENDING EVENTS</h5>
@@ -111,10 +115,10 @@
         </div>
     </div>
 
-
+    <!-- Druhý stĺpec - projekty -->
     <div class="col-3">
 
-        <!-- ---------------------------------  PROJECTS STARTING TODAY --------------------------------- -->
+        <!-- Projekty, ktoré dnes začínajú -->
         <div class="card-hover-shadow-2x mb-3 card text-dark">
             <div class="card-header-tab card-header">
                 <h5 class="card-header-title font-weight-normal"><i class="fa fa-suitcase mr-3"></i>STARTING PROJECTS</h5>
@@ -149,7 +153,7 @@
             </div>
         </div>
 
-       <!-- ---------------------------------  PROJECTS ENDING TODAY --------------------------------- -->
+       <!-- Projekty, ktoré dnes končia -->
         <div class="card-hover-shadow-2x mb-3 card text-dark">
             <div class="card-header-tab card-header">
                 <h5 class="card-header-title font-weight-normal"><i class="fa fa-suitcase mr-3"></i>ENDING PROJECTS</h5>
@@ -185,8 +189,9 @@
         </div>
     </div>
 
+    <!-- Tretí stĺpec - úlohy -->
     <div class="col-3">
-        <!-- ---------------------------------  TASKS DEADLINE TODAY --------------------------------- -->
+        <!-- Úlohy, ktorých termín je dnes -->
         <div class="card-hover-shadow-2x mb-3 card text-dark">
             <div class="card-header-tab card-header">
                 <h5 class="card-header-title font-weight-normal"><i class="fa fa-suitcase mr-3"></i>TASKS DEADLINES</h5>
@@ -223,9 +228,10 @@
     </div>
 
 </div>
-<!-- -------------------------- FOOTER --------------------------- -->
+<!-- Päta stránky -->
 <?php require 'parts/footer.php'; ?>
 
+<!-- Import JavaScriptových knižníc -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

@@ -2,36 +2,24 @@
 <html lang="en">
 
 <head>
-	<?php $title= "Productivity Hub"; ?>
-	
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
-<!-- BOOTSTRAP-->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" media='all' integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-<!-- FONTS-->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
-
-<!-- CSS STYLE-->
-<link rel="stylesheet" href="css/style.css">
-<title><?php $title ?></title>
-	
+	<?php 
+	$title= "Productivity Hub";
+	$public_page = true; // Označenie, že ide o verejnú stránku bez potreby prihlásenia
+	require 'parts/header.php'; 
+	?>
 </head>
 
 
 <body>
 
-<!-- -------------------------------------- MENU -------------------------------------------- -->
+<!-- Navigačný panel -->
 <header class="m-0 p-0">
 	<nav class="navbar navbar-expand-lg pt-3 text-dark">
 		<div class="menu container">
 			<a href="index.php" class="navbar-brand">
-			<!-- Logo Image -->
+			<!-- Logo obrázok -->
 			<img src="img/logo1.png" width="45" alt="Kalendar" class="d-inline-block align-middle mr-2">
-			<!-- Logo Text -->
+			<!-- Logo text -->
 			<span class="logo_text align-middle">Productivity Hub</span>
 			</a>		
 
@@ -46,12 +34,14 @@
 </header>
 
 
-<!-- ----------------------- MAIN CONTENT --------------------------------------- -->
+<!-- Hlavný obsah stránky - prihlasovací formulár -->
 <div class="container">
-	<div class="row m-0 p-0">	
+	<div class="row m-0 p-0">
+		<!-- Ľavá strana s formulárom -->	
 		<div class="col-6 p-5 justify-content-center">
 			<p class="text-center h1 fw-bold m-5">LOG IN</p>
 			<form class="px-5" name="login" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+				<!-- Pole pre používateľské meno -->
 				<div class="mb-4">					
 					<div class="input-group">
 						<div class="input-group-prepend">
@@ -60,6 +50,7 @@
 						<input class="form-control" type="text" name="user" placeholder="Username" required>
 					</div>
 				</div>
+				<!-- Pole pre heslo -->
 				<div class="mb-4">					
 					<div class="input-group">
 						<div class="input-group-prepend">
@@ -69,10 +60,12 @@
 					</div>
 				</div>			
 
+				<!-- Tlačidlo na odoslanie formulára -->
 				<div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
 				<button type="button" class="btn btn-primary" onclick="login.submit()">LOG IN</button>
 				</div>
 
+				<!-- Zobrazenie chybových hlásení -->
 				<?php if(!empty($errors)): ?>
 					<div class="err">
 						<ul>
@@ -81,15 +74,17 @@
 					</div>
 				<?php endif; ?>
 			</form>
+			<!-- Odkaz na registráciu pre nových používateľov -->
 			<span class="d-flex justify-content-center">Don't you have an account?<a class="nav-link text-primary m-0 p-0 pl-2" href="register.php">Sign Up</a></span>			
 		</div>
+		<!-- Pravá strana s obrázkom -->
 		<div class="col-6 p-3 mt-5 " >
 			<img class="img-fluid" src="img/login.jpg" alt="project_management">		
 		</div>
 	</div>
 </div>
 
-<!-- -------------------------- FOOTER --------------------------- -->
+<!-- Päta stránky -->
 <footer>
 	<div class="row m-0 p-0">
 		<div class="col-12">
@@ -103,7 +98,7 @@
 	</div>
 </footer>
   
-<!-- --------------------- JS SCRIPTS JQUERY + POPPER + BOOTSTRAP ------------------------- -->
+<!-- Import JavaScriptových knižníc -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

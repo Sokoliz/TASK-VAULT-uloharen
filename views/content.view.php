@@ -8,13 +8,14 @@
 
 <body class="bg">
 
+<!-- Navigačný panel -->
 <header class="m-0 p-0">
 	<nav class="navbar navbar-expand-lg pt-3 text-dark">
 		<div class="menu container">
 			<a href="index.php" class="navbar-brand">
-			<!-- Logo Image -->
+			<!-- Logo obrázok -->
 			<img src="img/logo1.png" width="45" alt="Kalendar" class="d-inline-block align-middle mr-2">
-			<!-- Logo Text -->
+			<!-- Logo text -->
 			<span class="logo_text align-middle">Productivity Hub</span>
 			</a>
             <ul class="navbar-nav ml-auto">
@@ -33,8 +34,10 @@
 	</nav>
 </header>
 
+<!-- Hlavné menu s kartami pre navigáciu -->
 <div class="container mt-0 mb-4">
     <div class="row d-flex m-2 mt-0">
+        <!-- Karta pre dnešné udalosti -->
         <div class="col-sm-4 col-md-4">
             <a class="card my-card text-dark" href="today.php">
                 <img class="card-img-top" src="img/today.jpg" class="img-rounded" id="Panel_Image">
@@ -44,6 +47,7 @@
             </a>                   
         </div>
 
+        <!-- Karta pre projekty -->
         <div class="col-sm-4 col-md-4">
             <a class="card my-card text-dark" href="projects.php">
                 <img class="card-img-top" src="img/projects.jpg" class="img-rounded" id="Panel_Image">
@@ -53,6 +57,7 @@
             </a>                   
         </div>
 
+        <!-- Karta pre kalendár -->
         <div class="col-sm-4 col-md-4">
             <a class="card my-card text-dark" href="calendar.php">
                 <img class="card-img-top" src="img/calender.jpg" class="img-rounded" id="Panel_Image">
@@ -64,14 +69,15 @@
     </div>
 </div>
 
-<!-- -------------------------- FOOTER --------------------------- -->
+<!-- Footer stránky -->
 <?php require 'parts/footer.php'; ?>
 
-
+<!-- Import JavaScriptových knižníc -->
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+<!-- Skript pre aktuálny čas a dátum -->
 <script type="text/javascript">
     function clock() {
     var time = new Date(),          
