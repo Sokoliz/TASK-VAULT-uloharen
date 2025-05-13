@@ -1,4 +1,3 @@
-
 .fc {
 	direction: ltr;
 	text-align: left;
@@ -8,80 +7,84 @@
 	text-align: right;
 }
 
-body .fc { /* extra precedence to overcome jqui */
-	font-size: 1em;
+body .fc {
+	font-size: 1em; /* extra priorita na prekonanie jqui */
 }
 
 
-/* Colors
+/* Farby
 --------------------------------------------------------------------------------------------------*/
 
 
-.fc-highlight { /* when user is selecting cells */
-	background: #bce8f1;
+.fc-highlight { 
+	background: #bce8f1; /* keď používateľ vyberá bunky */
 	opacity: .3;
 }
 
-.fc-bgevent { /* default look for background events */
-	background: rgb(143, 223, 130);
-	opacity: .3;
+.fc-bgevent { 
+	background: rgb(143, 223, 130); /* predvolený vzhľad pre udalosti na pozadí */
+	opacity: .3; /* študentské akcie môžu byť zvýraznené touto farbou */
 }
 
-.fc-nonbusiness { /* default look for non-business-hours areas */
-	/* will inherit .fc-bgevent's styles */
-	background: #d7d7d7;
+.fc-nonbusiness { 
+	
+	background: #d7d7d7; /* predvolený vzhľad pre mimopracovné hodiny */
+	/* zdedí štýly .fc-bgevent */
+	/* ideálne pre označenie víkendov a prázdnin pre študentov */
 }
 
 
-/* Buttons (styled <button> tags, normalized to work cross-browser)
+/* Tlačidlá (štylizované <button> tagy, normalizované pre kompatibilitu medzi prehliadačmi)
 --------------------------------------------------------------------------------------------------*/
 
 .fc button {
-	/* force height to include the border and padding */
-	-moz-box-sizing: border-box;
+	
+	-moz-box-sizing: border-box; /* vynútenie výšky vrátane okraja a výplne */
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 
-	/* dimensions */
-	margin: 0;
+	
+	margin: 0; /* rozmery */
 	height: 2.1em;
 	padding: 0 .6em;
 
-	/* text & cursor */
-	font-size: 1em; /* normalize */
-	white-space: nowrap;
+	
+	font-size: 1em; /* normalize */ /* text a kurzor */
+	white-space: nowrap; /* normalizácia */
 	cursor: pointer;
 }
 
-/* Firefox has an annoying inner border */
-.fc button::-moz-focus-inner { margin: 0; padding: 0; }
+
+.fc button::-moz-focus-inner { margin: 0; padding: 0; } /* Firefox má otravný vnútorný okraj */
 	
-.fc-state-default { /* non-theme */
-	border: 1px solid;
+.fc-state-default { 
+	border: 1px solid; /* bez témy */
 }
 
-.fc-state-default.fc-corner-left { /* non-theme */
-	border-top-left-radius: 4px;
+.fc-state-default.fc-corner-left { 
+	border-top-left-radius: 4px; /* bez témy */
 	border-bottom-left-radius: 4px;
 }
 
-.fc-state-default.fc-corner-right { /* non-theme */
-	border-top-right-radius: 4px;
+.fc-state-default.fc-corner-right { 
+	border-top-right-radius: 4px; /* bez témy */
 	border-bottom-right-radius: 4px;
 }
 
-/* icons in buttons */
 
-.fc button .fc-icon { /* non-theme */
-	position: relative;
-	top: -0.05em; /* seems to be a good adjustment across browsers */
-	margin: 0 .2em;
+
+.fc button .fc-icon { 
+	position: relative; /* ikony v tlačidlách */
+	top: -0.05em; 
+	margin: 0 .2em; /* zdá sa byť dobré nastavenie naprieč prehliadačmi */
 	vertical-align: middle;
 }
 	
+
+
 /*
-  button states
-  borrowed from twitter bootstrap (http://twitter.github.com/bootstrap/)
+  stavy tlačidiel
+  prevzaté z twitter bootstrap (http://twitter.github.com/bootstrap/)
 */
 
 .fc-state-default {
@@ -132,29 +135,32 @@ body .fc { /* extra precedence to overcome jqui */
 }
 
 
-/* Buttons Groups
+
+
+/* Skupiny tlačidiel
 --------------------------------------------------------------------------------------------------*/
 
 .fc-button-group {
 	display: inline-block;
 }
 
+
 /*
-every button that is not first in a button group should scootch over one pixel and cover the
-previous button's border...
+každé tlačidlo, ktoré nie je prvé v skupine tlačidiel, by sa malo posunúť o jeden pixel
+a prekryť okraj predchádzajúceho tlačidla...
 */
 
-.fc .fc-button-group > * { /* extra precedence b/c buttons have margin set to zero */
-	float: left;
+.fc .fc-button-group > * { 
+	float: left; /* extra priorita, pretože tlačidlá majú nastavený okraj na nulu */
 	margin: 0 0 0 -1px;
 }
 
-.fc .fc-button-group > :first-child { /* same */
-	margin-left: 0;
+.fc .fc-button-group > :first-child { 
+	margin-left: 0; /* to isté */
 }
 
 
-/* Popover
+/* Vyskakovacie okno
 --------------------------------------------------------------------------------------------------*/
 
 .fc-popover {
@@ -162,8 +168,9 @@ previous button's border...
 	box-shadow: 0 2px 6px rgba(0,0,0,.15);
 }
 
-.fc-popover .fc-header { /* TODO: be more consistent with fc-head/fc-body */
-	padding: 2px 4px;
+.fc-popover .fc-header { 
+	padding: 2px 4px; /* TODO: byť konzistentnejší s fc-head/fc-body */
+	/* užitočné pre zobrazenie detailov študentských udalostí */
 }
 
 .fc-popover .fc-header .fc-title {
@@ -185,7 +192,7 @@ previous button's border...
 }
 
 
-/* Misc Reusable Components
+/* Rôzne znovupoužiteľné komponenty
 --------------------------------------------------------------------------------------------------*/
 
 .fc-divider {
@@ -196,8 +203,8 @@ previous button's border...
 hr.fc-divider {
 	height: 0;
 	margin: 0;
-	padding: 0 0 2px; /* height is unreliable across browsers, so use padding */
-	border-width: 1px 0;
+	padding: 0 0 2px; 
+	border-width: 1px 0; /* výška je nespoľahlivá naprieč prehliadačmi, preto použite padding */
 }
 
 .fc-clear {
@@ -208,32 +215,37 @@ hr.fc-divider {
 .fc-bgevent-skeleton,
 .fc-highlight-skeleton,
 .fc-helper-skeleton {
-	/* these element should always cling to top-left/right corners */
-	position: absolute;
+	
+	position: absolute; /* tieto prvky by sa mali vždy držať horných ľavých/pravých rohov */
 	top: 0;
 	left: 0;
 	right: 0;
 }
 
 .fc-bg {
-	bottom: 0; /* strech bg to bottom edge */
+	bottom: 0; 
+	/* roztiahnuť pozadie k spodnému okraju */
+	/* ideálne pre zobrazenie celého časového rozvrhu študenta */
 }
 
 .fc-bg table {
-	height: 100%; /* strech bg to bottom edge */
+	height: 100%; 
+	/* roztiahnuť pozadie k spodnému okraju */
 }
 
 
-/* Tables
+/* Tabuľky
 --------------------------------------------------------------------------------------------------*/
 
 .fc table {
 	width: 100%;
-	box-sizing: border-box; /* fix scrollbar issue in firefox */
-	table-layout: fixed;
+	box-sizing: border-box; 
+	table-layout: fixed; /* oprava problému s posuvníkom vo Firefoxe */
 	border-collapse: collapse;
 	border-spacing: 0;
-	font-size: 1em; /* normalize cross-browser */
+	font-size: 1em; 
+	/* normalizácia naprieč prehliadačmi */
+	/* vhodné pre konzistentné zobrazenie študentského rozvrhu na rôznych zariadeniach */
 }
 
 .fc th {
@@ -249,11 +261,12 @@ hr.fc-divider {
 }
 
 .fc td.fc-today {
-	border-style: double; /* overcome neighboring borders */
+	border-style: double; 
+	/* prekonať susedné okraje */
+	/* zvýraznenie aktuálneho dňa pre študentov */
 }
 
-
-/* Internal Nav Links
+/* Interné navigačné odkazy
 --------------------------------------------------------------------------------------------------*/
 
 a[data-goto] {
@@ -265,31 +278,26 @@ a[data-goto]:hover {
 }
 
 
-/* Fake Table Rows
+/* Falošné riadky tabuľky
 --------------------------------------------------------------------------------------------------*/
 
-.fc .fc-row { /* extra precedence to overcome themes w/ .ui-widget-content forcing a 1px border */
-	/* no visible border by default. but make available if need be (scrollbar width compensation) */
-	border-style: solid;
-	border-width: 0;
+.fc .fc-row { 
+	
+	border-style: solid; /* extra priorita na prekonanie tém s .ui-widget-content vynucujúcich 1px okraj */
+	border-width: 0; /* predvolene žiadny viditeľný okraj, ale k dispozícii v prípade potreby (kompenzácia šírky posuvníka) */
 }
 
 .fc-row table {
-	/* don't put left/right border on anything within a fake row.
-	   the outer tbody will worry about this */
 	border-left: 0 hidden transparent;
 	border-right: 0 hidden transparent;
-
-	/* no bottom borders on rows */
 	border-bottom: 0 hidden transparent; 
 }
 
 .fc-row:first-child table {
-	border-top: 0 hidden transparent; /* no top border on first row */
+	border-top: 0 hidden transparent; 
 }
 
-
-/* Day Row (used within the header and the DayGrid)
+/* Riadok dňa (používaný v hlavičke a v DayGrid)
 --------------------------------------------------------------------------------------------------*/
 
 .fc-row {
@@ -300,16 +308,17 @@ a[data-goto]:hover {
 	z-index: 1;
 }
 
-/* highlighting cells & background event skeleton */
-
+/* zvýraznenie buniek a kostra udalostí na pozadí */
 .fc-row .fc-bgevent-skeleton,
 .fc-row .fc-highlight-skeleton {
-	bottom: 0; /* stretch skeleton to bottom of row */
+	bottom: 0; 
+	/* roztiahnuť kostru na spodok riadku */
 }
 
 .fc-row .fc-bgevent-skeleton table,
 .fc-row .fc-highlight-skeleton table {
-	height: 100%; /* stretch skeleton to bottom of row */
+	height: 100%; 
+	/* roztiahnuť kostru na spodok riadku */
 }
 
 .fc-row .fc-highlight-skeleton td,
@@ -319,7 +328,7 @@ a[data-goto]:hover {
 
 .fc-row .fc-bgevent-skeleton {
 	z-index: 2;
-
+	/* vhodné pre zobrazenie pozadia študentských udalostí ako sú prázdniny alebo skúškové obdobie */
 }
 
 .fc-row .fc-highlight-skeleton {
@@ -327,14 +336,16 @@ a[data-goto]:hover {
 }
 
 /*
-row content (which contains day/week numbers and events) as well as "helper" (which contains
-temporary rendered events).
+obsah riadku (ktorý obsahuje čísla dní/týždňov a udalosti), ako aj "pomocník" (ktorý obsahuje
+dočasne vykreslené udalosti).
 */
 
 .fc-row .fc-content-skeleton {
 	position: relative;
 	z-index: 4;
-	padding-bottom: 2px; /* matches the space above the events */
+	padding-bottom: 2px; /
+	/* zodpovedá priestoru nad udalosťami */
+	/* dôležité pre správne zobrazenie študentských rozvrhov */
 }
 
 .fc-row .fc-helper-skeleton {
@@ -344,75 +355,84 @@ temporary rendered events).
 .fc .fc-row .fc-content-skeleton table,
 .fc .fc-row .fc-content-skeleton td,
 .fc .fc-row .fc-helper-skeleton td {
-	/* see-through to the background below */
-	/* extra precedence to prevent theme-provided backgrounds */
-	background: none; /* in case <td>s are globally styled */
-	border-color: transparent;
+	background: none; 
+	border-color: transparent; /* priehľadnosť k pozadiu pod ním */
+	/* extra priorita na zabránenie pozadiam poskytnutým témou */
+	/* pre prípad, že <td> sú globálne štylizované */
+	/* umožňuje lepšie zvýraznenie dôležitých študentských termínov */
 }
 
 .fc-row .fc-content-skeleton td,
 .fc-row .fc-helper-skeleton td {
-	/* don't put a border between events and/or the day number */
-	border-bottom: 0;
+
+	border-bottom: 0; /* nie okraj medzi udalosti a/alebo číslo dňa */
 }
 
-.fc-row .fc-content-skeleton tbody td, /* cells with events inside (so NOT the day number cell) */
+.fc-row .fc-content-skeleton tbody td, 
 .fc-row .fc-helper-skeleton tbody td {
-	/* don't put a border between event cells */
-	border-top: 0;
+	
+	border-top: 0; /* bunky s udalosťami vo vnútri (teda NIE bunka s číslom dňa) */
+	/* nedávajte okraj medzi bunky udalostí */
 }
 
 
-/* Scrolling Container
+/* Posúvací kontajner
 --------------------------------------------------------------------------------------------------*/
 
 .fc-scroller {
-	-webkit-overflow-scrolling: touch;
+	overflow: auto;
+	/* dôležité pre plynulé posúvanie na mobilných zariadeniach študentov */
 }
 
 /* TODO: move to agenda/basic */
 .fc-scroller > .fc-day-grid,
 .fc-scroller > .fc-time-grid {
-	position: relative; /* re-scope all positions */
-	width: 100%; /* hack to force re-sizing this inner element when scrollbars appear/disappear */
+	position: relative; 
+	width: 100%; 
+	/* znovu definovať všetky pozície */
+	/* hack na vynútenie zmeny veľkosti tohto vnútorného prvku, keď sa objavia/zmiznú posuvníky */
 }
 
 
-/* Global Event Styles
+/* Globálne štýly udalostí
 --------------------------------------------------------------------------------------------------*/
 
 .fc-event {
-	position: relative; /* for resize handle and other inner positioning */
-	display: block; /* make the <a> tag block */
+	position: relative; 
+	display: block; 
 	font-size: .85em;
 	line-height: 1.3;
 	border-radius: 3px;
 	border: 1px solid #3a87ad; /* default BORDER color */
-}
-
-.fc-event,
-.fc-event-dot {
-	background-color: #3a87ad; /* default BACKGROUND color */
+	/* pre rukoväť zmeny veľkosti a iné vnútorné polohovanie */
+	/* urobiť tag <a> blokovým */
+	/* predvolená farba OKRAJA */
+	/* vhodné pre zobrazenie študentských udalostí ako sú prednášky, cvičenia a skúšky */
 }
 
 .fc-event,
 .fc-event:hover {
-	color: #fff; /* default TEXT color */
-	text-decoration: none; /* if <a> has an href */
+	color: #fff; 
+	text-decoration: none; 
+	/* predvolená farba TEXTU */
+	/* ak <a> má href */
 }
 
 .fc-event[href],
 .fc-event.fc-draggable {
-	cursor: pointer; /* give events with links and draggable events a hand mouse pointer */
+	cursor: pointer; 
+	/* dať udalostiam s odkazmi a ťahateľným udalostiam kurzor ruky */
 }
 
-.fc-not-allowed, /* causes a "warning" cursor. applied on body */
-.fc-not-allowed .fc-event { /* to override an event's custom cursor */
-	cursor: not-allowed;
+.fc-not-allowed, 
+.fc-not-allowed .fc-event { 
+	cursor: not-allowed; /* spôsobuje kurzor "varovanie". aplikované na telo */
+	/* na prepísanie vlastného kurzora udalosti */
+	/* užitočné pre zobrazenie nedostupných termínov pre študentov */
 }
 
-.fc-event .fc-bg { /* the generic .fc-bg already does position */
-	z-index: 1;
+.fc-event .fc-bg { 
+	z-index: 1; /* všeobecný .fc-bg už robí polohovanie */
 	background: #fff;
 	opacity: .25;
 }
@@ -422,14 +442,15 @@ temporary rendered events).
 	z-index: 2;
 }
 
-/* resizer (cursor AND touch devices) */
+/* menič veľkosti (kurzorové A dotykové zariadenia) */
 
 .fc-event .fc-resizer {
 	position: absolute;
 	z-index: 4;
+	/* užitočné pre študentov pri úprave dĺžky ich udalostí v rozvrhu */
 }
 
-/* resizer (touch devices) */
+/* menič veľkosti (dotykové zariadenia) */
 
 .fc-event .fc-resizer {
 	display: none;
@@ -437,18 +458,20 @@ temporary rendered events).
 
 .fc-event.fc-allow-mouse-resize .fc-resizer,
 .fc-event.fc-selected .fc-resizer {
-	/* only show when hovering or selected (with touch) */
-	display: block;
+	
+	display: block; /* zobraziť iba pri vznášaní alebo výbere (s dotykom) */
 }
 
-/* hit area */
+
+
+/* oblasť dotyku */
 
 .fc-event.fc-selected .fc-resizer:before {
-	/* 40x40 touch area */
-	content: "";
+	
+	content: ""; /* 40x40 dotyková plocha */
 	position: absolute;
-	z-index: 9999; /* user of this util can scope within a lower z-index */
-	top: 50%;
+	z-index: 9999; 
+	top: 50%; /* používateľ tohto nástroja môže určiť rozsah v rámci nižšieho z-indexu */
 	left: 50%;
 	width: 40px;
 	height: 40px;
@@ -457,12 +480,15 @@ temporary rendered events).
 }
 
 
-/* Event Selection (only for touch devices)
+
+
+/* Výber udalosti (len pre dotykové zariadenia)
 --------------------------------------------------------------------------------------------------*/
 
 .fc-event.fc-selected {
-	z-index: 9999 !important; /* overcomes inline z-index */
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	z-index: 9999 !important; 
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* prekonáva inline z-index */
+	/* dôležité pre študentov používajúcich mobilné zariadenia */
 }
 
 .fc-event.fc-selected.fc-dragging {
@@ -470,28 +496,27 @@ temporary rendered events).
 }
 
 
-/* Horizontal Events
+/* Horizontálne udalosti
 --------------------------------------------------------------------------------------------------*/
 
-/* bigger touch area when selected */
 .fc-h-event.fc-selected:before {
-	content: "";
+	content: ""; /* väčšia dotyková plocha pri výbere */
 	position: absolute;
-	z-index: 3; /* below resizers */
-	top: -10px;
+	z-index: 3; 
+	top: -10px; /* pod meničmi veľkosti */
 	bottom: -10px;
 	left: 0;
 	right: 0;
 }
 
-/* events that are continuing to/from another week. kill rounded corners and butt up against edge */
+/* udalosti, ktoré pokračujú do/z iného týždňa. odstrániť zaoblené rohy a pripojiť k okraju */
 
 .fc-ltr .fc-h-event.fc-not-start,
 .fc-rtl .fc-h-event.fc-not-end {
 	margin-left: 0;
 	border-left-width: 0;
-	padding-left: 1px; /* replace the border with padding */
-	border-top-left-radius: 0;
+	padding-left: 1px; 
+	border-top-left-radius: 0; /* nahradiť okraj výplňou */
 	border-bottom-left-radius: 0;
 }
 
@@ -499,39 +524,41 @@ temporary rendered events).
 .fc-rtl .fc-h-event.fc-not-start {
 	margin-right: 0;
 	border-right-width: 0;
-	padding-right: 1px; /* replace the border with padding */
+	padding-right: 1px; 
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 }
 
-/* resizer (cursor AND touch devices) */
+/* menič veľkosti (kurzorové A dotykové zariadenia) */
 
-/* left resizer  */
+/* ľavý menič veľkosti */
 .fc-ltr .fc-h-event .fc-start-resizer,
 .fc-rtl .fc-h-event .fc-end-resizer {
-	cursor: w-resize;
-	left: -1px; /* overcome border */
+	cursor: w-resize; 
+	left: -1px; 
+	/* prekonať okraj */
 }
 
-/* right resizer */
+/* pravý menič veľkosti */
 .fc-ltr .fc-h-event .fc-end-resizer,
 .fc-rtl .fc-h-event .fc-start-resizer {
-	cursor: e-resize;
-	right: -1px; /* overcome border */
+	cursor: e-resize; 
+	right: -1px; 
+	/* prekonať okraj */
 }
 
-/* resizer (mouse devices) */
+/* menič veľkosti (myšové zariadenia) */
 
 .fc-h-event.fc-allow-mouse-resize .fc-resizer {
 	width: 7px;
-	top: -1px; /* overcome top border */
-	bottom: -1px; /* overcome bottom border */
+	top: -1px; 
+	bottom: -1px; 
 }
 
-/* resizer (touch devices) */
+/* menič veľkosti (dotykové zariadenia) */
 
 .fc-h-event.fc-selected .fc-resizer {
-	/* 8x8 little dot */
+	/* 8x8 bodka */
 	border-radius: 4px;
 	border-width: 1px;
 	width: 6px;
@@ -539,54 +566,54 @@ temporary rendered events).
 	border-style: solid;
 	border-color: inherit;
 	background: #fff;
-	/* vertically center */
+	/* vertikálne centrovanie */
 	top: 50%;
 	margin-top: -4px;
 }
 
-/* left resizer  */
+/* ľavý menič  */
 .fc-ltr .fc-h-event.fc-selected .fc-start-resizer,
 .fc-rtl .fc-h-event.fc-selected .fc-end-resizer {
-	margin-left: -4px; /* centers the 8x8 dot on the left edge */
+	margin-left: -4px; /* centruje 8x8 bodku na ľavom okraji */
 }
 
-/* right resizer */
+/* pravý menič */
 .fc-ltr .fc-h-event.fc-selected .fc-end-resizer,
 .fc-rtl .fc-h-event.fc-selected .fc-start-resizer {
-	margin-right: -4px; /* centers the 8x8 dot on the right edge */
+	margin-right: -4px; /* centruje 8x8 bodku na pravom okraji */
 }
 
 
-/* DayGrid events
+/* Udalosti DayGrid
 ----------------------------------------------------------------------------------------------------
-We use the full "fc-day-grid-event" class instead of using descendants because the event won't
-be a descendant of the grid when it is being dragged.
+Používame plnú triedu "fc-day-grid-event" namiesto použitia potomkov, pretože udalosť nebude
+potomkom mriežky, keď sa ťahá.
 */
 
 .fc-day-grid-event {
-	margin: 1px 2px 0; /* spacing between events and edges */
+	margin: 1px 2px 0; /* medzera medzi udalosťami a okrajmi */
 	padding: 0 1px;
 }
 
 tr:first-child > td > .fc-day-grid-event {
-	margin-top: 2px; /* a little bit more space before the first event */
+	margin-top: 2px; /* trochu viac priestoru pred prvou udalosťou */
 }
 
 .fc-day-grid-event.fc-selected:after {
 	content: "";
 	position: absolute;
-	z-index: 1; /* same z-index as fc-bg, behind text */
-	/* overcome the borders */
+	z-index: 1; /* rovnaký z-index ako fc-bg, za textom */
+	/* prekonať okraje */
 	top: -1px;
 	right: -1px;
 	bottom: -1px;
 	left: -1px;
-	/* darkening effect */
+	/* stmavovací efekt */
 	background: #000;
 	opacity: .25;
 }
 
-.fc-day-grid-event .fc-content { /* force events to be one-line tall */
+.fc-day-grid-event .fc-content { /* vynútiť, aby udalosti boli vysoké jeden riadok */
 	white-space: nowrap;
 	overflow: hidden;
 }
@@ -595,25 +622,25 @@ tr:first-child > td > .fc-day-grid-event {
 	font-weight: bold;
 }
 
-/* resizer (cursor devices) */
+/* menič veľkosti (kurzorové zariadenia) */
 
-/* left resizer  */
+/* ľavý menič  */
 .fc-ltr .fc-day-grid-event.fc-allow-mouse-resize .fc-start-resizer,
 .fc-rtl .fc-day-grid-event.fc-allow-mouse-resize .fc-end-resizer {
-	margin-left: -2px; /* to the day cell's edge */
+	margin-left: -2px; /* k okraju bunky dňa */
 }
 
-/* right resizer */
+/* pravý menič */
 .fc-ltr .fc-day-grid-event.fc-allow-mouse-resize .fc-end-resizer,
 .fc-rtl .fc-day-grid-event.fc-allow-mouse-resize .fc-start-resizer {
-	margin-right: -2px; /* to the day cell's edge */
+	margin-right: -2px; /* k okraju bunky dňa */
 }
 
 
-/* Event Limiting
+/* Obmedzenie udalostí
 --------------------------------------------------------------------------------------------------*/
 
-/* "more" link that represents hidden events */
+/* odkaz "viac", ktorý predstavuje skryté udalosti */
 
 a.fc-more {
 	margin: 1px 3px;
@@ -626,14 +653,14 @@ a.fc-more:hover {
 	text-decoration: underline;
 }
 
-.fc-limited { /* rows and cells that are hidden because of a "more" link */
+.fc-limited { /* riadky a bunky, ktoré sú skryté kvôli odkazu "viac" */
 	display: none;
 }
 
-/* popover that appears when "more" link is clicked */
+/* vyskakovacie okno, ktoré sa objaví po kliknutí na odkaz "viac" */
 
 .fc-day-grid .fc-row {
-	z-index: 1; /* make the "more" popover one higher than this */
+	z-index: 1; /* urobiť vyskakovacie okno "viac" o jedno vyššie ako toto */
 }
 
 .fc-more-popover {
@@ -646,16 +673,39 @@ a.fc-more:hover {
 }
 
 
-/* Now Indicator
+/* Indikátor aktuálneho času
 --------------------------------------------------------------------------------------------------*/
 
-.fc-now-indicator {
-	position: absolute;
-	border: 0 solid red;
+.fc-time-grid .fc-now-indicator-line {
+	border-top-width: 1px;
+	left: 0;
+	right: 0;
+}
+
+/* šípka na osi */
+
+.fc-time-grid .fc-now-indicator-arrow {
+	margin-top: -5px; /* vertikálne centrovať na vrchnú súradnicu */
+}
+
+.fc-ltr .fc-time-grid .fc-now-indicator-arrow {
+	left: 0;
+	/* trojuholník smerujúci doprava... */
+	border-width: 5px 0 5px 6px;
+	border-top-color: transparent;
+	border-bottom-color: transparent;
+}
+
+.fc-rtl .fc-time-grid .fc-now-indicator-arrow {
+	right: 0;
+	/* trojuholník smerujúci doľava... */
+	border-width: 5px 6px 5px 0;
+	border-top-color: transparent;
+	border-bottom-color: transparent;
 }
 
 
-/* Utilities
+/* Nástroje
 --------------------------------------------------------------------------------------------------*/
 
 .fc-unselectable {
@@ -671,10 +721,10 @@ a.fc-more:hover {
 
 
 /*
-TODO: more distinction between this file and common.css
+TODO: viac rozlíšenia medzi týmto súborom a common.css
 */
 
-/* Colors
+/* Farby
 --------------------------------------------------------------------------------------------------*/
 
 .fc-unthemed th,
@@ -683,7 +733,7 @@ TODO: more distinction between this file and common.css
 .fc-unthemed tbody,
 .fc-unthemed .fc-divider,
 .fc-unthemed .fc-row,
-.fc-unthemed .fc-content, /* for gutter border */
+.fc-unthemed .fc-content, /* pre okraj žliabku */
 .fc-unthemed .fc-popover,
 .fc-unthemed .fc-list-view,
 .fc-unthemed .fc-list-heading td {
@@ -714,7 +764,7 @@ TODO: more distinction between this file and common.css
 }
 
 
-/* Icons (inline elements with styled text that mock arrow icons)
+/* Ikony (inline prvky so štylizovaným textom, ktoré napodobňujú šípkové ikony)
 --------------------------------------------------------------------------------------------------*/
 
 .fc-icon {
@@ -726,7 +776,7 @@ TODO: more distinction between this file and common.css
 	overflow: hidden;
 	font-family: "Courier New", Courier, monospace;
 
-	/* don't allow browser text-selection */
+	/* nepovoľte výber textu prehliadačom */
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -736,11 +786,9 @@ TODO: more distinction between this file and common.css
 }
 
 /*
-Acceptable font-family overrides for individual icons:
+Prijateľné prepisy font-family pre jednotlivé ikony:
 	"Arial", sans-serif
 	"Times New Roman", serif
-
-NOTE: use percentage font sizes or else old IE chokes
 */
 
 .fc-icon:after {
@@ -798,7 +846,7 @@ NOTE: use percentage font sizes or else old IE chokes
 }
 
 
-/* Popover
+/* Vyskakovacie okno
 --------------------------------------------------------------------------------------------------*/
 
 .fc-unthemed .fc-popover {
@@ -812,7 +860,7 @@ NOTE: use percentage font sizes or else old IE chokes
 }
 
 
-/* List View
+/* Zobrazenie zoznamu
 --------------------------------------------------------------------------------------------------*/
 
 .fc-unthemed .fc-list-item:hover td {
@@ -821,7 +869,7 @@ NOTE: use percentage font sizes or else old IE chokes
 
 
 
-/* Colors
+/* Farby
 --------------------------------------------------------------------------------------------------*/
 
 .ui-widget .fc-disabled-day {
@@ -829,37 +877,34 @@ NOTE: use percentage font sizes or else old IE chokes
 }
 
 
-/* Popover
+/* Vyskakovacie okno
 --------------------------------------------------------------------------------------------------*/
 
 .fc-popover > .ui-widget-header + .ui-widget-content {
-	border-top: 0; /* where they meet, let the header have the border */
+	border-top: 0; /* kde sa stretávajú, nech má hlavička okraj */
 }
 
 
-/* Global Event Styles
+/* Globálne štýly udalostí
 --------------------------------------------------------------------------------------------------*/
 
 .ui-widget .fc-event {
-	/* overpower jqui's styles on <a> tags. TODO: more DRY */
-	color: #fff; /* default TEXT color */
-	text-decoration: none; /* if <a> has an href */
+	/* prekonať štýly jqui na tagoch <a>. TODO: viac DRY */
+	color: #fff; /* predvolená farba TEXTU */
+	text-decoration: none; /* ak <a> má href */
 
-	/* undo ui-widget-header bold */
+	/* zrušiť tučné písmo ui-widget-header */
 	font-weight: normal;
 }
 
 
-/* TimeGrid axis running down the side (for both the all-day area and the slot area)
+/* Os časovej mriežky bežiaca dole po boku (pre oblasť celého dňa aj pre oblasť slotov)
 --------------------------------------------------------------------------------------------------*/
 
 .ui-widget td.fc-axis {
-	font-weight: normal; /* overcome bold */
+	font-weight: normal; 
 }
 
-
-/* TimeGrid Slats (lines that run horizontally)
---------------------------------------------------------------------------------------------------*/
 
 .fc-time-grid .fc-slats .ui-widget-content { 
 	background: none; /* see through to fc-bg */
@@ -888,21 +933,21 @@ NOTE: use percentage font sizes or else old IE chokes
 --------------------------------------------------------------------------------------------------*/
 
 .fc-bootstrap3 .fc-popover .panel-body {
-	padding: 0; /* undo built-in padding */
+	padding: 0; /* zrušiť zabudovaný padding */
 }
 
 
-/* TimeGrid Slats (lines that run horizontally)
+/* Vodorovné čiary časovej mriežky
 --------------------------------------------------------------------------------------------------*/
 
 .fc-bootstrap3 .fc-time-grid .fc-slats table {
-	/* some themes have background color. see through to slats */
+	/* niektoré témy majú farbu pozadia. vidieť cez ne na čiary */
 	background: none;
 }
 
 
 
-/* Toolbar
+/* Panel nástrojov
 --------------------------------------------------------------------------------------------------*/
 
 .fc-toolbar {
@@ -929,53 +974,35 @@ NOTE: use percentage font sizes or else old IE chokes
 	display: inline-block;
 }
 
-/* the things within each left/right/center section */
-.fc .fc-toolbar > * > * { /* extra precedence to override button border margins */
+/* veci v rámci každej ľavej/pravej/strednej sekcie */
+.fc .fc-toolbar > * > * { /* extra priorita na prepísanie okrajov tlačidiel */
 	float: left;
 	margin-left: .75em;
 }
 
-/* the first thing within each left/center/right section */
-.fc .fc-toolbar > * > :first-child { /* extra precedence to override button border margins */
+/* prvá vec v rámci každej ľavej/strednej/pravej sekcie */
+.fc .fc-toolbar > * > :first-child { /* extra priorita na prepísanie okrajov tlačidiel */
 	margin-left: 0;
 }
 	
-/* title text */
+/* text nadpisu */
 
 .fc-toolbar h2 {
 	margin: 0;
 }
 
-/* button layering (for border precedence) */
+/* vrstvenie tlačidiel (pre prioritu okrajov) */
 
 .fc-toolbar button {
 	position: relative;
-}
-
-.fc-toolbar .fc-state-hover,
-.fc-toolbar .ui-state-hover {
-	z-index: 2;
-}
-	
-.fc-toolbar .fc-state-down {
-	z-index: 3;
-}
-
-.fc-toolbar .fc-state-active,
-.fc-toolbar .ui-state-active {
-	z-index: 4;
-}
-
-.fc-toolbar button:focus {
-	z-index: 5;
 }
 
 
 /* View Structure
 --------------------------------------------------------------------------------------------------*/
 
-/* undo twitter bootstrap's box-sizing rules. normalizes positioning techniques */
-/* don't do this for the toolbar because we'll want bootstrap to style those buttons as some pt */
+/* zrušiť pravidlá box-sizing twitter bootstrap. normalizuje techniky polohovania */
+/* nerobte to pre panel nástrojov, pretože budeme chcieť, aby bootstrap štylizoval tieto tlačidlá */
 .fc-view-container *,
 .fc-view-container *:before,
 .fc-view-container *:after {
@@ -984,8 +1011,8 @@ NOTE: use percentage font sizes or else old IE chokes
 	        box-sizing: content-box;
 }
 
-.fc-view, /* scope positioning and z-index's for everything within the view */
-.fc-view > table { /* so dragged elements can be above the view's main element */
+.fc-view, /* rozsah polohovania a z-indexov pre všetko v rámci zobrazenia */
+.fc-view > table { /* aby ťahané prvky mohli byť nad hlavným prvkom zobrazenia */
 	position: relative;
 	z-index: 1;
 }
@@ -995,19 +1022,19 @@ NOTE: use percentage font sizes or else old IE chokes
 /* BasicView
 --------------------------------------------------------------------------------------------------*/
 
-/* day row structure */
+/* štruktúra riadku dňa */
 
 .fc-basicWeek-view .fc-content-skeleton,
 .fc-basicDay-view .fc-content-skeleton {
-	/* there may be week numbers in these views, so no padding-top */
-	padding-bottom: 1em; /* ensure a space at bottom of cell for user selecting/clicking */
+	/* môžu tu byť čísla týždňov v týchto zobrazeniach, takže žiadny padding-top */
+	padding-bottom: 1em; /* zabezpečiť priestor na spodku bunky pre výber/klikanie používateľa */
 }
 
 .fc-basic-view .fc-body .fc-row {
-	min-height: 4em; /* ensure that all rows are at least this tall */
+	min-height: 4em; /* zabezpečiť, aby všetky riadky boli aspoň takto vysoké */
 }
 
-/* a "rigid" row will take up a constant amount of height because content-skeleton is absolute */
+/* "pevný" riadok zaberie konštantné množstvo výšky, pretože content-skeleton je absolútny */
 
 .fc-row.fc-rigid {
 	overflow: hidden;
@@ -1020,7 +1047,7 @@ NOTE: use percentage font sizes or else old IE chokes
 	right: 0;
 }
 
-/* week and day number styling */
+/* štylizovanie čísel týždňa a dňa */
 
 .fc-day-top.fc-other-month {
 	opacity: 0.3;
@@ -1033,7 +1060,7 @@ NOTE: use percentage font sizes or else old IE chokes
 
 .fc-basic-view th.fc-week-number,
 .fc-basic-view th.fc-day-number {
-	padding: 0 2px; /* column headers can't have as much v space */
+	padding: 0 2px; /* hlavičky stĺpcov nemôžu mať toľko vertikálneho priestoru */
 }
 
 .fc-ltr .fc-basic-view .fc-day-top .fc-day-number { float: right; }
@@ -1049,40 +1076,40 @@ NOTE: use percentage font sizes or else old IE chokes
 	color: #808080;
 }
 
-/* when week/day number have own column */
+/* keď číslo týždňa/dňa má vlastný stĺpec */
 
 .fc-basic-view td.fc-week-number {
 	text-align: center;
 }
 
 .fc-basic-view td.fc-week-number > * {
-	/* work around the way we do column resizing and ensure a minimum width */
+	/* obísť spôsob, akým robíme zmenu veľkosti stĺpcov a zabezpečiť minimálnu šírku */
 	display: inline-block;
 	min-width: 1.25em;
 }
 
 
-/* AgendaView all-day area
+/* AgendaView celodenná oblasť
 --------------------------------------------------------------------------------------------------*/
 
 .fc-agenda-view .fc-day-grid {
 	position: relative;
-	z-index: 2; /* so the "more.." popover will be over the time grid */
+	z-index: 2; /* aby vyskakovacie okno "viac.." bolo nad časovou mriežkou */
 }
 
 .fc-agenda-view .fc-day-grid .fc-row {
-	min-height: 3em; /* all-day section will never get shorter than this */
+	min-height: 3em; /* celodenná sekcia nebude nikdy kratšia ako toto */
 }
 
 .fc-agenda-view .fc-day-grid .fc-row .fc-content-skeleton {
-	padding-bottom: 1em; /* give space underneath events for clicking/selecting days */
+	padding-bottom: 1em; /* poskytnúť priestor pod udalosťami pre klikanie/výber dní */
 }
 
 
-/* TimeGrid axis running down the side (for both the all-day area and the slot area)
+/* Os časovej mriežky bežiaca dole po boku (pre oblasť celého dňa aj pre oblasť slotov)
 --------------------------------------------------------------------------------------------------*/
 
-.fc .fc-axis { /* .fc to overcome default cell styles */
+.fc .fc-axis { /* .fc na prekonanie predvolených štýlov buniek */
 	vertical-align: middle;
 	padding: 0 4px;
 	white-space: nowrap;
@@ -1097,20 +1124,20 @@ NOTE: use percentage font sizes or else old IE chokes
 }
 
 
-/* TimeGrid Structure
+/* Štruktúra časovej mriežky
 --------------------------------------------------------------------------------------------------*/
 
-.fc-time-grid-container, /* so scroll container's z-index is below all-day */
-.fc-time-grid { /* so slats/bg/content/etc positions get scoped within here */
+.fc-time-grid-container, /* aby z-index kontajnera posúvania bol pod celodenným */
+.fc-time-grid { /* aby polohy slotov/pozadia/obsahu/atď. boli v rámci tohto rozsahu */
 	position: relative;
 	z-index: 1;
 }
 
 .fc-time-grid {
-	min-height: 100%; /* so if height setting is 'auto', .fc-bg stretches to fill height */
+	min-height: 100%; /* aby ak je nastavenie výšky 'auto', .fc-bg sa roztiahlo na výplň výšky */
 }
 
-.fc-time-grid table { /* don't put outer borders on slats/bg/content/etc */
+.fc-time-grid table { /* nedávajte vonkajšie okraje na sloty/pozadie/obsah/atď. */
 	border: 0 hidden transparent;
 }
 
@@ -1119,13 +1146,13 @@ NOTE: use percentage font sizes or else old IE chokes
 }
 
 .fc-time-grid .fc-slats,
-.fc-time-grid > hr { /* the <hr> AgendaView injects when grid is shorter than scroller */
+.fc-time-grid > hr { /* <hr> AgendaView vkladá, keď je mriežka kratšia ako posúvač */
 	position: relative;
 	z-index: 2;
 }
 
 .fc-time-grid .fc-content-col {
-	position: relative; /* because now-indicator lives directly inside */
+	position: relative; /* pretože indikátor aktuálneho času žije priamo vo vnútri */
 }
 
 .fc-time-grid .fc-content-skeleton {
@@ -1136,7 +1163,7 @@ NOTE: use percentage font sizes or else old IE chokes
 	right: 0;
 }
 
-/* divs within a cell within the fc-content-skeleton */
+/* divy v rámci bunky v rámci fc-content-skeleton */
 
 .fc-time-grid .fc-business-container {
 	position: relative;
@@ -1162,18 +1189,18 @@ NOTE: use percentage font sizes or else old IE chokes
 	z-index: 5;
 }
 
-.fc-time-grid .fc-helper-container { /* also is fc-event-container */
+.fc-time-grid .fc-helper-container { /* tiež je fc-event-container */
 	position: relative;
 	z-index: 6;
 }
 
 
-/* TimeGrid Slats (lines that run horizontally)
+/* Vodorovné čiary časovej mriežky
 --------------------------------------------------------------------------------------------------*/
 
 .fc-time-grid .fc-slats td {
 	height: 1.5em;
-	border-bottom: 0; /* each cell is responsible for its top border */
+	border-bottom: 0; /* každá bunka je zodpovedná za svoj horný okraj */
 }
 
 .fc-time-grid .fc-slats .fc-minor td {
@@ -1181,91 +1208,91 @@ NOTE: use percentage font sizes or else old IE chokes
 }
 
 
-/* TimeGrid Highlighting Slots
+/* Zvýraznenie slotov časovej mriežky
 --------------------------------------------------------------------------------------------------*/
 
-.fc-time-grid .fc-highlight-container { /* a div within a cell within the fc-highlight-skeleton */
-	position: relative; /* scopes the left/right of the fc-highlight to be in the column */
+.fc-time-grid .fc-highlight-container { /* div v rámci bunky v rámci fc-highlight-skeleton */
+	position: relative; /* určuje rozsah ľavej/pravej strany fc-highlight, aby bol v stĺpci */
 }
 
 .fc-time-grid .fc-highlight {
 	position: absolute;
 	left: 0;
 	right: 0;
-	/* top and bottom will be in by JS */
+	/* horná a dolná časť bude v JS */
 }
 
 
-/* TimeGrid Event Containment
+/* Umiestnenie udalostí časovej mriežky
 --------------------------------------------------------------------------------------------------*/
 
-.fc-ltr .fc-time-grid .fc-event-container { /* space on the sides of events for LTR (default) */
+.fc-ltr .fc-time-grid .fc-event-container { /* priestor na stranách udalostí pre LTR (predvolené) */
 	margin: 0 2.5% 0 2px;
 }
 
-.fc-rtl .fc-time-grid .fc-event-container { /* space on the sides of events for RTL */
+.fc-rtl .fc-time-grid .fc-event-container { /* priestor na stranách udalostí pre RTL */
 	margin: 0 2px 0 2.5%;
 }
 
 .fc-time-grid .fc-event,
 .fc-time-grid .fc-bgevent {
 	position: absolute;
-	z-index: 1; /* scope inner z-index's */
+	z-index: 1; /* rozsah vnútorných z-indexov */
 }
 
 .fc-time-grid .fc-bgevent {
-	/* background events always span full width */
+	/* udalosti na pozadí vždy pokrývajú celú šírku */
 	left: 0;
 	right: 0;
 }
 
 
-/* Generic Vertical Event
+/* Všeobecná vertikálna udalosť
 --------------------------------------------------------------------------------------------------*/
 
-.fc-v-event.fc-not-start { /* events that are continuing from another day */
-	/* replace space made by the top border with padding */
+.fc-v-event.fc-not-start { /* udalosti, ktoré pokračujú z iného dňa */
+	/* nahradiť priestor vytvorený horným okrajom výplňou */
 	border-top-width: 0;
 	padding-top: 1px;
 
-	/* remove top rounded corners */
+	/* odstrániť horné zaoblené rohy */
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
 
 .fc-v-event.fc-not-end {
-	/* replace space made by the top border with padding */
+	/* nahradiť priestor vytvorený horným okrajom výplňou */
 	border-bottom-width: 0;
 	padding-bottom: 1px;
 
-	/* remove bottom rounded corners */
+	/* odstrániť dolné zaoblené rohy */
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 }
 
 
-/* TimeGrid Event Styling
+/* Štylizovanie udalostí časovej mriežky
 ----------------------------------------------------------------------------------------------------
-We use the full "fc-time-grid-event" class instead of using descendants because the event won't
-be a descendant of the grid when it is being dragged.
+Používame plnú triedu "fc-time-grid-event" namiesto použitia potomkov, pretože udalosť nebude
+potomkom mriežky, keď sa ťahá.
 */
 
 .fc-time-grid-event {
-	overflow: hidden; /* don't let the bg flow over rounded corners */
+	overflow: hidden; /* nenechajte pozadie pretekať cez zaoblené rohy */
 }
 
 .fc-time-grid-event.fc-selected {
-	/* need to allow touch resizers to extend outside event's bounding box */
-	/* common fc-selected styles hide the fc-bg, so don't need this anyway */
+	/* potrebné povoliť dotykovým menením veľkosti rozšíriť sa mimo ohraničujúceho rámčeka udalosti */
+	/* bežné štýly fc-selected skrývajú fc-bg, takže to aj tak nepotrebujeme */
 	overflow: visible;
 }
 
 .fc-time-grid-event.fc-selected .fc-bg {
-	display: none; /* hide semi-white background, to appear darker */
+	display: none; /* skryť polo-biele pozadie, aby sa zdalo tmavšie */
 }
 
 .fc-time-grid-event .fc-content {
-	overflow: hidden; /* for when .fc-selected */
+	overflow: hidden; /* pre prípad, keď je .fc-selected */
 }
 
 .fc-time-grid-event .fc-time,
@@ -1278,38 +1305,38 @@ be a descendant of the grid when it is being dragged.
 	white-space: nowrap;
 }
 
-/* short mode, where time and title are on the same line */
+/* krátky režim, kde čas a názov sú na rovnakom riadku */
 
 .fc-time-grid-event.fc-short .fc-content {
-	/* don't wrap to second line (now that contents will be inline) */
+	/* nezalamovať na druhý riadok (teraz, keď obsah bude inline) */
 	white-space: nowrap;
 }
 
 .fc-time-grid-event.fc-short .fc-time,
 .fc-time-grid-event.fc-short .fc-title {
-	/* put the time and title on the same line */
+	/* dať čas a názov na rovnaký riadok */
 	display: inline-block;
 	vertical-align: top;
 }
 
 .fc-time-grid-event.fc-short .fc-time span {
-	display: none; /* don't display the full time text... */
+	display: none; /* nezobrazovať celý text času... */
 }
 
 .fc-time-grid-event.fc-short .fc-time:before {
-	content: attr(data-start); /* ...instead, display only the start time */
+	content: attr(data-start); /* ...namiesto toho zobraziť len čas začiatku */
 }
 
 .fc-time-grid-event.fc-short .fc-time:after {
-	content: "\000A0-\000A0"; /* seperate with a dash, wrapped in nbsp's */
+	content: "\000A0-\000A0"; /* oddeliť pomlčkou, zabalenou v nbsp */
 }
 
 .fc-time-grid-event.fc-short .fc-title {
-	font-size: .85em; /* make the title text the same size as the time */
-	padding: 0; /* undo padding from above */
+	font-size: .85em; /* urobiť text názvu rovnakej veľkosti ako čas */
+	padding: 0; /* zrušiť padding z vyššie */
 }
 
-/* resizer (cursor device) */
+/* menič veľkosti (kurzorové zariadenie) */
 
 .fc-time-grid-event.fc-allow-mouse-resize .fc-resizer {
 	left: 0;
@@ -1328,10 +1355,10 @@ be a descendant of the grid when it is being dragged.
 	content: "=";
 }
 
-/* resizer (touch device) */
+/* menič veľkosti (dotykové zariadenie) */
 
 .fc-time-grid-event.fc-selected .fc-resizer {
-	/* 10x10 dot */
+	/* 10x10 bodka */
 	border-radius: 5px;
 	border-width: 1px;
 	width: 8px;
@@ -1339,10 +1366,10 @@ be a descendant of the grid when it is being dragged.
 	border-style: solid;
 	border-color: inherit;
 	background: #fff;
-	/* horizontally center */
+	/* horizontálne centrovať */
 	left: 50%;
 	margin-left: -5px;
-	/* center on the bottom edge */
+	/* centrovať na spodnom okraji */
 	bottom: -5px;
 }
 
@@ -1392,10 +1419,10 @@ be a descendant of the grid when it is being dragged.
 	border-radius: 5px;
 }
 
-/* view wrapper */
+/* obal zobrazenia */
 
 .fc-rtl .fc-list-view {
-	direction: rtl; /* unlike core views, leverage browser RTL */
+	direction: rtl; /* na rozdiel od základných zobrazení, využíva prehliadačové RTL */
 }
 
 .fc-list-view {
@@ -1403,10 +1430,10 @@ be a descendant of the grid when it is being dragged.
 	border-style: solid;
 }
 
-/* table resets */
+/* resetovanie tabuľky */
 
 .fc .fc-list-table {
-	table-layout: auto; /* for shrinkwrapping cell content */
+	table-layout: auto; /* pre zbalenie obsahu bunky */
 }
 
 .fc-list-table td {
@@ -1418,7 +1445,7 @@ be a descendant of the grid when it is being dragged.
 	border-top-width: 0;
 }
 
-/* day headings with the list */
+/* nadpisy dní v zozname */
 
 .fc-list-heading {
 	border-bottom-width: 1px;
@@ -1434,10 +1461,10 @@ be a descendant of the grid when it is being dragged.
 .fc-rtl .fc-list-heading-main { float: right; }
 .fc-rtl .fc-list-heading-alt { float: left; }
 
-/* event list items */
+/* položky zoznamu udalostí */
 
 .fc-list-item.fc-has-url {
-	cursor: pointer; /* whole row will be clickable */
+	cursor: pointer; /* celý riadok bude klikateľný */
 }
 
 .fc-list-item-marker,
@@ -1446,22 +1473,22 @@ be a descendant of the grid when it is being dragged.
 	width: 1px;
 }
 
-/* make the dot closer to the event title */
+/* urobiť bodku bližšie k názvu udalosti */
 .fc-ltr .fc-list-item-marker { padding-right: 0; }
 .fc-rtl .fc-list-item-marker { padding-left: 0; }
 
 .fc-list-item-title a {
-	/* every event title cell has an <a> tag */
+	/* každá bunka názvu udalosti má tag <a> */
 	text-decoration: none;
 	color: inherit;
 }
 
 .fc-list-item-title a[href]:hover {
-	/* hover effect only on titles with hrefs */
+	/* efekt hover iba na názvoch s href */
 	text-decoration: underline;
 }
 
-/* message when no events */
+/* správa, keď nie sú žiadne udalosti */
 
 .fc-list-empty-wrap2 {
 	position: absolute;
@@ -1483,6 +1510,24 @@ be a descendant of the grid when it is being dragged.
 	text-align: center;
 }
 
-.fc-unthemed .fc-list-empty { /* theme will provide own background */
+.fc-unthemed .fc-list-empty { /* téma poskytne vlastné pozadie */
 	background-color: #eee;
+}
+
+.fc-toolbar .fc-state-hover,
+.fc-toolbar .ui-state-hover {
+	z-index: 2;
+}
+	
+.fc-toolbar .fc-state-down {
+	z-index: 3;
+}
+
+.fc-toolbar .fc-state-active,
+.fc-toolbar .ui-state-active {
+	z-index: 4;
+}
+
+.fc-toolbar button:focus {
+	z-index: 5;
 }

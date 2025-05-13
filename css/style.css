@@ -1,4 +1,4 @@
-/* ---------------- GENERAL ATRIBBUTES --------------------- */
+/* ---------------- VŠEOBECNÉ ATRIBÚTY --------------------- */
 * {
 	margin: 0;
 	padding: 0;
@@ -7,6 +7,7 @@
 	box-sizing: border-box;
 }
 
+/* Základné nastavenie stránky */
 body {
 	font-size: 16px;
 	font-family: 'Open Sans', sans-serif;
@@ -16,6 +17,7 @@ body {
 	min-height: 100vh;
 }
 
+/* Pozadie stránky */
 .bg{
 	background: url(../img/bg.jpg) no-repeat center fixed;
 	background-size: cover;
@@ -34,6 +36,7 @@ body {
 }
 
 
+/* --------------------- TLAČIDLÁ --------------------- */
 .btn-sign-up {
 	background-color: #fc527cd5;
 	color: #fff;
@@ -44,12 +47,14 @@ body {
 	color:#fff;
 }
 
+/* --------------------- KARTY --------------------- */
 .my-card{
     box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
-      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+    transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow;
   	cursor: pointer;
 }
 
+/* Efekt pri prejdení myšou */
 .my-card:hover{
      transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
@@ -58,6 +63,7 @@ body {
 }
 
 
+/* --------------------- FOOTER --------------------- */
 footer {
   position: relative;
   bottom: 0;
@@ -68,16 +74,17 @@ footer {
 }
 
 
-/* ------------------- MAIN CONTENT -------------------- */
+/* ------------------- HLAVNÝ OBSAH -------------------- */
 .fc-content span {
 	color: #fff;
 }
 
-/* --------------------- PROJECT CARD ------------------------------ */
+/* --------------------- KARTA PROJEKTU ------------------------------ */
 .widget-subheading {
     font-size: 0.75em;
 }
 
+/* Oblasť s posúvaním */
 .scroll-area {
 	max-height: 65vh;
     height: auto;
@@ -85,6 +92,7 @@ footer {
     overflow-x: hidden;
 }
 
+/* Indikátor úlohy */
 .todo-indicator {
     position: absolute;
     width: 4px;
@@ -96,6 +104,7 @@ footer {
     transition: opacity .2s;
 }
 
+/* Obal obsahu widgetu */
 .widget-content .widget-content-wrapper {
     display: flex;
     flex: 1;
@@ -103,10 +112,12 @@ footer {
     align-items: center;
 }
 
+/* Tlačidlá pre SweetAlert2 */
 .swa12-confirm, .swa12-cancel {
 	margin: 0 0.3em !important;
 }
 
+/* --------------------- POMOCNÉ TRIEDY --------------------- */
 .hidden {
     display: none;
 }
@@ -118,8 +129,8 @@ footer {
 	font-size: 0.8em;
 }
 
+/* Animácia pre nový projekt */
 #newProject:target {
-	-webkit-transition: all 1s;
 	transition: all 1s;
 	opacity: 1;
 	pointer-events: auto;

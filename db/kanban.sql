@@ -1,17 +1,12 @@
--- phpMyAdmin SQL Dump
--- version 4.9.0.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 20-11-2021 a las 21:40:26
--- Versión del servidor: 10.3.16-MariaDB
--- Versión de PHP: 7.3.6
+
+-- Toto je SQL subor pre vytvorenie databazy - exportoval som to z phpMyAdmin
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+-- Vytvorenie databazy ak neexistuje a nastavenie ze ju budeme pouzivat
 CREATE DATABASE IF NOT EXISTS kanban;
 USE kanban;
 
@@ -21,15 +16,13 @@ USE kanban;
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `kanban`
+-- Databáza: `kanban`
 --
-
 -- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `calendar`
 --
 
+-- Tabulka pre kalendar - tu sa ukladaju vsetky eventy
 CREATE TABLE `calendar` (
   `id_event` int(11) NOT NULL,
   `id_user` int(11) DEFAULT NULL,
@@ -44,9 +37,10 @@ CREATE TABLE `calendar` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `projects`
+-- Štruktúra tabuľky pre tabuľku `projects`
 --
 
+-- Tabulka pre projekty - tu sa ukladaju vsetky projekty
 CREATE TABLE `projects` (
   `id_project` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
@@ -58,9 +52,10 @@ CREATE TABLE `projects` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Volcado de datos para la tabla `projects`
+-- Dáta pre tabuľku `projects`
 --
 
+-- Testovacie data pre projekty - toto som pridal aby bolo vidiet ako to funguje
 INSERT INTO `projects` (`id_project`, `id_user`, `project_name`, `project_description`, `project_colour`, `start_date`, `end_date`) VALUES
 (142, 1, 'Project #1 long title', 'This is an example of a project with a short description.', '#0275d8', '2021-09-01', '2021-11-30'),
 (143, 1, 'Project #2', 'Another project example.', '#5bc0de', '2021-11-19', '2021-11-20'),
@@ -74,9 +69,10 @@ INSERT INTO `projects` (`id_project`, `id_user`, `project_name`, `project_descri
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tasks`
+-- Štruktúra tabuľky pre tabuľku `tasks`
 --
 
+-- Tabulka pre ulohy - tu sa ukladaju vsetky ulohy pre projekty
 CREATE TABLE `tasks` (
   `id_task` int(11) NOT NULL,
   `id_user` int(11) DEFAULT NULL,
@@ -89,18 +85,20 @@ CREATE TABLE `tasks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Volcado de datos para la tabla `tasks`
+-- Dáta pre tabuľku `tasks`
 --
 
+-- Testovacia uloha - pridal som len jednu aby bolo vidiet ako to funguje
 INSERT INTO `tasks` (`id_task`, `id_user`, `id_project`, `task_status`, `task_name`, `task_description`, `task_colour`, `deadline`) VALUES
 (32, 1, 143, 1, 'Task #1', 'An example of a task with description', '#5cb85c', '2021-11-20');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `users`
+-- Štruktúra tabuľky pre tabuľku `users`
 --
 
+-- Tabulka pre uzivatelov - tu sa ukladaju vsetky ucty
 CREATE TABLE `users` (
   `id_user` int(11) NOT NULL,
   `user` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -108,90 +106,104 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Volcado de datos para la tabla `users`
+-- Dáta pre tabuľku `users`
 --
 
+-- Testovaci uzivatel - toto by malo byt zaheshovane ale pre testovanie je to takto
 INSERT INTO `users` (`id_user`, `user`, `password`) VALUES (1, 'testuser', 'testpassword');
 
 --
--- Índices para tablas volcadas
+-- Indexy pre exportované tabuľky
 --
 
+-- Primarny kluc a cudzie kluce pre tabulku calendar
 --
--- Indices de la tabla `calendar`
+-- Indexy pre tabuľku `calendar`
 --
 ALTER TABLE `calendar`
   ADD PRIMARY KEY (`id_event`),
   ADD KEY `id_user` (`id_user`);
 
+-- Primarny kluc a cudzie kluce pre tabulku projects
 --
--- Indices de la tabla `projects`
+-- Indexy pre tabuľku `projects`
 --
 ALTER TABLE `projects`
   ADD PRIMARY KEY (`id_project`),
   ADD KEY `id_user` (`id_user`);
 
+-- Primarny kluc a cudzie kluce pre tabulku tasks
 --
--- Indices de la tabla `tasks`
+-- Indexy pre tabuľku `tasks`
 --
 ALTER TABLE `tasks`
   ADD PRIMARY KEY (`id_task`),
   ADD KEY `tasks_id_user` (`id_user`),
   ADD KEY `tasks_id_project` (`id_project`);
 
+-- Primarny kluc a unikatny kluc pre tabulku users
 --
--- Indices de la tabla `users`
+-- Indexy pre tabuľku `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`),
   ADD UNIQUE KEY `user` (`user`);
 
+-- Nastavenie auto incrementu pre vsetky ID stlpce
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT pre exportované tabuľky
 --
 
+-- Auto increment pre calendar - zacina od 26
 --
--- AUTO_INCREMENT de la tabla `calendar`
+-- AUTO_INCREMENT pre tabuľku `calendar`
 --
 ALTER TABLE `calendar`
   MODIFY `id_event` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
+-- Auto increment pre projects - zacina od 150
 --
--- AUTO_INCREMENT de la tabla `projects`
+-- AUTO_INCREMENT pre tabuľku `projects`
 --
 ALTER TABLE `projects`
   MODIFY `id_project` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
 
+-- Auto increment pre tasks - zacina od 33
 --
--- AUTO_INCREMENT de la tabla `tasks`
+-- AUTO_INCREMENT pre tabuľku `tasks`
 --
 ALTER TABLE `tasks`
   MODIFY `id_task` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
+-- Auto increment pre users - zacina od 15
 --
--- AUTO_INCREMENT de la tabla `users`
+-- AUTO_INCREMENT pre tabuľku `users`
 --
 ALTER TABLE `users`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
+-- Nastavenie cudzich klucov - referencna integrita
 --
--- Restricciones para tablas volcadas
+-- Obmedzenia pre exportované tabuľky
 --
 
+-- Cudzi kluc pre calendar - id_user odkazuje na users.id_user
 --
--- Filtros para la tabla `calendar`
+-- Obmedzenia pre tabuľku `calendar`
 --
 ALTER TABLE `calendar`
   ADD CONSTRAINT `calendar_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
 
+-- Cudzi kluc pre projects - id_user odkazuje na users.id_user
 --
--- Filtros para la tabla `projects`
+-- Obmedzenia pre tabuľku `projects`
 --
 ALTER TABLE `projects`
   ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
 
+-- Cudzie kluce pre tasks - id_user odkazuje na users.id_user a id_project odkazuje na projects.id_project
 --
--- Filtros para la tabla `tasks`
+-- Obmedzenia pre tabuľku `tasks`
 --
 ALTER TABLE `tasks`
   ADD CONSTRAINT `tasks_id_project` FOREIGN KEY (`id_project`) REFERENCES `projects` (`id_project`),
