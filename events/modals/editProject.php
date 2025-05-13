@@ -1,4 +1,3 @@
-
 <?php
 if (isset($_SESSION['user'])) {
 } else {
@@ -6,7 +5,7 @@ if (isset($_SESSION['user'])) {
 	die();
 }
 ?>
-<!-- --------------------------------------- EDIT PROJECT MODAL ------------------------------------------------------ -->
+<!-- Modal na upravu projektu - chcel som aby sa dali upravovat vsetky udaje -->
 <div id="project-edit-<?php echo $i; ?>" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -17,14 +16,17 @@ if (isset($_SESSION['user'])) {
             <form name="project" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" role="form">
                 <div class="modal-body">				
                     <div class="form-group">
+                        <!-- Nazov projektu - povinny udaj -->
                         <label class="text-dark" for="edit_name">Project Name<span class="text-danger pl-1">*</span></label>
                         <input class="form-control" type="text" name="edit_project_name" value="<?php echo $p['project_name']; ?>" required>
                     </div>
                     <div class="form-group">
+                        <!-- Popis projektu - nepovinny udaj -->
                         <label class="text-dark" for="edit_description">Description</label>
                         <textarea class="form-control" type="text" name="edit_project_description"><?php echo $p['project_description']; ?></textarea>
                     </div>
 					<div class="form-group">
+						<!-- Farba projektu - toto som spravil aby sa dali rozlisit projekty -->
 						<label for="edit_colour" class="text-dark">Colour</label>
 						<select name="edit_project_colour" class="form-control" style="color:<?php echo $p['project_colour']; ?>" value="<?php echo $p['project_colour'];?>">
 							<option style="color:<?php echo $p['project_colour']; ?>" value="<?php echo $p['project_colour'];?>">&#9724; 
@@ -49,21 +51,25 @@ if (isset($_SESSION['user'])) {
 
                 <div class="form-group d-flex justify-content-between mt-2">
                     <div class="col-6 mt-0 p-1">                        
+                        <!-- Datum zaciatku projektu - povinny udaj -->
                         <label class="text-dark">Start Date<span class="text-danger pl-1">*</span></label>
                         <input type="text" class="form-control" runat="server" id="startAdd1" name="edit_start_date" value="<?php echo $p['start_date']; ?>" required data-date-format="yyyy-mm-dd"/>
                     </div>
                     <div class="col-6 m-0 p-1">  
+                        <!-- Datum konca projektu - povinny udaj -->
                         <label class="text-dark">End date<span class="text-danger pl-1">*</span></label>
                         <input type="text" class="form-control" runat="server" id="endAdd1" name="edit_end_date" value="<?php echo $p['end_date']; ?>"required data-date-format="yyyy-mm-dd"/>
                     </div>
                 </div>
 
                     <div class="form-group">
+                        <!-- Skryty input pre id projektu - potrebujem ho aby som vedel co upravujem -->
                         <input hidden id="edit_id_project" name="edit_id_project" value="<?php echo $p['id_project']; ?>" >
                     </div>					
                 </div>
                 <div class="modal-footer">					
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <!-- Tlacidlo na ulozenie zmien -->
                     <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>

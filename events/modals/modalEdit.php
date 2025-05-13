@@ -1,3 +1,4 @@
+<!-- Modal na upravu eventu - toto som spravil nech sa da upravovat aj mazat event -->
 <div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -9,6 +10,7 @@
 
 				<div class="modal-body">
 					<div class="form-group">
+						<!-- Nazov eventu - povinny udaj -->
 						<label for="title" class="col-sm-4 control-label">Title</label>
 						<div class="col-sm-12">
 							<input type="text" name="title" class="form-control" id="title" placeholder="Title" required>
@@ -16,6 +18,7 @@
 					</div>
 
 					<div class="form-group">
+						<!-- Popis eventu - nepovinny udaj -->
 						<label for="description" class="col-sm-4 control-label">Description</label>
 						<div class="col-sm-12">
 							<textarea type="text" name="description" class="form-control" id="description" placeholder="Description"></textarea>
@@ -24,6 +27,7 @@
 
 
 					<div class="form-group">
+						<!-- Farba eventu - aby sa dali rozlisit typy eventov -->
 						<label for="colour" class="col-sm-4 control-label">Colour</label>
 						<div class="col-sm-12">
 						<select name="colour" class="form-control" id="colour">
@@ -39,6 +43,7 @@
 				  </div>
 
 					<div class="form-group">
+						<!-- Datum zaciatku eventu - povinny udaj -->
 						<label for="start_date" class="col-sm-4 control-label">Start date</label>
 						<div class="col-sm-12">
 						<input type="text" name="start_date" class="form-control" id="start_date" required>
@@ -46,13 +51,14 @@
 					</div>
 
 					<div class="form-group">
+						<!-- Datum konca eventu - povinny udaj -->
 						<label for="end_date" class="col-sm-4 control-label">End date</label>
 						<div class="col-sm-12">
 						<input type="text" name="end_date" class="form-control" id="end_date" required>
 						</div>
 					</div>
 						
-					<!-- Delete the event -->
+					<!-- Checkbox na vymazanie eventu - toto som pridal aby sa dal event vymazat priamo pri uprave -->
 					<div class="form-group"> 
 						<div class="col-sm-offset-2 col-sm-12">
 							<div class="checkbox">
@@ -61,11 +67,13 @@
 						</div>
 					</div>
 					
+					<!-- Skryty input pre id eventu - aby som vedel co upravujem -->
 					<input type="hidden" name="id_event" class="form-control" id="id_event">
 				</div>
 				
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<!-- Tlacidlo na ulozenie zmien -->
 					<button type="submit" class="btn btn-primary">Save</button>
 				</div>
 			</form>

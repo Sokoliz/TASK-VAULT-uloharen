@@ -1,3 +1,4 @@
+<!-- Toto je modal na pridanie eventu do kalendara - robil som ho ako prvy tak je trochu iny -->
 <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -10,6 +11,7 @@
 			  <div class="modal-body">
 				
 				  <div class="form-group">
+					<!-- Nazov eventu - povinny udaj -->
 					<label for="title" class="col-sm-4 control-label">Title</label>
 					<div class="col-sm-12">
 					  <input type="text" name="title" class="form-control" id="title" placeholder="title" required>
@@ -17,6 +19,7 @@
 				  </div>
 
 				  <div class="form-group">
+					<!-- Popis eventu - nepovinny udaj -->
 					<label for="description" class="col-sm-4 control-label">Description</label>
 					<div class="col-sm-12">
 					  <textarea type="text" name="description" class="form-control" id="description" placeholder="Description"></textarea>
@@ -24,6 +27,7 @@
 				  </div>
 				  
 				  <div class="form-group">
+					<!-- Farba eventu - aby sa dali rozlisit typy eventov -->
 					<label for="colour" class="col-sm-4 control-label">Colour</label>
 					<div class="col-sm-12">
 					  <select name="colour" class="form-control" id="colour">
@@ -39,12 +43,14 @@
 				  </div>
 
 				  <div class="form-group">
+					<!-- Datum zaciatku eventu - povinny udaj -->
 					<label for="start_date" class="col-sm-4 control-label">Start date</label>
 					<div class="col-sm-12">
 					  <input type="text" name="start_date" class="form-control" id="start_date" required>
 					</div>
 				  </div>
 				  <div class="form-group">
+					<!-- Datum konca eventu - povinny udaj -->
 					<label for="end_date" class="col-sm-4 control-label">End date</label>
 					<div class="col-sm-12">
 					  <input type="text" name="end_date" class="form-control" id="end_date" required>
@@ -55,6 +61,7 @@
 
 			  <div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<!-- Tlacidlo na pridanie eventu -->
 				<button type="submit" class="btn btn-primary">Add</button>
 			  </div>
 			</form>

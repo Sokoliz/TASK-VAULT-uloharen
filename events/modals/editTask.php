@@ -1,4 +1,3 @@
-
 <?php
 if (isset($_SESSION['user'])) {
 } else {
@@ -6,7 +5,7 @@ if (isset($_SESSION['user'])) {
 	die();
 }
 ?>
-<!-- --------------------------------------- EDIT TASK MODAL ------------------------------------------------------ -->
+<!-- Modal na upravu ulohy - toto som spravil aby sa dali menit detaily uloh -->
 <div id="task-edit-<?php echo $i; ?>" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -17,14 +16,17 @@ if (isset($_SESSION['user'])) {
             <form name="task" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" role="form">
                 <div class="modal-body">				
                     <div class="form-group">
+                        <!-- Nazov ulohy - povinny udaj -->
                         <label class="text-dark" for="edit_name">task Name<span class="text-danger pl-1">*</span></label>
                         <input class="form-control" type="text" name="edit_task_name" value="<?php echo $s['task_name']; ?>" required>
                     </div>
                     <div class="form-group">
+                        <!-- Popis ulohy - nepovinny udaj -->
                         <label class="text-dark" for="edit_description">Description</label>
                         <textarea class="form-control" type="text" name="edit_task_description"><?php echo $s['task_description']; ?></textarea>
                     </div>
 					<div class="form-group">
+						<!-- Farba ulohy - oznacuje prioritu -->
 						<label for="edit_colour" class="text-dark">Colour</label>
 						<select name="edit_task_colour" class="form-control" style="color:<?php echo $s['task_colour']; ?>" value="<?php echo $s['task_colour'];?>">
 							<option style="color:<?php echo $s['task_colour']; ?>" value="<?php echo $s['task_colour'];?>">&#9724; 
@@ -43,25 +45,30 @@ if (isset($_SESSION['user'])) {
                     
                     <div class="form-group d-flex justify-content-between mt-2">
                         <div class="col-12 m-0 p-1">  
+                            <!-- Deadline ulohy - nepovinny udaj -->
                             <label class="text-dark">Deadline</label>
                             <input type="date" class="form-control" runat="server" name="deadline" value="<?php if( $s['deadline'] !== '1970-01-01'){echo $s['deadline'];} ?>" min="<?php echo date('Y-m-d'); ?>" data-date-format="yyyy-mm-dd"/>
                         </div>                   
                     </div>                    
                
                     <div class="form-group">
+                        <!-- Skryty input pre id uzivatela - aby som vedel kto to upravil -->
                         <input hidden id="id_user" name="id_user" value=<?php echo $_SESSION['id_user']; ?> >
                     </div>	
 
                     <div class="form-group">
+                        <!-- Skryty input pre id projektu - aby som vedel kam patri tato uloha -->
                         <input hidden id="id_task_project" name="id_task_project" value="<?php echo $s['id_project']; ?>" >
                     </div>	  
 
                     <div class="form-group">
+                        <!-- Skryty input pre id ulohy - aby som vedel co upravujem -->
                         <input hidden id="edit_id_task" name="edit_id_task" value="<?php echo $s['id_task']; ?>" >
                     </div>					
                 </div>
                 <div class="modal-footer">					
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <!-- Tlacidlo na ulozenie zmien -->
                     <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
