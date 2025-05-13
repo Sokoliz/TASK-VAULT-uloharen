@@ -20,7 +20,51 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// Kontrola či nechýba meno alebo heslo
 	if (empty($user_form) || empty($password_form)) {
 		http_response_code(400);
-		echo 'Missing username or password';
+		echo '<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .error-box {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .error-title {
+            color: #b71c1c;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .error-message {
+            color: #b71c1c;
+        }
+        .btn-back {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-box">
+        <div class="error-title">Error</div>
+        <div class="error-message">Missing username or password</div>
+        <a href="register.php" class="btn btn-primary btn-back">Go Back</a>
+    </div>
+</body>
+</html>';
 		exit();
 	}
 
