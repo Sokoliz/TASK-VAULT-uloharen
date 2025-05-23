@@ -66,7 +66,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (isset($add_project)) {
 			echo '<script language="javascript">';
 			echo "Swal.fire({
-				position: 'top-end',
+				position: 'center',
 				icon: 'success',
 				title: 'Congrats!',
 				text: 'Your project has been successfully created!',
@@ -85,18 +85,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// Získame ID projektu na zmazanie
 		$id_project = filter_var(htmlspecialchars($_POST['id_project']), FILTER_SANITIZE_STRING);
 		
-		// Zmažeme projekt z databázy
-		$del_project = $connection->prepare("DELETE FROM projects WHERE id_project =?") ;			
+		// Najprv zmažeme všetky úlohy súvisiace s týmto projektom
+		$del_tasks = $connection->prepare("DELETE FROM tasks WHERE id_project = ?");
+		$del_tasks->execute(array($id_project));
+		
+		// Potom zmažeme samotný projekt z databázy
+		$del_project = $connection->prepare("DELETE FROM projects WHERE id_project = ?");			
 		$del_project->execute(array($id_project));
 		
 		// Potvrdíme užívateľovi zmazanie
 		if ($del_project!==FALSE) {
 			echo '<script language="javascript">';
 			echo "Swal.fire({
-				position: 'top-end',
+				position: 'center',
 				icon: 'success',
-				title: 'Good bye!',
-				text: 'Your project has been deleted!',
+				title: 'Dovidenia!',
+				text: 'Váš projekt bol úspešne zmazaný!',
 				showConfirmButton: false,
 				timer: 1200,
 			}).then(function(){ 
@@ -128,7 +132,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (isset($edit_project)) {
 			echo '<script language="javascript">';
 			echo "Swal.fire({
-				position: 'top-end',
+				position: 'center',
 				icon: 'success',
 				title: 'Well Done!',
 				text: 'Your project has been updated!',
@@ -168,7 +172,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (isset($add_task)) {
 			echo '<script language="javascript">';
 			echo "Swal.fire({
-				position: 'top-end',
+				position: 'center',
 				icon: 'success',
 				title: 'Congrats!',
 				text: 'Your task has been successfully created!',
@@ -197,7 +201,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if ($del_task!==FALSE) {
 			echo '<script language="javascript">';
 			echo "Swal.fire({
-				position: 'top-end',
+				position: 'center',
 				icon: 'success',
 				title: 'Good bye!',
 				text: 'Your task has been deleted!',
@@ -230,7 +234,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (isset($edit_task)) {
 			echo '<script language="javascript">';
 			echo "Swal.fire({
-				position: 'top-end',
+				position: 'center',
 				icon: 'success',
 				title: 'Well Done!',
 				text: 'Your task has been updated!',
@@ -258,7 +262,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (isset($move_task_right)) {
 			echo '<script language="javascript">';
 			echo "Swal.fire({
-				position: 'top-end',
+				position: 'center',
 				icon: 'success',				
 				showConfirmButton: false,
 				title: 'Well Done!',
@@ -285,7 +289,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (isset($move_task_left)) {
 			echo '<script language="javascript">';
 			echo "Swal.fire({
-				position: 'top-end',
+				position: 'center',
 				icon: 'success',				
 				showConfirmButton: false,
 				title: 'Well Done!',

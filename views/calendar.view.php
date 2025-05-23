@@ -4,6 +4,7 @@
 <head>
 	<?php $title= "Calendar"; ?>
 	<?php require 'parts/header.php'; ?>
+	<script src="js/theme.js"></script>
 
 	<!-- Import štýlov pre FullCalendar -->
 	<link href='css/fullcalendar.css' rel='stylesheet' />
@@ -25,7 +26,13 @@
 			<div id="navbarSupportedContent" class="collapse navbar-collapse">
 				<ul class="navbar-nav ml-auto">
                     <li><a href="content.php" class="btn text-primary mr-2"><i class="fas fa-home pr-2"></i>Home</a></li>	
-					<li><a href="logout.php" class="btn text-primary mr-2">Log out</a></li>				
+					<li><a href="logout.php" class="btn text-primary mr-2">Log out</a></li>
+                    <!-- Prepínač tmavého režimu -->
+					<li class="nav-item theme-switch-wrapper">
+                        <span class="mode-text btn text-primary">Mode</span>
+                        <i class="fas fa-moon mode-icon fa-lg" style="color: #4169E1 !important;"></i>
+                        <div class="toggle-button" id="toggle-button-ui"></div>
+                    </li>				
 				</ul>
 			</div>
 		</div>

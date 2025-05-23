@@ -156,3 +156,240 @@ footer {
     margin-bottom: 5px;
 }
 
+/* --------------------- TMAVÝ REŽIM --------------------- */
+.dark-mode {
+    background-color: #1f2937 !important;
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .navbar {
+    background-color: #111827 !important;
+}
+
+.dark-mode .card {
+    background-color: #283548 !important;
+    border-color: #374151 !important;
+}
+
+.dark-mode .navbar,
+.dark-mode .card,
+.dark-mode .card-header,
+.dark-mode .list-group-item {
+    background-color: #1e1e1e !important;
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .card-header-title,
+.dark-mode .widget-heading {
+    color: #4dabf7 !important;
+}
+
+.dark-mode .widget-subheading {
+    color: #adb5bd !important;
+}
+
+.dark-mode .text-dark {
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .text-primary {
+    color: #4dabf7 !important;
+}
+
+.dark-mode .btn-outline-primary {
+    color: #4dabf7;
+    border-color: #4dabf7;
+}
+
+.dark-mode .btn-outline-primary:hover {
+    background-color: #4dabf7;
+    color: #121212;
+}
+
+/* Twitter-štýl prepínača tmavého režimu */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.mode-text {
+    font-weight: 500;
+    color: #007bff;
+    margin-right: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.mode-text:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.mode-icon {
+    color: #4169E1 !important;
+    font-size: 20px;
+    margin-right: 10px;
+    text-shadow: 0 0 5px rgba(65, 105, 225, 0.5);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.mode-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Špeciálne pravidlo pre i.fa-moon s najvyššou prioritou */
+.fas.fa-moon.mode-icon {
+    color: #4169E1 !important;
+}
+
+/* Skrytie pôvodného checkboxu */
+.theme-toggle-checkbox {
+    display: none !important;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+/* Čistý toggle button */
+.toggle-button {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    background: #ccc;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    vertical-align: middle;
+}
+
+.toggle-button.active {
+    background-color: #007bff;
+}
+
+.toggle-button::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    top: 2px;
+    left: 2px;
+    transition: all 0.3s;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.toggle-button.active::after {
+    left: calc(100% - 22px);
+}
+
+/* Pridáme podporu pre tmavý režim do navbaru */
+.dark-mode .navbar {
+    background-color: #2d2d2d !important;
+}
+
+.dark-mode .navbar .nav-link,
+.dark-mode .navbar .navbar-brand {
+    color: #f0f0f0 !important;
+}
+
+.dark-mode .dropdown-menu {
+    background-color: #1e1e1e !important;
+    border-color: #333 !important;
+}
+
+.dark-mode .dropdown-item {
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .dropdown-item:hover {
+    background-color: #333 !important;
+}
+
+/* Zlepšíme čitateľnosť textov v tmavom režime */
+.dark-mode p,
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6 {
+    color: #f0f0f0 !important;
+}
+
+/* Upravíme farbu pozadia pre hlavnú stránku v tmavom režime */
+.dark-mode .bg {
+    background: linear-gradient(rgba(17, 24, 39, 0.95), rgba(31, 41, 55, 0.95)), url(../img/bg.jpg) no-repeat center fixed !important;
+    background-size: cover !important;
+}
+
+/* --------------------- DRAG AND DROP --------------------- */
+.draggable {
+    cursor: grab;
+}
+
+.draggable:active {
+    cursor: grabbing;
+}
+
+.drag-over {
+    border: 2px dashed #4dabf7;
+    border-radius: 5px;
+}
+
+.task-nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    margin-top: 10px;
+}
+
+.task-nav-button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2em;
+    color: #6c757d;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.task-nav-button:hover {
+    color: #007bff;
+}
+
+.task-nav-button:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.dark-mode p, 
+.dark-mode h1, 
+.dark-mode h2, 
+.dark-mode h3, 
+.dark-mode h4, 
+.dark-mode h5, 
+.dark-mode h6,
+.dark-mode .card-title {
+    color: #f0f0f0 !important;
+}
+
+/* Tmavé texty */
+body.dark-mode p, 
+body.dark-mode h1, 
+body.dark-mode h2, 
+body.dark-mode h3, 
+body.dark-mode h4, 
+body.dark-mode h5, 
+body.dark-mode h6,
+body.dark-mode .card-title,
+body.dark-mode .btn.text-primary {
+    color: #f0f0f0 !important;
+}
+

@@ -7,6 +7,7 @@
 	$public_page = true; // Označenie, že ide o verejnú stránku bez potreby prihlásenia
 	require 'parts/header.php'; 
 	?>
+	<script src="js/theme.js"></script>
 </head>
 
 
@@ -26,6 +27,14 @@
 			<button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
 			<div id="navbarSupportedContent" class="collapse navbar-collapse">
 				<ul class="navbar-nav ml-auto">
+					<!-- Prepínač tmavého režimu -->
+					<li class="nav-item theme-switch-wrapper">
+						<span class="mode-text btn text-primary">Mode:</span>
+						<label class="switch">
+							<input type="checkbox" id="theme-toggle">
+							<span class="switch-slider"></span>
+						</label>
+					</li>
 					<li><a href="login.php" class="btn text-primary mr-2"></i>Log in</a></li>				
 				</ul>
 			</div>

@@ -7,6 +7,7 @@
 	$public_page = true; // Označenie, že ide o verejnú stránku bez potreby prihlásenia
 	require 'parts/header.php'; 
 	?>
+	<script src="js/theme.js"></script>
 </head>
 
 
@@ -21,11 +22,19 @@
 			<img src="img/logo1.png" width="45" alt="Kalendar" class="d-inline-block align-middle mr-2">
 			<!-- Logo text -->
 			<span class="logo_text align-middle">Productivity Hub</span>
-			</a>		
+			</a>
 
 			<button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
 			<div id="navbarSupportedContent" class="collapse navbar-collapse">
 				<ul class="navbar-nav ml-auto">
+					<!-- Prepínač tmavého režimu -->
+					<li class="nav-item theme-switch-wrapper">
+						<span class="mode-text btn text-primary">Mode:</span>
+						<label class="switch">
+							<input type="checkbox" id="theme-toggle">
+							<span class="switch-slider"></span>
+						</label>
+					</li>
 					<li><a href="register.php" class="btn btn-primary text-light mr-2"></i>Sign Up</a></li>				
 				</ul>
 			</div>
