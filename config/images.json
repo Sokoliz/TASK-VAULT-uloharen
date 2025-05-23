@@ -1,0 +1,30 @@
+{
+  "logo": {
+    "main": "img/logo1.png"
+  },
+  "pages": {
+    "main": "img/main.jpg",
+    "login": "img/login.jpg",
+    "register": "img/register.jpg",
+    "today": "img/today.jpg",
+    "projects": "img/projects.jpg",
+    "calendar": "img/calender.jpg"
+  },
+  "backgrounds": {
+    "main": "img/bg.jpg",
+    "cover": "img/cover.png"
+  },
+  "icons": {
+    "user": "fas fa-user",
+    "lock": "fas fa-lock",
+    "calendar": "far fa-calendar-alt",
+    "clock": "far fa-clock",
+    "moon": "fas fa-moon",
+    "arrow-right": "fas fa-arrow-circle-right",
+    "rocket": "fas fa-rocket",
+    "calendar-check": "far fa-calendar-check"
+  },
+  "placeholders": {
+    "default": "img/cover.png"
+  }
+} 
