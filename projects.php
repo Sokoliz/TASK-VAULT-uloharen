@@ -81,7 +81,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 
 	// -------------------- ZMAZANIE PROJEKTU --------------------------
-	if(isset($_POST['id_project'])) {	
+	if(isset($_POST['id_project']) && !isset($_POST['id_task'])) {	
 		// Získame ID projektu na zmazanie
 		$id_project = filter_var(htmlspecialchars($_POST['id_project']), FILTER_SANITIZE_STRING);
 		
@@ -188,13 +188,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 
 	// -------------------- ZMAZANIE ÚLOHY --------------------------
-	if(isset($_POST['id_task'])) {	
+	if(isset($_POST['id_task']) && !isset($_POST['id_project_confirm'])) {	
 		// Získame ID úlohy a projektu
 		$id_task = filter_var(htmlspecialchars($_POST['id_task']), FILTER_SANITIZE_STRING);	
 		$id_project = filter_var(htmlspecialchars($_POST['id_project']), FILTER_SANITIZE_STRING);	
 		
 		// Zmažeme úlohu z databázy
-		$del_task = $connection->prepare("DELETE FROM tasks WHERE id_task =?") ;			
+		$del_task = $connection->prepare("DELETE FROM tasks WHERE id_task = ?") ;			
 		$del_task->execute(array($id_task));
 		
 		// Potvrdíme zmazanie úlohy

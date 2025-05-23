@@ -7,41 +7,24 @@
 	$public_page = true; // Označenie, že ide o verejnú stránku bez potreby prihlásenia
 	require 'parts/header.php'; 
 	?>
-	<script src="js/theme.js"></script>
 </head>
 
 
 <body>
 
-<!-- Navigačný panel -->
+<!-- Navigačný panel - len logo -->
 <header class="m-0 p-0">
 	<nav class="navbar navbar-expand-lg pt-3 text-dark">
 		<div class="menu container">
 			<a href="index.php" class="navbar-brand">
 			<!-- Logo obrázok -->
-			<img src="img/logo1.png" width="45" alt="Kalendar" class="d-inline-block align-middle mr-2">
+			<?php echo displayImage('logo', 'main', 'Kalendar', 'd-inline-block align-middle mr-2', ['width' => '45']); ?>
 			<!-- Logo text -->
 			<span class="logo_text align-middle">Productivity Hub</span>
 			</a>
-
-			<button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
-			<div id="navbarSupportedContent" class="collapse navbar-collapse">
-				<ul class="navbar-nav ml-auto">
-					<!-- Prepínač tmavého režimu -->
-					<li class="nav-item theme-switch-wrapper">
-						<span class="mode-text btn text-primary">Mode:</span>
-						<label class="switch">
-							<input type="checkbox" id="theme-toggle">
-							<span class="switch-slider"></span>
-						</label>
-					</li>
-					<li><a href="register.php" class="btn btn-primary text-light mr-2"></i>Sign Up</a></li>				
-				</ul>
-			</div>
 		</div>
 	</nav>
 </header>
-
 
 <!-- Hlavný obsah stránky - prihlasovací formulár -->
 <div class="container">
@@ -54,7 +37,7 @@
 				<div class="mb-4">					
 					<div class="input-group">
 						<div class="input-group-prepend">
-						<span class="btn-sign-up text-light input-group-text"> <small><i class="fas fa-user"></i></small></span>
+						<span class="btn-sign-up text-light input-group-text"> <small><?php echo displayIcon('user'); ?></small></span>
 						</div>											
 						<input class="form-control" type="text" name="user" placeholder="Username" required>
 					</div>
@@ -63,7 +46,7 @@
 				<div class="mb-4">					
 					<div class="input-group">
 						<div class="input-group-prepend">
-						<span class="btn-sign-up text-light input-group-text"> <small><i class="fas fa-lock"></i></small></span>
+						<span class="btn-sign-up text-light input-group-text"> <small><?php echo displayIcon('lock'); ?></small></span>
 						</div>					
 						<input class="form-control" type="password" name="password" placeholder="Password" required>						
 					</div>
@@ -88,7 +71,7 @@
 		</div>
 		<!-- Pravá strana s obrázkom -->
 		<div class="col-6 p-3 mt-5 " >
-			<img class="img-fluid" src="img/login.jpg" alt="project_management">		
+			<?php echo displayImage('pages', 'login', 'project_management', 'img-fluid'); ?>		
 		</div>
 	</div>
 </div>

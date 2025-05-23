@@ -14,19 +14,19 @@
 		<div class="menu container">
 			<a href="index.php" class="navbar-brand">
 			<!-- Logo obrázok -->
-			<img src="img/logo1.png" width="45" alt="Kalendar" class="d-inline-block align-middle mr-2">
+			<?php echo displayImage('logo', 'main', 'Kalendar', 'd-inline-block align-middle mr-2', ['width' => '45']); ?>
 			<!-- Logo text -->
 			<span class="logo_text align-middle">Productivity Hub</span>
 			</a>
 			
             <ul class="navbar-nav ml-auto">
-                <li><span class="btn text-primary mx-2"><i class="far fa-user pr-2"></i>Welcome <?php echo strtoupper($_SESSION['user']);?>!</span></li>
-                <li><span class="btn text-primary mx-2"><i class="far fa-calendar-alt pr-2"></i>Date:<span class="pl-2 date"></span></span></li>	
-                <li><span class="btn text-primary mr-2"><i class="far fa-clock pr-2"></i>Time:<span class="pl-2 clock"></span></span></li>
+                <li><span class="btn text-primary mx-2"><?php echo displayIcon('user', 'pr-2'); ?>Welcome <?php echo strtoupper($_SESSION['user']);?>!</span></li>
+                <li><span class="btn text-primary mx-2"><?php echo displayIcon('calendar', 'pr-2'); ?>Date:<span class="pl-2 date"></span></span></li>	
+                <li><span class="btn text-primary mr-2"><?php echo displayIcon('clock', 'pr-2'); ?>Time:<span class="pl-2 clock"></span></span></li>
                 <!-- Prepínač tmavého režimu -->
                 <li class="nav-item theme-switch-wrapper">
                     <a href="#" class="mode-text btn text-primary">Mode</a>
-                    <i class="fas fa-moon mode-icon fa-lg" style="color: #4169E1 !important;"></i>
+                    <?php echo displayIcon('moon', 'mode-icon fa-lg'); ?>
                 </li>
             </ul>	
 
@@ -46,7 +46,7 @@
         <!-- Karta pre dnešné udalosti -->
         <div class="col-sm-4 col-md-4">
             <a class="card my-card text-dark" href="today.php">
-                <img class="card-img-top" src="img/today.jpg" class="img-rounded" id="Panel_Image">
+                <?php echo displayImage('pages', 'today', 'Today', 'card-img-top img-rounded', ['id' => 'Panel_Image']); ?>
                <div class="card-body d-flex justify-content-center">
                     <h3 class="card-title"></i>TODAY</h3>
                </div>
@@ -56,7 +56,7 @@
         <!-- Karta pre projekty -->
         <div class="col-sm-4 col-md-4">
             <a class="card my-card text-dark" href="projects.php">
-                <img class="card-img-top" src="img/projects.jpg" class="img-rounded" id="Panel_Image">
+                <?php echo displayImage('pages', 'projects', 'Projects', 'card-img-top img-rounded', ['id' => 'Panel_Image']); ?>
                <div class="card-body d-flex justify-content-center">
                     <h3 class="card-title"></i>PROJECTS</h3>
                </div>
@@ -66,7 +66,7 @@
         <!-- Karta pre kalendár -->
         <div class="col-sm-4 col-md-4">
             <a class="card my-card text-dark" href="calendar.php">
-                <img class="card-img-top" src="img/calender.jpg" class="img-rounded" id="Panel_Image">
+                <?php echo displayImage('pages', 'calendar', 'Calendar', 'card-img-top img-rounded', ['id' => 'Panel_Image']); ?>
                <div class="card-body d-flex justify-content-center">
                     <h3 class="card-title"></i>CALENDAR</h3>
                </div>
@@ -91,7 +91,7 @@
         hours = time.getHours(),    
         minutes = time.getMinutes(),
         seconds = time.getSeconds();
-    var date =time.getFullYear()+'-'+(time.getMonth()+1)+'-'+time.getDate();
+    var date = time.getFullYear()+'-'+(time.getMonth()+1)+'-'+time.getDate();
         
 
     document.querySelectorAll('.clock')[0].innerHTML = harold(hours) + ":" + harold(minutes) + ":" + harold(seconds);
@@ -113,7 +113,7 @@
 	  $('[data-toggle="tooltip"]').tooltip()
 	})
 </script>
-
+  
 </body>
 </html>
 

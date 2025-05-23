@@ -17,11 +17,12 @@ body {
 	min-height: 100vh;
 }
 
-/* Pozadie stránky */
-.bg{
-	background: url(../img/bg.jpg) no-repeat center fixed;
+/* Pozadie stránky - CSS generované PHP funkciou pre štýl pozadia sa nachádza v dynamic-styles.php */
+.bg {
 	background-size: cover;
-	
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
 }
 
 /* --------------------- LOGO -------------------------- */
@@ -241,7 +242,9 @@ footer {
 }
 
 /* Špeciálne pravidlo pre i.fa-moon s najvyššou prioritou */
-.fas.fa-moon.mode-icon {
+.fas.fa-moon.mode-icon, 
+.fa-moon.mode-icon,
+i[class*="fa-moon"] {
     color: #4169E1 !important;
 }
 
