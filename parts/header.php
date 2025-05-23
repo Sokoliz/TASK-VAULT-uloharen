@@ -1,4 +1,7 @@
 <?php
+// Import konfiguračných funkcií pre prácu s obrázkami
+require_once 'config/functions.php';
+
 // Spustenie session pre správu prihláseného používateľa
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -28,6 +31,7 @@ if (!$public_page && !isset($_SESSION['user'])) {
 
 <!-- Vlastné CSS štýly -->
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="dynamic-styles.php">
 <title><?php echo isset($title) ? $title : 'Productivity Hub'; ?></title>
 
 <!-- JavaScript pre tmavý režim -->
