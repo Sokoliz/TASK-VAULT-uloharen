@@ -11,7 +11,6 @@ Vitajte v mojom záverečnom študentskom projekte!
 - **Pridávanie, úprava a mazanie udalostí** – rýchlo a jednoducho cez moderné modálne okná
 - **Projektový manažment** – správa projektov s možnosťou sledovania ich stavu
 - **Kanban systém pre úlohy** – vizuálne sledovanie postupu v štýle To Do, In Progress, Done
-- **Drag & Drop** – presúvanie udalostí priamo v kalendári
 - **Denné úlohy** – správa každodenných povinností
 - **Tmavý režim** – šetrite oči pri nočnom študovaní
 - **Bezpečné prihlásenie a registrácia**
