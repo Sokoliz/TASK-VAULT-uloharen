@@ -136,6 +136,13 @@ V súbore `db/functions.php` je definovaná trieda `Database`, ktorá slúži na
 
 ## CRUD operácie
 
+CRUD operácie sú skratkou pre Create, Read, Update, Delete a predstavujú základné operácie, ktoré sa vykonávajú s dátami v databáze:
+
+- **Create**: Vloženie nového záznamu do databázy (vloženie údajov z formulára do db)
+- **Read**: Čítanie a zobrazenie existujúcich záznamov z databázy (čítanie otázok a odpovedí – domáca úloha)
+- **Update**: Aktualizácia a úprava existujúcich záznamov v databáze (úprava konkrétnej otázky/odpovede)
+- **Delete**: Vymazanie záznamov z databázy.
+
 ### Create (Vytváranie)
 Príklad vytvorenia nového projektu:
 
@@ -1469,4 +1476,149 @@ Príklad JSON súboru (data/datas.json):
 ```
 
 Táto funkcia umožňuje centralizovane spravovať, ktoré CSS súbory sa majú načítať pre jednotlivé stránky, bez nutnosti manuálne upravovať hlavičku každej stránky.
+
+## HTTP komunikácia
+
+HTTP komunikácia prebieha medzi klientom a serverom pomocou požiadaviek (request) a odpovedí (response).
+
+### HTTP požiadavka (request)
+
+Klient odosiela serveru požiadavku, ktorá obsahuje informácie o tom, akú akciu chce vykonať. Požiadavka obsahuje:
+
+- **Metódu**: Určuje typ akcie, ktorú chce klient vykonať (GET, POST, PUT, DELETE)
+- **URL**: Určuje zdroj, ktorého sa požiadavka týka
+- **Hlavičku**: Obsahuje dodatočné informácie o požiadavke, ako napríklad typ klienta, preferovaný jazyk, cookies
+- **Telo**: Voliteľná časť, ktorá obsahuje dáta, ktoré sa posielajú serveru (napr. pri formulári)
+
+### HTTP odpoveď (response)
+
+Údaj, ktorý server vydá ako odpoveď na konkrétnu požiadavku, sa nazýva HTTP odpoveď. Tá pozostáva zo:
+
+- **Status kódu**: Číselný kód, ktorý informuje o stave požiadavky (200 OK, 404 Not Found, 500 Internal Server Error)
+- **Hlavičky**: Obsahujú dodatočné informácie o odpovedi, ako napríklad typ obsahu, dĺžka obsahu, cookies
+- **Tela**: Obsahuje dáta, ktoré server posiela klientovi (napr. HTML stránka, JSON objekt)
+
+### HTTP stavové kódy
+
+#### Informačné (1xx)
+Tieto kódy oznamujú, že prebieha dočasná akcia. Klient by mal požiadavku zopakovať.
+
+- **100 – Continue** – server informuje klienta, že akceptuje požiadavku a klient môže ďalej posielať dáta
+- **102 – Processing** - server spracováva požiadavku klienta a čoskoro odošle odpoveď
+- **103 – Early hints** - server posiela klientovi predbežné informácie o odpovedi
+
+#### Úspech (2xx)
+Tieto kódy oznamujú, že požiadavka bola úspešne spracovaná, server odoslal klientovi naspäť požadovaný obsah.
+
+- **200 – OK** – požiadavka bola úspešná a obsah je k dispozícii
+- **201 – Created** - server vytvoril nový zdroj v reakcii na požiadavku klienta. Používa sa, keď klient požiada o vytvorenie nového objektu, napríklad súboru alebo záznamu v databáze
+- **202 – Accepted** - server prijal požiadavku klienta, ale jej spracovanie ešte nie je dokončené
+- **204 – No Content** - server úspešne spracoval požiadavku klienta, ale nemá žiadnu odpoveď. Používa sa vtedy, keď klient požiada napr. o vymazanie objektu
+
+#### Presmerovanie (3xx)
+Tieto kódy oznamujú, že klient by mal presmerovať svoju požiadavku na inú URL adresu, resp. urobiť ďalšiu akciu pre získanie obsahu.
+
+- **301 – Moved Permanently** – požadovaný zdroj bol natrvalo presunutý na inú URL adresu a klient by mal aktualizovať svoju URL
+- **303 – See Other** – klient by mal znova odoslať požiadavku na inú URL adresu, ale metóda požiadavky by sa mala zmeniť (napr. pri formulári zmeníme metódu GET na POST)
+- **304 – Not Modified** – požadovaný zdroj sa od poslednej požiadavky klienta nezmenil. Klient môže použiť lokálne uloženú kópiu zdroja
+
+#### Chybný klient (4xx)
+Tieto kódy oznamujú, že klient urobil chybu v požiadavke.
+
+- **400 – Bad Request** – požiadavka klienta je nesprávne naformátovaná a mal by požiadavku opraviť a znova odoslať (nesprávne ID produktu, neplatná URL)
+- **401 – Unauthorized** – klient nie je autorizovaný na prístup k požadovanému zdroju (mal by použiť správny login a heslo)
+- **402 – Payment Required** – klient musí zaplatiť za prístup k požadovanému zdroju
+- **403 – Forbidden** – klient nemá prístup k požadovanému zdroju. Klient by mal požiadavku zrušiť
+- **409 – Conflict** – server nemôže splniť požiadavku klienta kvôli konfliktu s aktuálnym stavom požadovaného zdroja (klient vytvára už existujúci účet)
+
+#### Chyba servera (5xx)
+Tieto kódy oznamujú, že na serveri sa vyskytla chyba.
+
+- **503 – Service Unavailable** – server je dočasne nedostupný z dôvodu preťaženia alebo údržby
+- **504 – Gateway Timeout** – webserver, ktorý funguje ako brána alebo proxy server, nedostal včasnú odpoveď od nadriadeného servera (upstream server), ktorý je potrebný na spracovanie požiadavky klienta
+- **510 – Not Extended** – server nerozumie požiadavke klienta, pretože obsahuje hlavičku rozšírenia, ktorú server nepodporuje
+
+## Pokročilé koncepty objektovo orientovaného programovania v PHP
+
+### Objekty z tried
+- Každá trieda potrebuje objekty, aby sme ich mohli používať
+- Z triedy môžeme vytvoriť viacero objektov. Každý objekt má svoje vlastné hodnoty vlastností a vie vykonávať metódy definované v triede
+- Objekty vedia interagovať medzi sebou a s ostatnými časťami programu
+- Vytvárame ich vždy pomocou slova `new` – nový objekt, ktorý je inštanciou konkrétnej triedy
+
+### Kľúčové slovo $this
+- Špeciálne kľúčové slovo, ktoré odkazuje na aktuálny objekt, v ktorom sa nachádza
+- Používa sa na prístup k vlastnostiam a metódam aktuálneho objektu
+- Využitie spočíva v tom, že vlastnosti a metódy sú definované v rámci triedy, ale prístup k nim sa vykonáva z konkrétnych objektov, vytvorených z tejto triedy
+- Pomáha nám odlíšiť vlastnosti a metódy aktuálneho objektu od premenných a funkcií definovaných mimo triedy
+
+### Modifikátory prístupu
+Vlastnosti a metódy môžu mať modifikátory prístupu, ktoré riadia, kde k nim možno pristupovať. Existujú tri modifikátory prístupu:
+
+- **Public** – k vlastnosti alebo metóde sa dá pristupovať odkiaľkoľvek. Predvolene sa dá pristupovať ku každej premennej
+- **Protected** – k vlastnosti alebo metóde je možné pristupovať v rámci triedy a tried odvodených z tejto triedy
+- **Private** - vlastnosť alebo metóda sú prístupné IBA v rámci triedy
+
+### Magické metódy
+
+- **__construct()**: Konštruktor - volá sa pri vytvorení nového objektu
+- **__destruct()**: Deštruktor sa volá pri zničení objektu
+- **__get()**: Volá sa pri prístupe k vlastnosti, ktorá neexistuje
+- **__set()**: Volá sa pri nastavení vlastnosti, ktorá neexistuje
+- **__call()**: Volá sa pri volaní metódy, ktorá neexistuje
+- **__isset()**: Volá sa pri testovaní, či vlastnosť existuje
+- **__unset()**: Volá sa pri zničení vlastnosti
+- **__toString()**: Volá sa pri konverzii objektu na reťazec
+- **__invoke()**: Umožňuje volanie objektu ako funkcie
+- **__clone()**: Používa sa na klonovanie objektu. Vytvárame si teda kópiu existujúceho objektu
+
+#### Konštruktor
+- Konštruktor je špeciálna metóda v triede, ktorá sa automaticky volá pri vytvorení nového objektu z tejto triedy. Môžeme si ho predstaviť ako "inštalačný program", ktorý inicializuje a konfiguruje novovytvorený objekt
+- Konštruktor nemá návratový typ
+- Názov konštruktora je vždy zhodný s názvom triedy
+- V triede môže existovať aj viacero konštruktorov, v PHP je však iba jeden
+
+#### Deštruktor
+- Špeciálna metóda, ktorá sa automaticky volá pri zničení objektu
+- Hlavný účel deštruktora je uvoľniť zdroje, ktoré objekt alokoval počas svojej existencie. To zahŕňa zatvorenie súborov, uvoľnenie pamäte alebo ukončenie sieťových pripojení
+- Používame pri práci so súbormi a pri práci s databázami (databázové spojenie)
+
+#### __get() a __set()
+- **__get()** sa automaticky volá pri pokuse o prístup k neprístupnej alebo neexistujúcej vlastnosti objektu
+- Umožňuje dynamické zachytávanie a spracovávanie prístupu k vlastnostiam
+- Príklady použitia: implementáciu virtuálnych vlastností, poskytnutie prístupu k interným dátam s kontrolou, dynamické načítanie hodnôt z databázy
+
+- **__set()** sa automaticky volá pri pokuse o priradenie hodnoty neprístupnej alebo neexistujúcej vlastnosti objektu
+- Umožňuje dynamické zachytávanie a spracovávanie priradenia vlastnosti
+- Príklady použitia: implementáciu virtuálnych vlastností, kontrolu a validáciu priraďovaných hodnôt, dynamické ukladanie hodnôt do databázy
+
+#### __call()
+- Táto metóda sa volá, keď sa programátor pokúsi zavolať metódu, ktorá neexistuje
+- Umožňuje nám tak definovať vlastné správanie pre volanie neexistujúcich metód
+- Používa sa pre univerzálne spracovanie rôznych typov požiadaviek
+- Zjednodušuje kód a znižuje duplicitu
+
+#### __clone()
+- Používa sa na klonovanie objektu. To znamená, že nový objekt bude mať rovnaké vlastnosti a hodnoty ako pôvodný objekt, ale bude existovať samostatne a akékoľvek zmeny vykonané na kópii neovplyvnia pôvodný objekt
+- V klonovaní rozlišujeme medzi plytkou a hlbokou kópiou
+- **Plytká kópia (Shallow copy)** – bez metódy __clone(), skopírujú len referencie na vlastnosti, nie ich hodnoty. To znamená, že úpravy vlastností v klonovanom objekte by sa prejavili aj v pôvodnom objekte
+- **Hlboká kópia (Deep copy)** – Metóda __clone() umožňuje vytvoriť hlbokú kópiu objektu, kde sa skopírujú aj hodnoty vlastností, nie len referencie. To znamená, že úpravy vlastností v klonovanom objekte sa neprejavia v pôvodnom objekte
+
+### Rozdiel medzi premennými, vlastnosťami, funkciami a metódami
+
+- **Premenná (Variable)**: je definovaná v rámci funkcie alebo bloku kódu. Premenné sú ako dočasné nádoby na uloženie dát
+- **Vlastnosť (Property)**: je definovaná v rámci triedy. Vlastnosti sú ako ingrediencie pizze - definujú, z čoho sa objekt skladá
+- **Funkcia**: Samostatný blok kódu, ktorý vykonáva určitú úlohu. Funkcie nemusia súvisieť s žiadnou konkrétnou triedou
+- **Metóda**: Funkcia definovaná v rámci triedy. Metódy sú ako kroky v návode na pizzu - definujú, čo objekt dokáže robiť (alebo ako bude chutiť)
+
+### Menné priestory (Namespaces)
+
+Menné priestory sú kvalifikátory, ktoré riešia niekoľko problémov:
+
+- Umožňujú lepšiu organizáciu zoskupením tried, ktoré spolupracujú pri plnení úlohy
+- Zlepšujú prehľadnosť kódu
+- Umožňujú použiť rovnaký názov pre viac ako jednu triedu: 
+  - Môžeme mať napríklad sadu tried, ktoré popisujú tabuľku HTML, ako napríklad Table, Row, a Cell
+  - Môžeme však mať aj inú sadu tried na popis nábytku, ako napríklad Table, Chair a Bed
+  - Priestory názvov možno použiť na usporiadanie tried do dvoch rôznych skupín a zároveň zabrániť zámene dvoch tried Table a Table -> použili by sme napríklad html\Table a furniture\Table
 
