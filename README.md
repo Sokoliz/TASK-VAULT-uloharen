@@ -1,4 +1,4 @@
-# 🗓️ TASK VAULT – Moderný študentský kalendár a systém správy úloh
+# 🗓️ TASK VAULT – Moderný študentský kalendár
 
 Vitajte v mojom záverečnom študentskom projekte!
 **TASK VAULT** je webová aplikácia, ktorá pomáha študentom efektívne plánovať úlohy, organizovať čas a mať prehľad o všetkých dôležitých termínoch na jednom mieste. Koniec s chaotickými poznámkami a zabudnutými termínmi!
