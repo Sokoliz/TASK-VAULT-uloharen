@@ -9,6 +9,7 @@
 6. [Autentifikácia používateľov](#autentifikácia-používateľov)
 7. [Štruktúra súborov](#štruktúra-súborov)
 8. [Podrobný popis funkcií a príkazov](#podrobný-popis-funkcií-a-príkazov)
+9. [Vzťahy medzi súbormi a ich funkcionalita](#vzťahy-medzi-súbormi-a-ich-funkcionalita)
 
 ## Databáza a pripojenie
 
@@ -105,7 +106,9 @@ V súbore `db/functions.php` je definovaná trieda `Database`, ktorá slúži na
 - `$_POST` - obsahuje dáta odoslané metódou POST (z formulárov)
 - `$_GET` - obsahuje dáta odoslané metódou GET (z URL parametrov)
 - `$_SERVER` - obsahuje informácie o serveri a aktuálnej požiadavke
-  - `$_SERVER['REQUEST_METHOD']` - zisťuje, či ide o GET alebo POST požiadavku
+- `$_SERVER['REQUEST_METHOD']` - zisťuje, či ide o GET alebo POST požiadavku
+-`$GET`: Používa sa pre operácie, ktoré iba získavajú dáta, filtrujú a zobrazujú výsledky
+-`$POST`: Používa sa pre operácie, ktoré vytvárajú, upravujú alebo mažú dáta, a tiež pre odosielanie citlivých údajov
 
 ### Práca s dátumom
 - `date("Y-m-d", strtotime($date))` - konvertuje string dátum na formát Y-m-d
@@ -158,6 +161,24 @@ $statement->execute(array($id_user, $project_name, $project_description, $projec
 2. `execute()` - vykoná dotaz, pričom nahradí otázniky hodnotami z poľa v poradí
 3. Pole `array()` obsahuje hodnoty, ktoré sa vložia namiesto otáznikov
 
+**Súbory implementujúce CREATE operácie:**
+- **register.php** - registrácia nových používateľov
+  ```php
+  $statement = $connection->prepare('INSERT INTO users (id_user, user, password) VALUES (null, :user, :password)');
+  ```
+- **projects.php** - pridávanie nových projektov a úloh
+  ```php
+  // Pridávanie projektov
+  $statement = $connection->prepare('INSERT INTO projects (id_user, project_name, project_description, project_colour, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?)');
+  
+  // Pridávanie úloh
+  $statement = $connection->prepare('INSERT INTO tasks (id_user, id_project, task_status, task_name, task_description, task_colour, deadline) VALUES (?, ?, ?, ?, ?, ?, ?)');
+  ```
+- **events/actions/eventAdd.php** - pridávanie udalostí do kalendára
+  ```php
+  $sql = "INSERT INTO calendar(id_user, title, description, start_date, end_date, colour) values ('$id_user', '$title', '$description', '$start_date', '$end_date', '$colour')";
+  ```
+
 ### Read (Čítanie)
 Príklad získania všetkých projektov užívateľa:
 
@@ -173,6 +194,39 @@ $projects = $projects->fetchAll();
 2. `execute()` - vykoná dotaz s konkrétnym ID užívateľa
 3. `fetchAll()` - získa všetky riadky výsledku ako pole
 
+**Súbory implementujúce READ operácie:**
+- **login.php** - overenie prihlasovacích údajov
+  ```php
+  $statement = $connection->prepare('SELECT * FROM users WHERE user =? AND password =?');
+  ```
+- **register.php** - kontrola existencie používateľského mena
+  ```php
+  $statement = $connection->prepare('SELECT * FROM users WHERE user = :user LIMIT 1');
+  ```
+- **projects.php** - zobrazenie projektov a úloh
+  ```php
+  // Získanie zoznamu projektov
+  $projects = $connection->prepare("SELECT SQL_CALC_FOUND_ROWS * FROM projects WHERE id_user = ? ORDER BY id_project DESC");
+  
+  // Získanie úloh konkrétneho projektu
+  $show_tasks = $connection->prepare("SELECT SQL_CALC_FOUND_ROWS * FROM tasks WHERE id_user = ? AND id_project = ? ORDER BY deadline DESC");
+  ```
+- **today.php** - zobrazenie dnešných projektov, úloh a udalostí
+  ```php
+  // Projekty začínajúce dnes
+  $projects_start = $connection->prepare("SELECT SQL_CALC_FOUND_ROWS * FROM projects WHERE id_user = ? AND start_date= ? ORDER BY id_project DESC");
+  
+  // Projekty končiace dnes
+  $projects_end = $connection->prepare("SELECT SQL_CALC_FOUND_ROWS * FROM projects WHERE id_user = ? AND end_date= ? ORDER BY id_project DESC");
+  
+  // Úlohy s dnešným termínom
+  $tasks = $connection->prepare("SELECT SQL_CALC_FOUND_ROWS * FROM tasks WHERE id_user = ? AND deadline= ? ORDER BY id_task DESC");
+  ```
+- **calendar.php** - zobrazenie udalostí v kalendári
+  ```php
+  $statement = $connection->prepare("SELECT id_event, title, description, start_date, end_date, colour FROM calendar Where id_user = ? ");
+  ```
+
 ### Update (Aktualizácia)
 Príklad aktualizácie projektu:
 
@@ -187,6 +241,27 @@ $statement->execute(array($edit_project_name, $edit_project_description, $edit_p
 2. `execute()` - vykoná dotaz, pričom nahradí otázniky hodnotami z poľa
 3. Posledný parameter v poli je ID projektu, ktorý sa aktualizuje
 
+**Súbory implementujúce UPDATE operácie:**
+- **projects.php** - úprava projektov a úloh
+  ```php
+  // Úprava projektu
+  $statement = $connection->prepare('UPDATE projects SET project_name=?, project_description=?, project_colour=?, start_date=?, end_date=? WHERE id_project=?');
+  
+  // Úprava úlohy
+  $statement = $connection->prepare('UPDATE tasks SET task_name=?, task_description=?, task_colour=?, deadline=? WHERE id_task=?');
+  
+  // Zmena stavu úlohy (presun medzi stĺpcami Kanban)
+  $statement = $connection->prepare('UPDATE tasks SET task_status=? WHERE id_task=?');
+  ```
+- **events/actions/eventEdit.php** - úprava udalostí v kalendári
+  ```php
+  $sql = "UPDATE calendar SET title = '$title', description = '$description', start_date = '$start_date', end_date = '$end_date', colour = '$colour' WHERE id_event = '$id_event'";
+  ```
+- **events/actions/eventEditData.php** - aktualizácia dátumov udalosti pri drag & drop
+  ```php
+  $sql = "UPDATE calendar SET start_date = '$start_date', end_date = '$end_date' WHERE id_event = '$id_event'";
+  ```
+
 ### Delete (Mazanie)
 Príklad zmazania projektu:
 
@@ -199,6 +274,27 @@ $del_project->execute(array($id_project));
 **Vysvetlenie:**
 1. `prepare()` - pripraví SQL DELETE dotaz s parametrom (otáznik)
 2. `execute()` - vykoná dotaz s konkrétnym ID projektu
+
+**Súbory implementujúce DELETE operácie:**
+- **projects.php** - mazanie projektov a úloh
+  ```php
+  // Mazanie projektu
+  $del_project = $connection->prepare("DELETE FROM projects WHERE id_project = ?");
+  
+  // Mazanie všetkých úloh projektu
+  $del_tasks = $connection->prepare("DELETE FROM tasks WHERE id_project = ?");
+  
+  // Mazanie konkrétnej úlohy
+  $del_task = $connection->prepare("DELETE FROM tasks WHERE id_task = ?");
+  ```
+- **delete.php** - univerzálny kontrolér pre mazanie
+  ```php
+  $del_project_confirm = $connection->prepare('DELETE FROM projects WHERE id_project=?');
+  ```
+- **events/actions/eventEdit.php** - mazanie udalosti v kalendári
+  ```php
+  $sql = "DELETE FROM calendar WHERE id_event = '$id_event'";
+  ```
 
 ## Bezpečnosť
 
@@ -404,6 +500,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 				':password' => $password_form
 			));
 		// Presmerovanie na prihlasovaciu stránku
+		
 		header('Location: login.php');
 	}
 }
@@ -1621,4 +1718,109 @@ Menné priestory sú kvalifikátory, ktoré riešia niekoľko problémov:
   - Môžeme mať napríklad sadu tried, ktoré popisujú tabuľku HTML, ako napríklad Table, Row, a Cell
   - Môžeme však mať aj inú sadu tried na popis nábytku, ako napríklad Table, Chair a Bed
   - Priestory názvov možno použiť na usporiadanie tried do dvoch rôznych skupín a zároveň zabrániť zámene dvoch tried Table a Table -> použili by sme napríklad html\Table a furniture\Table
+
+## Vzťahy medzi súbormi a ich funkcionalita
+
+### Základná štruktúra projektu
+
+Projekt používa MVC-like architektúru (Model-View-Controller), kde sú súbory rozdelené podľa ich úlohy:
+
+#### Kontroléry (Controllers)
+Hlavné PHP súbory v koreňovom adresári, ktoré spracúvajú logiku, získavajú dáta a načítavajú príslušné šablóny (views).
+
+#### Šablóny (Views)
+Súbory v adresári `views/` obsahujú HTML kód spolu s PHP pre zobrazenie dát používateľovi.
+
+#### Model
+Databázové funkcie v adresári `db/` zabezpečujú prístup k dátam.
+
+### Kľúčové vzťahy medzi súbormi
+
+#### Kontroléry a ich šablóny
+
+1. **Hlavná stránka**
+   - `index.php` - kontroluje prihlásenie a presmerováva používateľa
+   - `main.php` - kontrolér pre úvodnú stránku (neprihlásení používatelia)
+   - `views/main.view.php` - šablóna úvodnej stránky
+
+2. **Autentifikácia**
+   - `login.php` - spracúva prihlásenie používateľa
+   - `views/login.view.php` - šablóna prihlasovacej stránky
+   - `register.php` - spracúva registráciu používateľa
+   - `views/register.view.php` - šablóna registračnej stránky
+   - `logout.php` - odhlásenie používateľa a zrušenie session
+
+3. **Dashboard**
+   - `content.php` - kontrolér pre dashboard (hlavný obsah po prihlásení)
+   - `views/content.view.php` - šablóna dashboardu s navigačnými kartami
+
+4. **Kalendár**
+   - `calendar.php` - kontrolér pre kalendár (získava udalosti z databázy)
+   - `views/calendar.view.php` - šablóna kalendára (HTML štruktúra)
+   - `calendar2.php` - obsahuje JavaScript konfiguráciu FullCalendar-a a spracovanie dát
+   
+   **Vzťah medzi calendar.php a calendar2.php**: 
+   - `calendar.php` získava dáta z databázy a volá `calendar.view.php`
+   - `calendar.view.php` na konci importuje `calendar2.php`
+   - `calendar2.php` transformuje dáta získané v `calendar.php` do JSON formátu a inicializuje kalendár
+
+5. **Projekty a úlohy**
+   - `projects.php` - kontrolér pre správu projektov a úloh
+   - `views/projects.view.php` - šablóna pre zobrazenie projektov a úloh
+   - `delete.php` - univerzálny kontrolér pre mazanie záznamov
+
+6. **Denný prehľad**
+   - `today.php` - kontrolér pre zobrazenie aktuálnych úloh
+   - `views/today.view.php` - šablóna pre denný prehľad úloh
+
+#### Zdieľané komponenty
+
+1. **Hlavička a päta**
+   - `parts/header.php` - obsahuje HTML hlavičku, meta tagy, CSS, navigáciu
+   - `parts/footer.php` - obsahuje pätu stránky a spoločné JavaScripty
+
+2. **Modálne okná**
+   - `events/modals/modalAdd.php` - modálne okno pre pridávanie udalostí
+   - `events/modals/modalEdit.php` - modálne okno pre úpravu udalostí
+   - `events/modals/newProject.php` - modálne okno pre nový projekt
+   - `events/modals/newTask.php` - modálne okno pre novú úlohu
+
+3. **Akcie a operácie**
+   - `events/actions/*.php` - súbory obsahujúce spracovanie AJAX požiadaviek
+
+### Workflow - tok údajov v aplikácii
+
+#### Prihlásenie používateľa
+1. Používateľ navštívi `login.php`
+2. `login.php` načíta šablónu `views/login.view.php`
+3. Po odoslaní formulára `login.php` overí používateľa v databáze
+4. Po úspešnom prihlásení je používateľ presmerovaný na `index.php`, ktorý ho ďalej presmeruje na `content.php`
+
+#### Zobrazenie kalendára
+1. Používateľ klikne na kartu "CALENDAR" na dashboarde, čo ho presmeruje na `calendar.php`
+2. `calendar.php` získa udalosti z databázy pre prihláseného používateľa
+3. `calendar.php` načíta šablónu `views/calendar.view.php`
+4. Na konci `calendar.view.php` sa importuje `calendar2.php`
+5. `calendar2.php` spracuje dáta do JSON formátu a inicializuje FullCalendar
+6. Používateľ môže interagovať s kalendárom - pridávať, upravovať a mazať udalosti
+
+#### Správa projektov a úloh
+1. Používateľ klikne na kartu "PROJECTS" na dashboarde, čo ho presmeruje na `projects.php`
+2. `projects.php` získa zoznam projektov a úloh z databázy
+3. `projects.php` načíta šablónu `views/projects.view.php`
+4. Šablóna zobrazí Kanban tabuľu s projektmi a úlohami
+5. Používateľ môže pridávať, upravovať a mazať projekty a úlohy
+6. Pri pridávaní a úprave sa zobrazujú modálne okná z adresára `events/modals/`
+
+### Databázové prepojenia
+
+Všetky súbory, ktoré pracujú s databázou, importujú triedu Database z `db/functions.php`:
+
+```php
+require_once('db/functions.php');
+$database = new Database();
+$connection = $database->connection();
+```
+
+Táto trieda poskytuje metódu `connection()`, ktorá vytvára a vracia PDO pripojenie k MySQL databáze.
 
