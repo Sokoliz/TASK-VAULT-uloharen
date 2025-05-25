@@ -31,7 +31,7 @@
 					<li class="nav-item theme-switch-wrapper">
                         <span class="mode-text btn text-primary">Mode</span>
                         <i class="fas fa-moon mode-icon fa-lg" style="color: #4169E1 !important;"></i>
-                        <div class="toggle-button" id="toggle-button-ui"></div>
+                        <div id="toggle-button-ui"></div>
                     </li>				
 				</ul>
 			</div>
