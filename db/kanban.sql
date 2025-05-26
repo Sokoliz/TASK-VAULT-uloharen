@@ -1,4 +1,3 @@
-
 -- Toto je SQL subor pre vytvorenie databazy - exportoval som to z phpMyAdmin
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -192,22 +191,22 @@ ALTER TABLE `users`
 -- Obmedzenia pre tabuľku `calendar`
 --
 ALTER TABLE `calendar`
-  ADD CONSTRAINT `calendar_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
+  ADD CONSTRAINT `calendar_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE SET NULL;
 
 -- Cudzi kluc pre projects - id_user odkazuje na users.id_user
 --
 -- Obmedzenia pre tabuľku `projects`
 --
 ALTER TABLE `projects`
-  ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
+  ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE;
 
 -- Cudzie kluce pre tasks - id_user odkazuje na users.id_user a id_project odkazuje na projects.id_project
 --
 -- Obmedzenia pre tabuľku `tasks`
 --
 ALTER TABLE `tasks`
-  ADD CONSTRAINT `tasks_id_project` FOREIGN KEY (`id_project`) REFERENCES `projects` (`id_project`),
-  ADD CONSTRAINT `tasks_id_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
+  ADD CONSTRAINT `tasks_id_project` FOREIGN KEY (`id_project`) REFERENCES `projects` (`id_project`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tasks_id_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
