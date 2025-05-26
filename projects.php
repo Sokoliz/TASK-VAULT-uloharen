@@ -99,8 +99,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			echo "Swal.fire({
 				position: 'center',
 				icon: 'success',
-				title: 'Dovidenia!',
-				text: 'Váš projekt bol úspešne zmazaný!',
+				title: 'Good bye!',
+				text: 'Your project has been successfully deleted!',
 				showConfirmButton: false,
 				timer: 1200,
 			}).then(function(){ 
