@@ -3,11 +3,8 @@
  * Funkcie pre prácu s konfiguráciou obrázkov
  */
 
-/**
- * Získa konfiguráciu obrázkov z JSON súboru
- * 
- * @return array Asociatívne pole s konfiguráciou obrázkov
- */
+//Získa konfiguráciu obrázkov z JSON súboru
+
 function getImagesConfig() {
     static $imagesConfig = null;
     
@@ -20,13 +17,8 @@ function getImagesConfig() {
     return $imagesConfig;
 }
 
-/**
- * Získa cestu k obrázku na základe kategórie a názvu
- * 
- * @param string $category Kategória obrázku (logo, pages, backgrounds, icons, placeholders)
- * @param string $imageName Názov obrázku
- * @return string Cesta k obrázku alebo CSS trieda pre ikonu
- */
+// Získa cestu k obrázku na základe kategórie a názvu
+ 
 function getImagePath($category, $imageName) {
     $imagesConfig = getImagesConfig();
     
@@ -39,16 +31,8 @@ function getImagePath($category, $imageName) {
     return $imagesConfig['placeholders']['default'];
 }
 
-/**
- * Vygeneruje HTML tag img na základe kategórie a názvu obrázku
- * 
- * @param string $category Kategória obrázku (logo, pages, backgrounds)
- * @param string $imageName Názov obrázku
- * @param string $alt Alternatívny text pre obrázok
- * @param string $class CSS trieda pre obrázok
- * @param array $attributes Ďalšie atribúty pre tag img (width, height, atď.)
- * @return string HTML kód s tagom img
- */
+//Vygeneruje HTML tag img na základe kategórie a názvu obrázku
+ 
 function displayImage($category, $imageName, $alt = "", $class = "", $attributes = []) {
     $imagePath = getImagePath($category, $imageName);
     $altText = htmlspecialchars($alt);
@@ -63,13 +47,7 @@ function displayImage($category, $imageName, $alt = "", $class = "", $attributes
     return '<img src="' . $imagePath . '" alt="' . $altText . '"' . $className . $attrStr . '>';
 }
 
-/**
- * Vygeneruje HTML tag s FontAwesome ikonou
- * 
- * @param string $iconName Názov ikony
- * @param string $class Dodatočná CSS trieda
- * @return string HTML kód s ikonou
- */
+//Vygeneruje HTML tag s FontAwesome ikonou
 function displayIcon($iconName, $class = "") {
     $iconClass = getImagePath('icons', $iconName);
     $className = $class ? ' ' . htmlspecialchars($class) : '';
@@ -83,13 +61,8 @@ function displayIcon($iconName, $class = "") {
     return '<i class="' . $iconClass . $className . '"' . $style . '></i>';
 }
 
-/**
- * Vygeneruje CSS pre pozadie na základe kategórie a názvu obrázku
- * 
- * @param string $category Kategória obrázku (najčastejšie 'backgrounds')
- * @param string $imageName Názov obrázku
- * @return string CSS hodnota pre background-image
- */
+//Vygeneruje CSS pre pozadie na základe kategórie a názvu obrázku
+
 function getBackgroundStyle($category, $imageName) {
     $imagePath = getImagePath($category, $imageName);
     return "background-image: url('" . $imagePath . "');";

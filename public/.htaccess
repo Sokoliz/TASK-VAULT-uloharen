@@ -1,0 +1,13 @@
+# Zapnutie modulu Apache pre prepis URL adries (mod_rewrite)
+RewriteEngine On
+
+# Podmienka: Ak požadovaná URL nie je existujúci súbor (!-f)
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Podmienka: Ak požadovaná URL nie je existujúci adresár (!-d)
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Pravidlo: Presmerovať všetky požiadavky na index.php
+# QSA - zachová pôvodné query string parametre
+# L - je posledné pravidlo, ktoré sa má vykonať
+RewriteRule ^ index.php [QSA,L]

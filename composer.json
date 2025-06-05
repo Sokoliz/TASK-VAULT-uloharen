@@ -1,0 +1,17 @@
+{
+    "name": "marek/productivity",
+    "authors": [
+        {
+            "name": "marek",
+            "email": "marek.sokol@student.ukf.sk"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\" : "app/",
+            "Config\\" : "config/",
+            "Public\\" : "public/"
+        }
+    }
+}

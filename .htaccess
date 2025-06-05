@@ -1,0 +1,19 @@
+# Overenie, či je v Apache serveri dostupný modul mod_rewrite pre presmerovanie
+<IfModule mod_rewrite.c>
+    # Aktivácia modulu pre prepis URL adries
+    RewriteEngine On
+
+
+
+    # Podmienka: Pokračuj s prepisom len ak požadovaná URL nie je existujúci súbor
+    RewriteCond %{REQUEST_FILENAME} !-f
+    # Podmienka: Pokračuj s prepisom len ak požadovaná URL nie je existujúci adresár
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+
+    # Pravidlo: Presmeruj všetky požiadavky na index.php v koreňovom adresári
+    # ^(.*)$ - zachytí celú URL cestu ako parameter (dostupný v $_SERVER['REQUEST_URI'])
+    # QSA - zachová pôvodné parametre v URL (query string)
+    # L - toto je posledné pravidlo, ktoré sa má aplikovať
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
