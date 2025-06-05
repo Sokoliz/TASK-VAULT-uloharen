@@ -72,7 +72,18 @@ Vitajte v mojom záverečnom študentskom projekte!
 5. **Umiestnenie aplikácie:**
    **DÔLEŽITÉ:** Aplikácia musí byť umiestnená priamo v hlavnom adresári "htdocs" vášho webového servera (XAMPP, WAMP), nie v podpriečinku. Toto je potrebné pre správne fungovanie URL adries a smerovania.
 
-6. **Spustite lokálny server** (napr. XAMPP, WAMP).
+6. **Spustite aplikáciu:**
+
+   a) **Pomocou lokálneho servera** (napr. XAMPP, WAMP).
+
+   b) **Pomocou vstavaného PHP servera cez CMD:**
+
+   ```bash
+   cd cesta/k/projektu
+   php -S localhost:1234
+   ```
+
+   Potom otvorte prehliadač a prejdite na adresu `http://localhost:1234`
 
 7. **Otvorte aplikáciu v prehliadači** a prihláste sa alebo si vytvorte nový účet.
 
