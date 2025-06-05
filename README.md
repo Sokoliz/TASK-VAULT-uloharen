@@ -34,7 +34,7 @@ Vitajte v mojom záverečnom študentskom projekte!
 
 ## 🖥️ Ukážka aplikácie
 
-> ![Ukážka kalendára](img/ukazka.jpg)
+> ![Ukážka kalendára](public/img/ukazka.jpg)
 
 ---
 
