@@ -1,0 +1,155 @@
+/**
+ * Dynamic Theme CSS
+ * Uses CSS variables for theming that can be updated via JavaScript
+ */
+
+:root {
+    /* Svetlá téma - predvolená */
+    --text-color: black;
+    --bg-color: white;
+    --card-bg: white;
+    --background-image: url('/public/img/cover.png');
+    --background-overlay: rgba(255, 255, 255, 0);
+    --link-color: #0275d8;
+    --card-border: #dee2e6;
+}
+
+[data-theme="dark"] {
+    --text-color: white;
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --background-overlay: rgba(0, 0, 0, 0.7);
+    --link-color: #5bc0de;
+    --card-border: #495057;
+}
+
+body {
+    color: var(--text-color) !important;
+    background-color: var(--bg-color) !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Background styling */
+.bg {
+    background-image: var(--background-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* Specific page backgrounds */
+.bg-login {
+    --background-image: url('/public/img/backgrounds/login.jpg');
+}
+
+.bg-register {
+    --background-image: url('/public/img/backgrounds/register.jpg');
+}
+
+.bg-calendar {
+    --background-image: url('/public/img/backgrounds/calendar.jpg');
+}
+
+.bg-projects {
+    --background-image: url('/public/img/backgrounds/projects.jpg');
+}
+
+.bg-tasks {
+    --background-image: url('/public/img/backgrounds/tasks.jpg');
+}
+
+/* Dark mode overrides for specific pages */
+.dark-mode .bg-login,
+.dark-mode .bg-register,
+.dark-mode .bg-calendar,
+.dark-mode .bg-projects,
+.dark-mode .bg-tasks {
+    --background-overlay: rgba(0, 0, 0, 0.7);
+}
+
+/* Card styling with theme variables */
+.card {
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
+    color: var(--text-color);
+}
+
+/* Link styling */
+a {
+    color: var(--link-color);
+}
+
+a:hover {
+    color: var(--link-color-hover, darker(var(--link-color), 15%));
+}
+
+/* Theme switcher styles */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.theme-switch-wrapper .mode-text {
+    margin-right: 8px;
+}
+
+.theme-switch-wrapper .mode-icon {
+    cursor: pointer;
+    transition: color 0.3s ease;
+    color: #007bff;
+}
+
+[data-theme="dark"] .mode-icon {
+    color: #f8f9fa;
+}
+
+/* Form elements theming */
+.form-control {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--card-border);
+}
+
+.form-control:focus {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+/* Modal theming */
+.modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.modal-header, .modal-footer {
+    border-color: var(--card-border);
+}
+
+/* Button theming - primary buttons */
+.btn-primary {
+    background-color: var(--link-color);
+    border-color: var(--link-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--link-color-hover, darker(var(--link-color), 15%));
+    border-color: var(--link-color-hover, darker(var(--link-color), 15%));
+}
+
+/* Calendar theming */
+.fc-event {
+    border-color: var(--link-color);
+    background-color: var(--link-color);
+}
+
+.fc-today {
+    background-color: rgba(var(--link-color-rgb, 2, 117, 216), 0.1) !important;
+}
+
+/* Karty projektov a úloh v tmavom režime */
+[data-theme="dark"] .card {
+    background-color: var(--card-bg) !important;
+    border-color: #333 !important;
+} 

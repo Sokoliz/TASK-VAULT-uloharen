@@ -5,53 +5,100 @@ use App\Core\Session;
 use App\Models\Project;
 use App\Models\Calendar;
 use App\Models\Task;
+use App\Views\Today\TodayPageRenderer;
 
-// Kontrolér pre zobrazenie všetkých dôležitých údajov pre aktuálny deň
 class TodayController
 {
     private $project;
     private $calendar;
     private $task;
 
-    // Konštruktor inicializuje sedenie, kontroluje prihlásenie a vytvára inštancie potrebných modelov
     public function __construct()
     {
-        Session::start();
-        // Ak používateľ nie je prihlásený, presmeruje ho na prihlásenie
         if (!Session::isLoggedIn()) {
             header("Location: /login");
             exit;
         }
 
-        // Vytvorenie inštancií všetkých potrebných modelov
         $this->project = new Project();
         $this->calendar = new Calendar();
         $this->task = new Task();
     }
 
-    // Metóda pre zobrazenie všetkých údajov relevantných pre dnešný deň
     public function index()
     {
-        // Získanie ID prihláseného používateľa
         $userId = Session::get('user_id');
 
-        // Príprava dátumových premenných pre dnešný deň
         $today = date("Y-m-d");
         $today_start = $today . " 00:00:00";
         $today_end = $today . " 23:59:59";
 
-        // Získanie projektov, ktoré začínajú alebo končia dnes
+        // Get projects starting or ending today
         $projects_start = $this->project->getByStartDate($userId, $today);
-        $projects_end   = $this->project->getByEndDate($userId, $today);
+        $projects_end = $this->project->getByEndDate($userId, $today);
 
-        // Získanie udalostí kalendára, ktoré začínajú alebo končia dnes
+        // Get events starting or ending today
         $events_start = $this->calendar->getEventsByStartDate($userId, $today_start, $today_end);
-        $events_end   = $this->calendar->getEventsByEndDate($userId, $today_start, $today_end);
+        $events_end = $this->calendar->getEventsByEndDate($userId, $today_start, $today_end);
 
-        // Získanie úloh, ktoré majú termín dokončenia dnes
-        $tasks = $this->task->getByDeadline($userId, $today);
+        // Get tasks with deadlines today
+        $tasks_deadline = $this->task->getByDeadline($userId, $today);
+        
+        // Format the tasks with additional information
+        $formatted_tasks = $this->formatTasks($tasks_deadline);
 
-        // Načítanie pohľadu pre zobrazenie dnešných udalostí a úloh
-        require __DIR__ . '/../Views/today.php';
+        // Prepare view data
+        $viewData = [
+            'projects_start' => $projects_start,
+            'projects_end' => $projects_end,
+            'events_start' => $events_start,
+            'events_end' => $events_end,
+            'formatted_tasks' => $formatted_tasks,
+            'today' => $today
+        ];
+
+        // Načítanie view triedy a vytvorenie jej inštancie
+        require_once __DIR__ . '/../Views/page/today.view.php';
+        $todayView = new \TodayView($viewData);
+        echo $todayView->render();
+    }
+    
+    /**
+     * Format task data for display
+     * 
+     * @param array $tasks Tasks to format
+     * @return array Formatted tasks
+     */
+    private function formatTasks($tasks)
+    {
+        $formatted = [];
+        
+        foreach ($tasks as $task) {
+            // Determine task status text
+            $status_text = 'To Do';
+            if ($task['task_status'] == 2) {
+                $status_text = 'In Progress';
+            } elseif ($task['task_status'] == 3) {
+                $status_text = 'Complete';
+            }
+            
+            // Get project information
+            $project = $this->project->getById($task['id_project']);
+            $project_name = $project ? $project['project_name'] : 'Unknown project';
+            
+            // Format the task with additional information
+            $formatted[] = [
+                'id_task' => $task['id_task'],
+                'title' => $task['task_name'],
+                'description' => $task['task_description'],
+                'colour' => $task['task_colour'],
+                'status' => $status_text,
+                'deadline' => $task['deadline'],
+                'project_id' => $task['id_project'],
+                'project_name' => $project_name
+            ];
+        }
+        
+        return $formatted;
     }
 }

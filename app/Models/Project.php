@@ -3,75 +3,116 @@ namespace App\Models;
 
 use App\Core\Database;
 use PDO;
+use PDOException;
 
-// Model pre prácu s projektami v databáze
 class Project
 {
     private $db;
 
-    // Konštruktor inicializuje pripojenie k databáze
     public function __construct()
     {
         $this->db = Database::getInstance();
     }
 
-    // Získanie všetkých projektov pre konkrétneho používateľa
     public function getAllByUser($userId)
     {
-        $stmt = $this->db->prepare("SELECT * FROM projects WHERE id_user = ?");
-        $stmt->execute([$userId]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM projects WHERE id_user = ? ORDER BY id_project DESC");
+            $stmt->execute([$userId]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error retrieving projects: " . $e->getMessage());
+            return [];
+        }
     }
 
-    // Vytvorenie nového projektu v databáze
     public function create($data)
     {
-        $stmt = $this->db->prepare("INSERT INTO projects (id_user, project_name, project_description, project_colour, start_date, end_date)
-                                    VALUES (?, ?, ?, ?, ?, ?)");
-        return $stmt->execute([
-            $data['id_user'],
-            $data['project_name'],
-            $data['project_description'],
-            $data['project_colour'],
-            $data['start_date'],
-            $data['end_date']
-        ]);
+        try {
+            $stmt = $this->db->prepare("INSERT INTO projects (id_user, project_name, project_description, project_colour, start_date, end_date)
+                                      VALUES (?, ?, ?, ?, ?, ?)");
+            return $stmt->execute([
+                $data['id_user'],
+                $data['project_name'],
+                $data['project_description'],
+                $data['project_colour'],
+                $data['start_date'],
+                $data['end_date']
+            ]);
+        } catch (PDOException $e) {
+            error_log("Error creating project: " . $e->getMessage());
+            return false;
+        }
     }
 
-    // Aktualizácia existujúceho projektu v databáze
     public function update($id, $data)
     {
-        $stmt = $this->db->prepare("UPDATE projects SET project_name = ?, project_description = ?, project_colour = ?, start_date = ?, end_date = ? WHERE id_project = ?");
-        return $stmt->execute([
-            $data['project_name'],
-            $data['project_description'],
-            $data['project_colour'],
-            $data['start_date'],
-            $data['end_date'],
-            $id
-        ]);
+        try {
+            $stmt = $this->db->prepare("UPDATE projects SET project_name = ?, project_description = ?, project_colour = ?, start_date = ?, end_date = ? WHERE id_project = ?");
+            return $stmt->execute([
+                $data['project_name'],
+                $data['project_description'],
+                $data['project_colour'],
+                $data['start_date'],
+                $data['end_date'],
+                $id
+            ]);
+        } catch (PDOException $e) {
+            error_log("Error updating project: " . $e->getMessage());
+            return false;
+        }
     }
 
-    // Vymazanie projektu z databázy
     public function delete($id)
     {
-        $stmt = $this->db->prepare("DELETE FROM projects WHERE id_project = ?");
-        return $stmt->execute([$id]);
+        try {
+            $stmt = $this->db->prepare("DELETE FROM projects WHERE id_project = ?");
+            return $stmt->execute([$id]);
+        } catch (PDOException $e) {
+            error_log("Error deleting project: " . $e->getMessage());
+            return false;
+        }
     }
 
-    // Získanie projektov, ktoré začínajú v konkrétny dátum
     public function getByStartDate($userId, $date)
     {
-        $stmt = $this->db->prepare("SELECT * FROM projects WHERE id_user = ? AND start_date = ?");
-        $stmt->execute([$userId, $date]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM projects WHERE id_user = ? AND start_date = ?");
+            $stmt->execute([$userId, $date]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error retrieving projects by start date: " . $e->getMessage());
+            return [];
+        }
     }
 
-    // Získanie projektov, ktoré končia v konkrétny dátum
     public function getByEndDate($userId, $date)
     {
-        $stmt = $this->db->prepare("SELECT * FROM projects WHERE id_user = ? AND end_date = ?");
-        $stmt->execute([$userId, $date]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM projects WHERE id_user = ? AND end_date = ?");
+            $stmt->execute([$userId, $date]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error retrieving projects by end date: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    /**
+     * Get a project by ID
+     * 
+     * @param int $id Project ID
+     * @return array|false Project data or false if not found
+     */
+    public function getById($id)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM projects WHERE id_project = ?");
+            $stmt->execute([$id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error retrieving project by ID: " . $e->getMessage());
+            return false;
+        }
     }
 }

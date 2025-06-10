@@ -1,0 +1,10 @@
+/**
+ * Theme icons styles
+ * 
+ * Defines styles for icons related to theme switching
+ */
+
+/* Moon icon for dark mode toggle */
+.fa-moon.mode-icon {
+    color: #4169E1 !important;
+} 

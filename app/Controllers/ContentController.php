@@ -2,23 +2,25 @@
 namespace App\Controllers;
 
 use App\Core\Session;
+use App\Views\Content\ContentView;
 
-// Kontrolér pre správu obsahu, ktorý je prístupný len prihláseným používateľom
 class ContentController
 {
-    // Základná metóda pre zobrazenie obsahu stránky
     public function index()
     {
-        // Spustenie sedenia pre prístup k údajom o prihlásení
         Session::start();
-
-        // Kontrola, či je používateľ prihlásený, ak nie, presmeruje ho na login
+        
+        error_log("ContentController - checking if user is logged in");
         if (!Session::isLoggedIn()) {
+            error_log("User not logged in, redirecting to /login");
             header("Location: /login");
             exit;
         }
-
-        // Načítanie pohľadu s obsahom pre prihláseného používateľa
-        require __DIR__ . '/../Views/content.php';
+        
+        error_log("User is logged in, showing content page");
+        
+        // Vytvorenie a zobrazenie view pomocou OOP
+        $contentView = new ContentView();
+        echo $contentView->render();
     }
 }

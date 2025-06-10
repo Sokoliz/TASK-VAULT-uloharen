@@ -4,77 +4,85 @@ namespace App\Controllers;
 use App\Core\Session;
 use App\Models\Task;
 
-// Kontrolér pre správu úloh v rámci projektov
 class TaskController
 {
     private $task;
 
-    // Konštruktor inicializuje sedenie a overuje prihlásenie používateľa
     public function __construct()
     {
-        Session::start();
-
-        // Ak používateľ nie je prihlásený, presmeruje ho na prihlásenie
         if (!Session::isLoggedIn()) {
             header("Location: /login");
             exit;
         }
 
-        // Vytvorenie inštancie modelu pre prácu s úlohami
         $this->task = new Task();
     }
 
-    // Základná metóda pre zobrazenie úloh konkrétneho projektu
     public function index()
     {
-        // Kontrola, či bol zadaný parameter projektu v URL
         if (!isset($_GET['project'])) {
             echo "Project ID missing.";
             exit;
         }
 
-        // Získanie ID projektu z URL a načítanie jeho úloh
         $projectId = $_GET['project'];
         $tasks = $this->task->getByProject($projectId);
 
-        // Načítanie pohľadu pre zobrazenie úloh
         require __DIR__ . '/../Views/task/index.php';
     }
 
-    // Metóda pre vytvorenie novej úlohy v projekte
     public function create()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Príprava dát pre novú úlohu z formulára
+            // Log received POST data for debugging
+            error_log("Task create POST data: " . print_r($_POST, true));
+            
+            // We'll let client-side validation handle most validation errors
+            // This is just a fallback for security
+            if (empty($_POST['task_name']) || empty($_POST['task_colour']) || empty($_POST['deadline'])) {
+                error_log("Task validation failed: missing task_name, task_colour, or deadline");
+                // Instead of showing an error message, just redirect back
+                header("Location: /projects?idProject=" . $_POST['id_project']);
+                exit;
+            }
+            
             $data = [
                 'id_user'         => Session::get('user_id'),
                 'id_project'      => $_POST['id_project'],
                 'task_status'     => $_POST['task_status'],
                 'task_name'       => $_POST['task_name'],
-                'task_description'=> $_POST['task_description'],
+                'task_description'=> $_POST['task_description'] ?? '',
                 'task_colour'     => $_POST['task_colour'],
                 'deadline'        => $_POST['deadline']
             ];
-            // Vytvorenie novej úlohy v databáze
-            $this->task->create($data);
-            // Presmerovanie späť na stránku projektu s jeho úlohami
+            
+            // Log data being sent to the model
+            error_log("Task data for model: " . print_r($data, true));
+            
+            $result = $this->task->create($data);
+            
+            // Log result
+            error_log("Task creation result: " . ($result ? "Success" : "Failed"));
+            
+            // Success message has been removed as requested
+            
             header("Location: /projects?idProject=" . $_POST['id_project']);
+            exit;
         }
     }
 
-    // Metóda pre úpravu alebo vymazanie existujúcej úlohy
     public function edit()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Získanie ID úlohy z formulára
             $id = $_POST['id_task'];
+            $projectId = $_POST['id_project'];
 
-            // Ak bola požadovaná akcia vymazanie
             if (isset($_POST['delete'])) {
-                // Vymazanie úlohy z databázy
-                $this->task->delete($id);
+                // Log deletion attempt for debugging
+                error_log("Attempting to delete task ID: " . $id . " for project: " . $projectId);
+                $result = $this->task->delete($id);
+                error_log("Delete result: " . ($result ? "Success" : "Failed"));
             } else {
-                // Príprava dát pre aktualizáciu úlohy
                 $data = [
                     'task_name'        => $_POST['task_name'],
                     'task_description' => $_POST['task_description'],
@@ -82,41 +90,41 @@ class TaskController
                     'deadline'         => $_POST['deadline'],
                 ];
                 
-                // Aktualizácia úlohy v databáze
                 $this->task->update($id, $data);
-                
             }
 
-            // Presmerovanie späť na stránku projektu s jeho úlohami
-            header("Location: /projects?idProject=" . $_POST['id_project']);
+            header("Location: /projects?idProject=" . $projectId);
+            exit; // Ensure script execution stops after redirect
         }
     }
 
-    // Metóda pre zmenu stavu úlohy (posun v rámci workflow)
     public function move()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Získanie ID úlohy z formulára
             $id = $_POST['id_task'];
-
-            // Posun stavu úlohy doprava (zvýšenie hodnoty stavu)
+            $projectId = $_POST['id_project'];
+            
             if (isset($_POST['right'])) {
                 $data = [
-                    'task_status'        => $_POST['task_status'] +1,
+                    'task_status' => $_POST['task_status'] + 1,
                 ];
-            } else {
-                // Posun stavu úlohy doľava (zníženie hodnoty stavu)
+            } else if (isset($_POST['left'])) {
                 $data = [
-                    'task_status'        => $_POST['task_status'] -1 ,
-                    
+                    'task_status' => $_POST['task_status'] - 1,
                 ];
             }
-
-            // Aktualizácia stavu úlohy v databáze
+            
             $this->task->status_update($id, $data);
-
-            // Presmerovanie späť na stránku projektu s jeho úlohami
-            header("Location: /projects?idProject=" . $_POST['id_project']);
+            header("Location: /projects?idProject=" . $projectId);
         }
     }
+
+
+
+
+
+
+
+
+
 }

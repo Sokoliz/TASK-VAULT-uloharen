@@ -1,0 +1,852 @@
+/* style.css */
+/* ---------------- VŠEOBECNÉ ATRIBÚTY --------------------- */
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+/* Základné nastavenie stránky */
+body {
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+	height: 100vh !important;
+	width: 100vw !important;
+	display: grid;
+	min-height: 100vh;
+}
+
+/* Pozadie stránky - CSS generované PHP funkciou pre štýl pozadia sa nachádza v dynamic-styles.php */
+.bg {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+/* Prevent text wrapping in navbar items */
+.nowrap {
+    white-space: nowrap !important;
+    display: inline-block !important;
+}
+
+/* --------------------- LOGO -------------------------- */
+
+.logo_text {
+	font-family: 'Comfortaa', cursive;
+	font-size: 1.2em;
+}
+
+.icon {
+	padding-left: 0.5em;
+}
+
+
+/* --------------------- TLAČIDLÁ --------------------- */
+.btn-sign-up {
+	background-color: #fc527cd5;
+	color: #fff;
+}
+
+.btn-sign-up:hover {
+	background-color: #fc527c;
+	color:#fff;
+}
+
+/* --------------------- KARTY --------------------- */
+.my-card{
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+    transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow;
+  	cursor: pointer;
+}
+
+/* Efekt pri prejdení myšou */
+.my-card:hover{
+     transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  color: #007bff;
+  text-decoration: none;
+}
+
+
+/* --------------------- FOOTER --------------------- */
+footer {
+  position: relative;
+  bottom: 0;
+  width: 100%; 
+  display: flex;
+  align-items: end;
+  justify-content: center; 
+}
+
+
+/* ------------------- HLAVNÝ OBSAH -------------------- */
+.fc-content span {
+	color: #fff;
+}
+
+/* --------------------- KARTA PROJEKTU ------------------------------ */
+.widget-subheading {
+    font-size: 0.75em;
+}
+
+/* Oblasť s posúvaním */
+.scroll-area {
+	max-height: 65vh;
+    height: auto;
+	padding-bottom: 0.5em;
+    overflow-x: hidden;
+}
+
+/* Indikátor úlohy */
+.todo-indicator {
+    position: absolute;
+    width: 4px;
+    height: 60%;
+    border-radius: 0.3rem;
+    left: 0.625rem;
+    top: 20%;
+    opacity: .6;
+    transition: opacity .2s;
+}
+
+/* Obal obsahu widgetu */
+.widget-content .widget-content-wrapper {
+    display: flex;
+    flex: 1;
+    position: relative;
+    align-items: center;
+}
+
+/* Tlačidlá pre SweetAlert2 */
+.swa12-confirm, .swa12-cancel {
+	margin: 0 0.3em !important;
+}
+
+/* --------------------- POMOCNÉ TRIEDY --------------------- */
+.hidden {
+    display: none;
+}
+.unhidden {
+    display: block;
+}
+
+.font-small {
+	font-size: 0.8em;
+}
+
+/* Animácia pre nový projekt */
+#newProject:target {
+	transition: all 1s;
+	opacity: 1;
+	pointer-events: auto;
+}
+
+/* --------------------- CHYBOVÉ HLÁSENIA --------------------- */
+.err {
+    background-color: #ffebee;
+    border-left: 4px solid #f44336;
+    color: #b71c1c;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.err ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.err li {
+    margin-bottom: 5px;
+}
+
+/* --------------------- TMAVÝ REŽIM --------------------- */
+.dark-mode {
+    background-color: #1f2937 !important;
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .navbar {
+    background-color: #111827 !important;
+}
+
+.dark-mode .card {
+    background-color: #283548 !important;
+    border-color: #374151 !important;
+}
+
+.dark-mode .navbar,
+.dark-mode .card,
+.dark-mode .card-header,
+.dark-mode .list-group-item {
+    background-color: #1e1e1e !important;
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .card-header-title,
+.dark-mode .widget-heading {
+    color: #4dabf7 !important;
+}
+
+.dark-mode .widget-subheading {
+    color: #adb5bd !important;
+}
+
+.dark-mode .text-dark {
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .text-primary {
+    color: #4dabf7 !important;
+}
+
+.dark-mode .btn-outline-primary {
+    color: #4dabf7;
+    border-color: #4dabf7;
+}
+
+.dark-mode .btn-outline-primary:hover {
+    background-color: #4dabf7;
+    color: #121212;
+}
+
+/* Twitter-štýl prepínača tmavého režimu */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.mode-text {
+    font-weight: 500;
+    color: #007bff;
+    margin-right: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.mode-text:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.mode-icon {
+    color: #4169E1 !important;
+    font-size: 20px;
+    margin-right: 10px;
+    text-shadow: 0 0 5px rgba(65, 105, 225, 0.5);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.mode-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Špeciálne pravidlo pre i.fa-moon s najvyššou prioritou */
+.fas.fa-moon.mode-icon, 
+.fa-moon.mode-icon,
+i[class*="fa-moon"] {
+    color: #4169E1 !important;
+}
+
+/* Skrytie pôvodného checkboxu */
+.theme-toggle-checkbox {
+    display: none !important;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+/* Čistý toggle button */
+.toggle-button {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    background: #ccc;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    vertical-align: middle;
+}
+
+.toggle-button.active {
+    background-color: #007bff;
+}
+
+.toggle-button::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    top: 2px;
+    left: 2px;
+    transition: all 0.3s;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.toggle-button.active::after {
+    left: calc(100% - 22px);
+}
+
+/* Pridáme podporu pre tmavý režim do navbaru */
+.dark-mode .navbar {
+    background-color: #2d2d2d !important;
+}
+
+.dark-mode .navbar .nav-link,
+.dark-mode .navbar .navbar-brand {
+    color: #f0f0f0 !important;
+}
+
+.dark-mode .dropdown-menu {
+    background-color: #1e1e1e !important;
+    border-color: #333 !important;
+}
+
+.dark-mode .dropdown-item {
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .dropdown-item:hover {
+    background-color: #333 !important;
+}
+
+/* Zlepšíme čitateľnosť textov v tmavom režime */
+.dark-mode p,
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6 {
+    color: #f0f0f0 !important;
+}
+
+/* Upravíme farbu pozadia pre hlavnú stránku v tmavom režime */
+.dark-mode .bg {
+    background: linear-gradient(rgba(17, 24, 39, 0.95), rgba(31, 41, 55, 0.95)), url(../../img/bg.jpg) no-repeat center fixed !important;
+    background-size: cover !important;
+}
+
+/* --------------------- DRAG AND DROP --------------------- */
+.draggable {
+    cursor: grab;
+}
+
+.draggable:active {
+    cursor: grabbing;
+}
+
+.drag-over {
+    border: 2px dashed #4dabf7;
+    border-radius: 5px;
+}
+
+.task-nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    margin-top: 10px;
+}
+
+.task-nav-button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2em;
+    color: #6c757d;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.task-nav-button:hover {
+    color: #007bff;
+}
+
+.task-nav-button:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.dark-mode p, 
+.dark-mode h1, 
+.dark-mode h2, 
+.dark-mode h3, 
+.dark-mode h4, 
+.dark-mode h5, 
+.dark-mode h6,
+.dark-mode .card-title {
+    color: #f0f0f0 !important;
+}
+
+/* Tmavé texty */
+body.dark-mode p, 
+body.dark-mode h1, 
+body.dark-mode h2, 
+body.dark-mode h3, 
+body.dark-mode h4, 
+body.dark-mode h5, 
+body.dark-mode h6,
+body.dark-mode .card-title,
+body.dark-mode .btn.text-primary {
+    color: #f0f0f0 !important;
+}
+
+/* --------------------- MODAL DIALOGS --------------------- */
+.modal-dialog {
+    margin-top: 0;
+    margin-bottom: 0;
+    position: relative;
+    top: 0;
+}
+
+.modal.fade .modal-dialog {
+    transform: translate(0, 0) !important;
+    transition: opacity 0.15s linear;
+}
+
+.modal.show .modal-dialog {
+    transform: translate(0, 0) !important;
+}
+
+.modal-content {
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    margin-top: 20px;
+}
+
+/* Dark mode styles for modals */
+.dark-mode .modal-content {
+    background-color: #283548;
+    color: #e0e0e0;
+}
+
+.dark-mode .modal-header {
+    border-bottom-color: #374151;
+}
+
+.dark-mode .modal-footer {
+    border-top-color: #374151;
+}
+
+
+
+/* dynamic-theme.css */
+/**
+ * Dynamic Theme CSS
+ * Uses CSS variables for theming that can be updated via JavaScript
+ */
+
+:root {
+    /* Svetlá téma - predvolená */
+    --text-color: black;
+    --bg-color: white;
+    --card-bg: white;
+    --background-image: url('/public/img/cover.png');
+    --background-overlay: rgba(255, 255, 255, 0);
+    --link-color: #0275d8;
+    --card-border: #dee2e6;
+}
+
+[data-theme="dark"] {
+    --text-color: white;
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --background-overlay: rgba(0, 0, 0, 0.7);
+    --link-color: #5bc0de;
+    --card-border: #495057;
+}
+
+body {
+    color: var(--text-color) !important;
+    background-color: var(--bg-color) !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Background styling */
+.bg {
+    background-image: var(--background-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* Specific page backgrounds */
+.bg-login {
+    --background-image: url('/public/img/backgrounds/login.jpg');
+}
+
+.bg-register {
+    --background-image: url('/public/img/backgrounds/register.jpg');
+}
+
+.bg-calendar {
+    --background-image: url('/public/img/backgrounds/calendar.jpg');
+}
+
+.bg-projects {
+    --background-image: url('/public/img/backgrounds/projects.jpg');
+}
+
+.bg-tasks {
+    --background-image: url('/public/img/backgrounds/tasks.jpg');
+}
+
+/* Dark mode overrides for specific pages */
+.dark-mode .bg-login,
+.dark-mode .bg-register,
+.dark-mode .bg-calendar,
+.dark-mode .bg-projects,
+.dark-mode .bg-tasks {
+    --background-overlay: rgba(0, 0, 0, 0.7);
+}
+
+/* Card styling with theme variables */
+.card {
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
+    color: var(--text-color);
+}
+
+/* Link styling */
+a {
+    color: var(--link-color);
+}
+
+a:hover {
+    color: var(--link-color-hover, darker(var(--link-color), 15%));
+}
+
+/* Theme switcher styles */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.theme-switch-wrapper .mode-text {
+    margin-right: 8px;
+}
+
+.theme-switch-wrapper .mode-icon {
+    cursor: pointer;
+    transition: color 0.3s ease;
+    color: #007bff;
+}
+
+[data-theme="dark"] .mode-icon {
+    color: #f8f9fa;
+}
+
+/* Form elements theming */
+.form-control {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--card-border);
+}
+
+.form-control:focus {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+/* Modal theming */
+.modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.modal-header, .modal-footer {
+    border-color: var(--card-border);
+}
+
+/* Button theming - primary buttons */
+.btn-primary {
+    background-color: var(--link-color);
+    border-color: var(--link-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--link-color-hover, darker(var(--link-color), 15%));
+    border-color: var(--link-color-hover, darker(var(--link-color), 15%));
+}
+
+/* Calendar theming */
+.fc-event {
+    border-color: var(--link-color);
+    background-color: var(--link-color);
+}
+
+.fc-today {
+    background-color: rgba(var(--link-color-rgb, 2, 117, 216), 0.1) !important;
+}
+
+/* Karty projektov a úloh v tmavom režime */
+[data-theme="dark"] .card {
+    background-color: var(--card-bg) !important;
+    border-color: #333 !important;
+} 
+
+/* components.css */
+/**
+ * Component styles
+ * 
+ * Styles for reusable components throughout the application
+ */
+
+/* Scrollable area styling */
+.ps--active-y {
+    position: static;
+}
+
+/* Todo indicators with different colors */
+.todo-indicator-blue {
+    background-color: #0275d8;
+}
+
+.todo-indicator-tile {
+    background-color: #5bc0de;
+}
+
+.todo-indicator-green {
+    background-color: #5cb85c;
+}
+
+.todo-indicator-orange {
+    background-color: #f0ad4e;
+}
+
+.todo-indicator-red {
+    background-color: #d9534f;
+}
+
+.todo-indicator-black {
+    background-color: #292b2c;
+}
+
+/* Utility classes */
+.nowrap {
+    white-space: nowrap;
+}
+
+/* Color options for selects */
+.select-color-blue {
+    color: #0275d8;
+}
+
+.select-color-tile {
+    color: #5bc0de;
+}
+
+.select-color-green {
+    color: #5cb85c;
+}
+
+.select-color-orange {
+    color: #f0ad4e;
+}
+
+.select-color-red {
+    color: #d9534f;
+}
+
+.select-color-black {
+    color: #292b2c;
+}
+
+/* Select Dropdown Color Overrides */
+select.color-select {
+    font-weight: bold !important;
+}
+
+select.color-select option {
+    font-weight: bold !important;
+}
+
+/* Override Bootstrap's default styling for selects */
+select[name="colour"] option,
+select[name="project_colour"] option,
+select[name="task_colour"] option {
+    font-weight: bold !important;
+}
+
+/* Specific styling for color select options in the dropdown */
+select[name="colour"] option[value="#5cb85c"],
+select[name="project_colour"] option[value="#5cb85c"],
+select[name="task_colour"] option[value="#5cb85c"] {
+    color: #5cb85c !important;
+}
+
+select[name="colour"] option[value="#f0ad4e"],
+select[name="project_colour"] option[value="#f0ad4e"],
+select[name="task_colour"] option[value="#f0ad4e"] {
+    color: #f0ad4e !important;
+}
+
+select[name="colour"] option[value="#d9534f"],
+select[name="project_colour"] option[value="#d9534f"],
+select[name="task_colour"] option[value="#d9534f"] {
+    color: #d9534f !important;
+}
+
+select[name="colour"] option[value="#0275d8"],
+select[name="project_colour"] option[value="#0275d8"],
+select[name="task_colour"] option[value="#0275d8"] {
+    color: #0275d8 !important;
+}
+
+select[name="colour"] option[value="#5bc0de"],
+select[name="project_colour"] option[value="#5bc0de"],
+select[name="task_colour"] option[value="#5bc0de"] {
+    color: #5bc0de !important;
+}
+
+select[name="colour"] option[value="#292b2c"],
+select[name="project_colour"] option[value="#292b2c"],
+select[name="task_colour"] option[value="#292b2c"] {
+    color: #292b2c !important;
+}
+
+/* Make sure selected option is visible with appropriate color */
+select.color-select option:checked {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+} 
+
+/* theme-icons.css */
+/**
+ * Theme icons styles
+ * 
+ * Defines styles for icons related to theme switching
+ */
+
+/* Moon icon for dark mode toggle */
+.fa-moon.mode-icon {
+    color: #4169E1 !important;
+} 
+
+/* select-colors.css */
+/**
+ * Select Colors
+ * 
+ * CSS styles specifically for color select elements
+ */
+
+/* Reset select element appearance */
+select[name="colour"],
+select[name="project_colour"],
+select[name="task_colour"] {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    color: inherit !important;
+    font-weight: bold !important;
+    background-color: #ffffff !important; /* Always white background */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.7em top 50%;
+    background-size: 0.65em auto;
+    padding-right: 1.4em;
+}
+
+/* High-specificity selectors for color selects to ensure they're applied */
+body select[name="colour"],
+body select[name="project_colour"],
+body select[name="task_colour"] {
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.4) !important;
+    background-color: #ffffff !important; /* Reinforcing white background */
+}
+
+/* High-specificity selectors for dropdown options */
+body select[name="colour"] option,
+body select[name="project_colour"] option,
+body select[name="task_colour"] option {
+    font-weight: bold !important;
+    text-shadow: none !important;
+}
+
+/* Color specific rules - using very specific selectors to ensure they override other styles */
+body select[name="colour"] option[value="#5cb85c"],
+body select[name="project_colour"] option[value="#5cb85c"],
+body select[name="task_colour"] option[value="#5cb85c"],
+option[value="#5cb85c"] {
+    color: #5cb85c !important;
+    background-color: transparent !important;
+}
+
+body select[name="colour"] option[value="#f0ad4e"],
+body select[name="project_colour"] option[value="#f0ad4e"],
+body select[name="task_colour"] option[value="#f0ad4e"],
+option[value="#f0ad4e"] {
+    color: #f0ad4e !important;
+    background-color: transparent !important;
+}
+
+body select[name="colour"] option[value="#d9534f"],
+body select[name="project_colour"] option[value="#d9534f"],
+body select[name="task_colour"] option[value="#d9534f"],
+option[value="#d9534f"] {
+    color: #d9534f !important;
+    background-color: transparent !important;
+}
+
+/* Firefox specific fixes */
+@-moz-document url-prefix() {
+    select[name="colour"],
+    select[name="project_colour"],
+    select[name="task_colour"] {
+        text-shadow: 0px 0px 0px currentColor !important;
+        color: transparent !important;
+    }
+}
+
+/* Selected option state */
+select[name="colour"] option:checked,
+select[name="project_colour"] option:checked,
+select[name="task_colour"] option:checked {
+    font-weight: bold !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+} 
+
+/* modal-colors.css */
+/**
+ * Modal color styles
+ * 
+ * Defines color styles for event modals
+ */
+
+/* Color options for event modals */
+.color-option-blue {
+    color: #0275d8;
+}
+
+.color-option-tile {
+    color: #5bc0de;
+}
+
+.color-option-green {
+    color: #5cb85c;
+}
+
+.color-option-orange {
+    color: #f0ad4e;
+}
+
+.color-option-red {
+    color: #d9534f;
+}
+
+.color-option-black {
+    color: #292b2c;
+} 
+

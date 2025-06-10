@@ -1,0 +1,81 @@
+/**
+ * Select Colors
+ * 
+ * CSS styles specifically for color select elements
+ */
+
+/* Reset select element appearance */
+select[name="colour"],
+select[name="project_colour"],
+select[name="task_colour"] {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    color: inherit !important;
+    font-weight: bold !important;
+    background-color: #ffffff !important; /* Always white background */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.7em top 50%;
+    background-size: 0.65em auto;
+    padding-right: 1.4em;
+}
+
+/* High-specificity selectors for color selects to ensure they're applied */
+body select[name="colour"],
+body select[name="project_colour"],
+body select[name="task_colour"] {
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.4) !important;
+    background-color: #ffffff !important; /* Reinforcing white background */
+}
+
+/* High-specificity selectors for dropdown options */
+body select[name="colour"] option,
+body select[name="project_colour"] option,
+body select[name="task_colour"] option {
+    font-weight: bold !important;
+    text-shadow: none !important;
+}
+
+/* Color specific rules - using very specific selectors to ensure they override other styles */
+body select[name="colour"] option[value="#5cb85c"],
+body select[name="project_colour"] option[value="#5cb85c"],
+body select[name="task_colour"] option[value="#5cb85c"],
+option[value="#5cb85c"] {
+    color: #5cb85c !important;
+    background-color: transparent !important;
+}
+
+body select[name="colour"] option[value="#f0ad4e"],
+body select[name="project_colour"] option[value="#f0ad4e"],
+body select[name="task_colour"] option[value="#f0ad4e"],
+option[value="#f0ad4e"] {
+    color: #f0ad4e !important;
+    background-color: transparent !important;
+}
+
+body select[name="colour"] option[value="#d9534f"],
+body select[name="project_colour"] option[value="#d9534f"],
+body select[name="task_colour"] option[value="#d9534f"],
+option[value="#d9534f"] {
+    color: #d9534f !important;
+    background-color: transparent !important;
+}
+
+/* Firefox specific fixes */
+@-moz-document url-prefix() {
+    select[name="colour"],
+    select[name="project_colour"],
+    select[name="task_colour"] {
+        text-shadow: 0px 0px 0px currentColor !important;
+        color: transparent !important;
+    }
+}
+
+/* Selected option state */
+select[name="colour"] option:checked,
+select[name="project_colour"] option:checked,
+select[name="task_colour"] option:checked {
+    font-weight: bold !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+} 

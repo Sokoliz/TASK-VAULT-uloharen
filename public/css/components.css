@@ -1,0 +1,123 @@
+/**
+ * Component styles
+ * 
+ * Styles for reusable components throughout the application
+ */
+
+/* Scrollable area styling */
+.ps--active-y {
+    position: static;
+}
+
+/* Todo indicators with different colors */
+.todo-indicator-blue {
+    background-color: #0275d8;
+}
+
+.todo-indicator-tile {
+    background-color: #5bc0de;
+}
+
+.todo-indicator-green {
+    background-color: #5cb85c;
+}
+
+.todo-indicator-orange {
+    background-color: #f0ad4e;
+}
+
+.todo-indicator-red {
+    background-color: #d9534f;
+}
+
+.todo-indicator-black {
+    background-color: #292b2c;
+}
+
+/* Utility classes */
+.nowrap {
+    white-space: nowrap;
+}
+
+/* Color options for selects */
+.select-color-blue {
+    color: #0275d8;
+}
+
+.select-color-tile {
+    color: #5bc0de;
+}
+
+.select-color-green {
+    color: #5cb85c;
+}
+
+.select-color-orange {
+    color: #f0ad4e;
+}
+
+.select-color-red {
+    color: #d9534f;
+}
+
+.select-color-black {
+    color: #292b2c;
+}
+
+/* Select Dropdown Color Overrides */
+select.color-select {
+    font-weight: bold !important;
+}
+
+select.color-select option {
+    font-weight: bold !important;
+}
+
+/* Override Bootstrap's default styling for selects */
+select[name="colour"] option,
+select[name="project_colour"] option,
+select[name="task_colour"] option {
+    font-weight: bold !important;
+}
+
+/* Specific styling for color select options in the dropdown */
+select[name="colour"] option[value="#5cb85c"],
+select[name="project_colour"] option[value="#5cb85c"],
+select[name="task_colour"] option[value="#5cb85c"] {
+    color: #5cb85c !important;
+}
+
+select[name="colour"] option[value="#f0ad4e"],
+select[name="project_colour"] option[value="#f0ad4e"],
+select[name="task_colour"] option[value="#f0ad4e"] {
+    color: #f0ad4e !important;
+}
+
+select[name="colour"] option[value="#d9534f"],
+select[name="project_colour"] option[value="#d9534f"],
+select[name="task_colour"] option[value="#d9534f"] {
+    color: #d9534f !important;
+}
+
+select[name="colour"] option[value="#0275d8"],
+select[name="project_colour"] option[value="#0275d8"],
+select[name="task_colour"] option[value="#0275d8"] {
+    color: #0275d8 !important;
+}
+
+select[name="colour"] option[value="#5bc0de"],
+select[name="project_colour"] option[value="#5bc0de"],
+select[name="task_colour"] option[value="#5bc0de"] {
+    color: #5bc0de !important;
+}
+
+select[name="colour"] option[value="#292b2c"],
+select[name="project_colour"] option[value="#292b2c"],
+select[name="task_colour"] option[value="#292b2c"] {
+    color: #292b2c !important;
+}
+
+/* Make sure selected option is visible with appropriate color */
+select.color-select option:checked {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+} 

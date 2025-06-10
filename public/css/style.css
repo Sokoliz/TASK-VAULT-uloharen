@@ -25,6 +25,12 @@ body {
 	background-attachment: fixed;
 }
 
+/* Prevent text wrapping in navbar items */
+.nowrap {
+    white-space: nowrap !important;
+    display: inline-block !important;
+}
+
 /* --------------------- LOGO -------------------------- */
 
 .logo_text {
@@ -394,5 +400,41 @@ body.dark-mode h6,
 body.dark-mode .card-title,
 body.dark-mode .btn.text-primary {
     color: #f0f0f0 !important;
+}
+
+/* --------------------- MODAL DIALOGS --------------------- */
+.modal-dialog {
+    margin-top: 0;
+    margin-bottom: 0;
+    position: relative;
+    top: 0;
+}
+
+.modal.fade .modal-dialog {
+    transform: translate(0, 0) !important;
+    transition: opacity 0.15s linear;
+}
+
+.modal.show .modal-dialog {
+    transform: translate(0, 0) !important;
+}
+
+.modal-content {
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    margin-top: 20px;
+}
+
+/* Dark mode styles for modals */
+.dark-mode .modal-content {
+    background-color: #283548;
+    color: #e0e0e0;
+}
+
+.dark-mode .modal-header {
+    border-bottom-color: #374151;
+}
+
+.dark-mode .modal-footer {
+    border-top-color: #374151;
 }
 

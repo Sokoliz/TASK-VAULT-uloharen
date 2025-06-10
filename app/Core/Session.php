@@ -1,41 +1,70 @@
 <?php
 namespace App\Core;
 
-// Trieda pre správu sedení používateľov pomocou PHP sessions
 class Session
 {
-    // Metóda pre začatie sedenia, ak ešte nie je aktívne
     public static function start()
     {
-        // Kontrola, či sedenie už nie je aktívne
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+        
+        // Uistíme sa, že $_SESSION je inicializované
+        if (!isset($_SESSION)) {
+            $_SESSION = array();
+        }
     }
 
-    // Metóda pre nastavenie hodnoty v sedení podľa kľúča
     public static function set($key, $value)
     {
+        // Uistíme sa, že $_SESSION je inicializované
+        if (!isset($_SESSION)) {
+            self::start();
+        }
+        
         $_SESSION[$key] = $value;
     }
 
-    // Metóda pre získanie hodnoty zo sedenia podľa kľúča
-    // Ak kľúč neexistuje, vráti null
     public static function get($key)
     {
+        // Uistíme sa, že $_SESSION je inicializované
+        if (!isset($_SESSION)) {
+            self::start();
+        }
+        
         return $_SESSION[$key] ?? null;
     }
 
-    // Metóda pre zničenie sedenia (odhlásenie používateľa)
     public static function destroy()
     {
+        // Uistíme sa, že $_SESSION je inicializované
+        if (!isset($_SESSION)) {
+            self::start();
+        }
+        
+        // Kompletne vyčistíme session
+        $_SESSION = array();
+        
+        // Ak používame cookies, tak ich vymažeme
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        
+        // Nakoniec zničíme samotnú session
         session_destroy();
     }
 
-    // Metóda pre kontrolu, či je používateľ prihlásený
-    // Vracia true, ak existuje user_id v sedení
     public static function isLoggedIn(): bool
     {
+        // Uistíme sa, že $_SESSION je inicializované
+        if (!isset($_SESSION)) {
+            self::start();
+        }
+        
         return isset($_SESSION['user_id']);
     }
 }

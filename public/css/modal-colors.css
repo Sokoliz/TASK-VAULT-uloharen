@@ -1,0 +1,30 @@
+/**
+ * Modal color styles
+ * 
+ * Defines color styles for event modals
+ */
+
+/* Color options for event modals */
+.color-option-blue {
+    color: #0275d8;
+}
+
+.color-option-tile {
+    color: #5bc0de;
+}
+
+.color-option-green {
+    color: #5cb85c;
+}
+
+.color-option-orange {
+    color: #f0ad4e;
+}
+
+.color-option-red {
+    color: #d9534f;
+}
+
+.color-option-black {
+    color: #292b2c;
+} 
