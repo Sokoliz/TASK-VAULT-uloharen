@@ -6,28 +6,20 @@ require_once(__DIR__ . '/../Views/events/modals/Modal.php');
 require_once(__DIR__ . '/../Views/events/modals/TaskEditModal.php');
 
 /**
- * Controller for displaying the task edit modal
+ * Controller pre zobrazenie modálneho okna na úpravu úlohy
  */
 class TaskEditModalController {
-    /**
-     * Task data
-     * 
-     * @var array
-     */
+    
     private $taskData;
     
-    /**
-     * Task index
-     * 
-     * @var int
-     */
+    
     private $taskIndex;
     
     /**
-     * Constructor
+     * Konštruktor
      * 
-     * @param array $taskData Task data
-     * @param int $taskIndex Task index
+     * @param array $taskData Dáta úlohy
+     * @param int $taskIndex Index úlohy
      */
     public function __construct($taskData = [], $taskIndex = 0) {
         $this->taskData = $taskData;
@@ -35,29 +27,32 @@ class TaskEditModalController {
     }
     
     /**
-     * Render the modal
+     * Renderovanie modálneho okna
      * 
-     * @return string HTML for the modal
+     * @return string HTML pre modálne okno
      */
     public function render() {
-        // Create and render the modal
+        // Vytvorenie a renderovanie modálneho okna
+        // Podobne ako u ostatných modálnych okien, predávam dáta do view
         $modal = new TaskEditModal($this->taskData, $this->taskIndex);
         return $modal->render();
     }
     
     /**
-     * Display the modal
+     * Zobrazenie modálneho okna
      */
     public function display() {
         echo $this->render();
     }
 }
 
-// Get task data and index from variables in scope
-// In a real application, these would come from a database or request parameters
+// Získanie dát a indexu úlohy z premenných v scope
+// V skutočnej aplikácii by som tieto dáta získaval z databázy
+// V budúcnosti by som toto mohol prerobiť na použitie GET parametrov
 $taskData = isset($s) ? $s : [];
 $taskIndex = isset($i) ? $i : 0;
 
-// Create and run the controller
+// Vytvorenie a spustenie controllera
+// Jednoduchý vzorec, ktorý sa opakuje vo viacerých controlleroch
 $controller = new TaskEditModalController($taskData, $taskIndex);
 $controller->display(); 

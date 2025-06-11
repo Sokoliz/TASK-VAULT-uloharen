@@ -6,44 +6,38 @@ require_once(__DIR__ . '/../Views/events/modals/Modal.php');
 require_once(__DIR__ . '/../Views/events/modals/EventEditModal.php');
 
 /**
- * Controller for displaying the event edit modal
+ * Controller pre zobrazenie modálneho okna na úpravu udalosti
  */
 class EventEditModalController {
-    /**
-     * Event data
-     * 
-     * @var array|null
-     */
+    
     private $eventData;
     
-    /**
-     * Constructor
-     * 
-     * @param array|null $eventData Event data
-     */
+    
     public function __construct($eventData = null) {
         $this->eventData = $eventData;
     }
     
     /**
-     * Render the modal
+     * Renderovanie modálneho okna
      * 
-     * @return string HTML for the modal
+     * @return string HTML pre modálne okno
      */
     public function render() {
-        // Create and render the modal
+        // Vytvorenie a renderovanie modálneho okna
+        // V tomto prípade poskytujeme dáta udalosti, ktoré chceme upraviť
         $modal = new EventEditModal($this->eventData);
         return $modal->render('Save');
     }
     
     /**
-     * Display the modal
+     * Zobrazenie modálneho okna
      */
     public function display() {
         echo $this->render();
     }
 }
 
-// Create and run the controller
+// Vytvorenie a spustenie controllera
+// Toto je zjednodušená verzia, v reálnej aplikácii by som získaval dáta z DB
 $controller = new EventEditModalController();
 $controller->display(); 

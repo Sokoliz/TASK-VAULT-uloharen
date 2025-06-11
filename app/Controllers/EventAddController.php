@@ -7,31 +7,31 @@ require_once(__DIR__ . '/../Views/events/actions/Event.php');
 require_once(__DIR__ . '/../Views/events/actions/EventAdd.php');
 
 /**
- * Controller for adding events
+ * Controller pre pridávanie udalostí do kalendára
  */
 class EventAddController {
-    /**
-     * Process the event addition
-     * 
-     * @return void
-     */
+    
     public function process() {
-        // Start session using Session class
+        // Spustenie session pomocou Session triedy
+        // Toto je lepšie ako používať natívne PHP session funkcie
         Session::start();
 
-        // Check if user is logged in
+        // Kontrola, či je používateľ prihlásený
+        // Nechcem, aby niekto pridával udalosti bez prihlásenia
         if (!Session::isLoggedIn()) {
             http_response_code(401);
             header('Location: /login');
             die();
         }
 
-        // Instantiate and run
+        // Vytvorenie inštancie a spustenie
+        // Toto by sa dalo vylepšiť použitím dependency injection
         $eventAdd = new EventAdd();
         $eventAdd->addEvent();
     }
 }
 
-// Create and run the controller
+// Vytvorenie a spustenie controllera
+// Toto je jednoduchšie ako používať router, ale nie je to najlepší prístup
 $controller = new EventAddController();
 $controller->process(); 

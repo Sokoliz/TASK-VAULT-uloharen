@@ -6,28 +6,20 @@ require_once(__DIR__ . '/../Views/events/modals/Modal.php');
 require_once(__DIR__ . '/../Views/events/modals/ProjectDeleteModal.php');
 
 /**
- * Controller for displaying the project delete modal
+ * Controller pre zobrazenie modálneho okna na vymazanie projektu
  */
 class ProjectDeleteModalController {
-    /**
-     * Project data
-     * 
-     * @var array
-     */
+    
     private $projectData;
     
-    /**
-     * Project index
-     * 
-     * @var int
-     */
+    
     private $projectIndex;
     
     /**
-     * Constructor
+     * Konštruktor
      * 
-     * @param array $projectData Project data
-     * @param int $projectIndex Project index
+     * @param array $projectData Dáta projektu
+     * @param int $projectIndex Index projektu
      */
     public function __construct($projectData = [], $projectIndex = 0) {
         $this->projectData = $projectData;
@@ -35,29 +27,32 @@ class ProjectDeleteModalController {
     }
     
     /**
-     * Render the modal
+     * Renderovanie modálneho okna
      * 
-     * @return string HTML for the modal
+     * @return string HTML pre modálne okno
      */
     public function render() {
-        // Create and render the modal
+        // Vytvorenie a renderovanie modálneho okna
+        // Posielam aj dáta projektu, aby sa zobrazili detaily mazaného projektu
         $modal = new ProjectDeleteModal($this->projectData, $this->projectIndex);
         return $modal->render('Delete');
     }
     
     /**
-     * Display the modal
+     * Zobrazenie modálneho okna
      */
     public function display() {
         echo $this->render();
     }
 }
 
-// Get project data and index from variables in scope
-// In a real application, these would come from a database or request parameters
+// Získanie dát a indexu projektu z premenných v scope
+// V reálnej aplikácii by tieto údaje prišli z databázy alebo z GET parametrov
+// Nie som si istý, či je toto najlepší spôsob, ale funguje to
 $projectData = isset($p) ? $p : [];
 $projectIndex = isset($i) ? $i : 0;
 
-// Create and run the controller
+// Vytvorenie a spustenie controllera
+// Modálne okno na mazanie potrebuje vedieť, ktorý projekt sa má vymazať
 $controller = new ProjectDeleteModalController($projectData, $projectIndex);
 $controller->display(); 

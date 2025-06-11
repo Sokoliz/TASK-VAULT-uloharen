@@ -6,28 +6,19 @@ require_once(__DIR__ . '/../Views/events/modals/Modal.php');
 require_once(__DIR__ . '/../Views/events/modals/ProjectEditModal.php');
 
 /**
- * Controller for displaying the project edit modal
+ * Controller pre zobrazenie modálneho okna na úpravu projektu
  */
 class ProjectEditModalController {
-    /**
-     * Project data
-     * 
-     * @var array
-     */
+    
     private $projectData;
     
-    /**
-     * Project index
-     * 
-     * @var int
-     */
     private $projectIndex;
     
     /**
-     * Constructor
+     * Konštruktor
      * 
-     * @param array $projectData Project data
-     * @param int $projectIndex Project index
+     * @param array $projectData Dáta projektu
+     * @param int $projectIndex Index projektu
      */
     public function __construct($projectData = [], $projectIndex = 0) {
         $this->projectData = $projectData;
@@ -35,29 +26,32 @@ class ProjectEditModalController {
     }
     
     /**
-     * Render the modal
+     * Renderovanie modálneho okna
      * 
-     * @return string HTML for the modal
+     * @return string HTML pre modálne okno
      */
     public function render() {
-        // Create and render the modal
+        // Vytvorenie a renderovanie modálneho okna
+        // Názov tlačidla "Update" sa používa na odlíšenie od formulára na pridanie
         $modal = new ProjectEditModal($this->projectData, $this->projectIndex);
         return $modal->render('Update');
     }
     
     /**
-     * Display the modal
+     * Zobrazenie modálneho okna
      */
     public function display() {
         echo $this->render();
     }
 }
 
-// Get project data and index from variables in scope
-// In a real application, these would come from a database or request parameters
+// Získanie dát a indexu projektu z premenných v scope
+// V reálnej aplikácii by tieto údaje prišli z databázy alebo parametrov requestu
+// Asi by to bolo lepšie riešiť cez GET parameter a potom načítať z DB
 $projectData = isset($p) ? $p : [];
 $projectIndex = isset($i) ? $i : 0;
 
-// Create and run the controller
+// Vytvorenie a spustenie controllera
+// Opäť ten istý vzorec ako pri ostatných modal controlleroch
 $controller = new ProjectEditModalController($projectData, $projectIndex);
 $controller->display(); 

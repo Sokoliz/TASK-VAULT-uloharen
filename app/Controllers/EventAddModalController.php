@@ -6,28 +6,26 @@ require_once(__DIR__ . '/../Views/events/modals/Modal.php');
 require_once(__DIR__ . '/../Views/events/modals/EventAddModal.php');
 
 /**
- * Controller for displaying the event add modal
+ * Controller pre zobrazenie modálneho okna na pridanie udalosti
  */
 class EventAddModalController {
-    /**
-     * Render the modal
-     * 
-     * @return string HTML for the modal
-     */
+    
     public function render() {
-        // Create and render the modal
+        // Vytvorenie a renderovanie modálneho okna
+        // Toto je jednoduchý prípad, nepotrebujem žiadne dáta z modelu
         $modal = new EventAddModal();
         return $modal->render('Add');
     }
     
     /**
-     * Display the modal
+     * Zobrazenie modálneho okna
      */
     public function display() {
         echo $this->render();
     }
 }
 
-// Create and run the controller
+// Vytvorenie a spustenie controllera
+// Opäť by sa toto dalo lepšie riešiť cez router
 $controller = new EventAddModalController();
 $controller->display(); 

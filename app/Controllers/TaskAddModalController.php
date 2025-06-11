@@ -6,45 +6,48 @@ require_once(__DIR__ . '/../Views/events/modals/Modal.php');
 require_once(__DIR__ . '/../Views/events/modals/TaskAddModal.php');
 
 /**
- * Controller for displaying the task add modal
+ * Controller pre zobrazenie modálneho okna na pridanie úlohy
  */
 class TaskAddModalController {
     /**
-     * Project ID for the task
+     * ID projektu pre úlohu
      */
     private $project_id;
     
     /**
-     * Constructor
+     * Konštruktor
      * 
-     * @param int $project_id Project ID for the task
+     * @param int $project_id ID projektu pre úlohu
      */
     public function __construct($project_id) {
         $this->project_id = $project_id;
     }
     
     /**
-     * Render the modal
+     * Renderovanie modálneho okna
      * 
-     * @return string HTML for the modal
+     * @return string HTML pre modálne okno
      */
     public function render() {
-        // Create and render the modal
+        // Vytvorenie a renderovanie modálneho okna
+        // Tu posielam project_id, aby úloha mohla byť priradená konkrétnemu projektu
         $modal = new TaskAddModal($this->project_id);
         return $modal->render('Create');
     }
     
     /**
-     * Display the modal
+     * Zobrazenie modálneho okna
      */
     public function display() {
         echo $this->render();
     }
 }
 
-// Get project ID from the URL parameter
+// Získanie ID projektu z parametra URL
+// Toto je lepšie riešenie ako pri predchádzajúcich controlleroch - používa GET parameter
 $id_project_for_task = isset($_GET['idProject']) ? $_GET['idProject'] : 0;
 
-// Create and run the controller
+// Vytvorenie a spustenie controllera
+// Teraz potrebujeme aj ID projektu pre správne vytvorenie úlohy
 $controller = new TaskAddModalController($id_project_for_task);
 $controller->display(); 

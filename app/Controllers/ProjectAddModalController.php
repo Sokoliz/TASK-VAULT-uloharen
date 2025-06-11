@@ -6,33 +6,36 @@ require_once(__DIR__ . '/../Views/events/modals/Modal.php');
 require_once(__DIR__ . '/../Views/events/modals/ProjectAddModal.php');
 
 /**
- * Controller for displaying the project add modal
+ * Controller pre zobrazenie modálneho okna na pridanie projektu
  */
 class ProjectAddModalController {
     /**
-     * Render the modal
+     * Renderovanie modálneho okna
      * 
-     * @return string HTML for the modal
+     * @return string HTML pre modálne okno
      */
     public function render() {
-        // Create and render the modal
+        // Vytvorenie a renderovanie modálneho okna
+        // Na názve tlačidla záleží, preto ho posielam ako parameter 'Create'
         $modal = new ProjectAddModal();
         $modalHtml = $modal->render('Create');
 
-        // Add reference to external JavaScript file for form validation
+        // Pridanie odkazu na externý JavaScript súbor pre validáciu formulára
+        // Validácia na strane klienta šetrí dáta a čas servera
         $modalHtml .= '<script src="/public/js/project-form-validation.js"></script>';
 
         return $modalHtml;
     }
     
     /**
-     * Display the modal
+     * Zobrazenie modálneho okna
      */
     public function display() {
         echo $this->render();
     }
 }
 
-// Create and run the controller
+// Vytvorenie a spustenie controllera
+// Tieto modálne okná sú jednoduché, preto nie je potrebný žiadny parameter
 $controller = new ProjectAddModalController();
 $controller->display(); 

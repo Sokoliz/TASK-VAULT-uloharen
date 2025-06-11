@@ -6,28 +6,20 @@ require_once(__DIR__ . '/../Views/events/modals/Modal.php');
 require_once(__DIR__ . '/../Views/events/modals/EditTaskModal.php');
 
 /**
- * Controller for displaying the edit task modal
+ * Controller pre zobrazenie modálneho okna na úpravu úlohy
  */
 class EditTaskModalController {
-    /**
-     * Task data
-     * 
-     * @var array
-     */
+    
     private $taskData;
     
-    /**
-     * Task index
-     * 
-     * @var int
-     */
+    
     private $taskIndex;
     
     /**
-     * Constructor
+     * Konštruktor
      * 
-     * @param array $taskData Task data
-     * @param int $taskIndex Task index
+     * @param array $taskData Dáta úlohy
+     * @param int $taskIndex Index úlohy
      */
     public function __construct($taskData = [], $taskIndex = 0) {
         $this->taskData = $taskData;
@@ -35,29 +27,32 @@ class EditTaskModalController {
     }
     
     /**
-     * Render the modal
+     * Renderovanie modálneho okna
      * 
-     * @return string HTML for the modal
+     * @return string HTML pre modálne okno
      */
     public function render() {
-        // Create and render the modal
+        // Vytvorenie a renderovanie modálneho okna
+        // Tu využívam dependency injection a posúvam dáta do view
         $modal = new EditTaskModal($this->taskData, $this->taskIndex);
         return $modal->render();
     }
     
     /**
-     * Display the modal
+     * Zobrazenie modálneho okna
      */
     public function display() {
         echo $this->render();
     }
 }
 
-// Get task data and index from variables in scope
-// In a real application, these would come from a database or request parameters
+// Získanie dát a indexu úlohy z premenných v scope
+// V reálnej aplikácii by tieto údaje prišli z databázy alebo parametrov requestu
+// Toto vyzerá trochu divne, určite by som to v reálnom projekte robil inak
 $taskData = isset($s) ? $s : [];
 $taskIndex = isset($i) ? $i : 0;
 
-// Create and run the controller
+// Vytvorenie a spustenie controllera
+// Dalo by sa to riešiť cez Router, ale toto je jednoduchšie riešenie
 $controller = new EditTaskModalController($taskData, $taskIndex);
 $controller->display(); 
