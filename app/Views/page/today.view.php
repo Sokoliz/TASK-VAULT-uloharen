@@ -1,24 +1,15 @@
 <?php
 require_once('View.php');
 
-/**
- * TodayView class for rendering the today's events and tasks page
- */
+// Trieda TodayView pre zobrazenie stránky s dnešnými udalosťami a úlohami
+// Táto stránka ukazuje používateľovi, čo má dnes na pláne
 class TodayView extends View {
-    /**
-     * Constructor
-     * 
-     * @param array $data Data to be passed to the view
-     */
+    
     public function __construct($data = []) {
         parent::__construct('Today\'s Activities', false, $data);
     }
     
-    /**
-     * Render the head section with additional styles and scripts
-     * 
-     * @return string HTML for the head section
-     */
+    
     protected function renderHead() {
         $html = parent::renderHead();
         $html .= '<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet" type="text/css" />';
@@ -29,14 +20,7 @@ class TodayView extends View {
         return $html;
     }
     
-    /**
-     * Render a card with a list of items
-     * 
-     * @param string $title Card title
-     * @param array $items Items to display
-     * @param string $type Type of items (events or projects)
-     * @return string HTML for the card
-     */
+    
     protected function renderCard($title, $items, $type = 'events') {
         $html = '<div class="card-hover-shadow-2x mb-3 card text-dark">';
         $html .= '<div class="card-header-tab card-header">';
@@ -82,11 +66,7 @@ class TodayView extends View {
         return $html;
     }
     
-    /**
-     * Render the task column
-     * 
-     * @return string HTML for the task column
-     */
+    
     protected function renderTaskColumn() {
         $tasks = $this->getData('formatted_tasks', []);
         
@@ -129,11 +109,7 @@ class TodayView extends View {
         return $html;
     }
     
-    /**
-     * Render the events column
-     * 
-     * @return string HTML for the events column
-     */
+    
     protected function renderEventsColumn() {
         $events_start = $this->getData('events_start', []);
         $events_end = $this->getData('events_end', []);
@@ -146,11 +122,7 @@ class TodayView extends View {
         return $html;
     }
     
-    /**
-     * Render the projects column
-     * 
-     * @return string HTML for the projects column
-     */
+    
     protected function renderProjectsColumn() {
         $projects_start = $this->getData('projects_start', []);
         $projects_end = $this->getData('projects_end', []);
@@ -163,11 +135,7 @@ class TodayView extends View {
         return $html;
     }
     
-    /**
-     * Render the content section
-     * 
-     * @return string HTML for the content section
-     */
+    
     protected function renderContent() {
         // Nastavenie premenných pre navbar.php
         $isPublic = false;
@@ -183,7 +151,7 @@ class TodayView extends View {
         $html .= '<div class="row d-flex m-4 mt-2 justify-content-center">';
         $html .= '<h2 class="col-12 text-center mb-4 text-primary">HAPPENING TODAY</h2>';
         
-        // Render columns
+        // Renderujeme stĺpce
         $html .= $this->renderEventsColumn();
         $html .= $this->renderProjectsColumn();
         $html .= $this->renderTaskColumn();
@@ -194,7 +162,7 @@ class TodayView extends View {
     }
     
     /**
-     * Render the complete page
+     * Renderuje kompletnú stránku
      * 
      * @return string Complete HTML for the page
      */
@@ -202,21 +170,21 @@ class TodayView extends View {
         $html = '<!DOCTYPE html>';
         $html .= '<html lang="en">';
         
-        // Head section
+        // Sekcia head
         $html .= '<head>';
         $html .= $this->renderHead();
         $html .= '</head>';
         
-        // Body section with background class
+        // Sekcia body s triedou pozadia
         $html .= '<body class="bg">';
         
-        // Content
+        // Obsah
         $html .= $this->renderContent();
         
-        // Footer
+        // Pätička
         $html .= $this->renderFooter();
         
-        // Scripts
+        // Skripty
         $html .= $this->renderScripts();
         
         $html .= '</body>';

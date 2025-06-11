@@ -1,34 +1,21 @@
 <?php
 
-/**
- * Header class for rendering page headers
- */
+// Táto trieda sa stará o vykreslenie hlavičky stránky - obsahuje všetko čo treba v <head>
 class Header {
-    /**
-     * Page title
-     */
+    // Title stránky, bude v tagu <title>
     private $title;
     
-    /**
-     * Additional CSS files
-     */
+    // Extra CSS súbory, ktoré sa pridávajú do hlavičky
     private $cssFiles = [];
     
-    /**
-     * Additional JavaScript files
-     */
+    // JS súbory, ktoré budeme pridávať do stránky
     private $jsFiles = [];
     
-    /**
-     * Flag to use combined files for better performance
-     */
+    // Flag či použijeme skombinované súbory pre lepší výkon - načíta to len jeden veľký súbor namiesto viacerých malých
     private $useCombinedFiles = true;
     
-    /**
-     * Constructor
-     * 
-     * @param string $title Page title
-     */
+    // Konštruktor triedy, nastaví základný title a pridá potrebné CSS a JS súbory
+    // title - nadpis stránky, defaultne 'Productivity Hub'
     public function __construct($title = 'Productivity Hub') {
         $this->title = $title;
         
@@ -60,24 +47,18 @@ class Header {
         }
     }
     
-    /**
-     * Set the page title
-     * 
-     * @param string $title Page title
-     * @return self
-     */
+    // Nastav title stránky - užitočné keď potrebuješ zmeniť nadpis dynamicky
+    // title - nový nadpis stránky
+    // vráti $this aby sa dalo reťaziť volanie metód
     public function setTitle($title) {
         $this->title = $title;
         return $this;
     }
     
-    /**
-     * Add a CSS file
-     * 
-     * @param string $url URL of the CSS file
-     * @param bool $integrity Whether to add integrity attribute
-     * @return self
-     */
+    // Pridá CSS súbor do zoznamu súborov na načítanie
+    // url - cesta k CSS súboru
+    // integrity - či treba pridať integrity check (pre CDN súbory)
+    // vráti $this aby sa dalo reťaziť volanie metód
     public function addCssFile($url, $integrity = false) {
         $this->cssFiles[] = [
             'url' => $url,
@@ -86,13 +67,10 @@ class Header {
         return $this;
     }
     
-    /**
-     * Add a JavaScript file
-     * 
-     * @param string $url URL of the JavaScript file
-     * @param bool $defer Whether to add defer attribute
-     * @return self
-     */
+    // Pridá JavaScript súbor do zoznamu súborov na načítanie
+    // url - cesta k JS súboru
+    // defer - či sa má súbor načítať neskôr (neblokuje vykreslenie stránky)
+    // vráti $this aby sa dalo reťaziť volanie metód
     public function addJsFile($url, $defer = false) {
         $this->jsFiles[] = [
             'url' => $url,
@@ -101,11 +79,8 @@ class Header {
         return $this;
     }
     
-    /**
-     * Render meta tags
-     * 
-     * @return string HTML for meta tags
-     */
+    // Vygeneruje meta tagy pre HTML hlavičku
+    // fakt dôležité pre správne zobrazenie na mobiloch a encoding
     protected function renderMetaTags() {
         $html = '<!-- Meta tagy pre správne zobrazenie stránky -->' . PHP_EOL;
         $html .= '<meta charset="UTF-8">' . PHP_EOL;
@@ -113,18 +88,15 @@ class Header {
         return $html;
     }
     
-    /**
-     * Render CSS links
-     * 
-     * @return string HTML for CSS links
-     */
+    // Vygeneruje HTML kód pre všetky CSS linky
+    // najprv načíta externé CDN knižnice a potom naše vlastné súbory
     protected function renderCssLinks() {
         $html = '';
         
-        // Add Font Awesome
+        
         $html .= '<link href="' . $this->cssFiles[0]['url'] . '" rel="stylesheet">' . PHP_EOL;
         
-        // Add Bootstrap
+        
         $html .= '<!-- Bootstrap framework pre štýly -->' . PHP_EOL;
         $html .= '<link rel="stylesheet" href="' . $this->cssFiles[1]['url'] . '" media="all"';
         if ($this->cssFiles[1]['integrity']) {
@@ -132,21 +104,21 @@ class Header {
         }
         $html .= '>' . PHP_EOL;
         
-        // Add fonts
+        
         $html .= '<!-- Importované písma -->' . PHP_EOL;
         $html .= '<link href="' . $this->cssFiles[2]['url'] . '" rel="stylesheet">' . PHP_EOL;
         $html .= '<link href="' . $this->cssFiles[3]['url'] . '" rel="stylesheet">' . PHP_EOL;
         
-        // Add custom styles - either combined or individual
+        
         $html .= '<!-- Vlastné CSS štýly -->' . PHP_EOL;
         
         if ($this->useCombinedFiles) {
-            // Use the combined file with a version parameter for cache busting
+            
             $version = filemtime(__DIR__ . '/../../../public/css/style.css') . 
                       filemtime(__DIR__ . '/../../../public/css/dynamic-theme.css');
             $html .= '<link rel="stylesheet" href="/public/css/combine.php?v=' . $version . '">' . PHP_EOL;
         } else {
-            // Add individual CSS files
+            
             for ($i = 4; $i < count($this->cssFiles); $i++) {
                 $html .= '<link rel="stylesheet" href="' . $this->cssFiles[$i]['url'] . '">' . PHP_EOL;
             }
@@ -155,20 +127,14 @@ class Header {
         return $html;
     }
     
-    /**
-     * Render the title
-     * 
-     * @return string HTML for title
-     */
+    // Generuje HTML tag pre title stránky
+    // jednoduchá vec ale dôležitá pre SEO aj UX
     protected function renderTitle() {
         return '<title>' . $this->title . '</title>' . PHP_EOL;
     }
     
-    /**
-     * Render theme switch script reference
-     * 
-     * @return string HTML for including theme switch script
-     */
+    // Pridá JavaScript pre prepínanie svetlej/tmavej témy
+    // musí byť skoro na začiatku, aby sme predišli "flash of unstyled content"
     protected function renderThemeSwitchScript() {
         $html = '<!-- JavaScript pre tmavý režim -->' . PHP_EOL;
         
@@ -181,21 +147,18 @@ class Header {
         return $html;
     }
     
-    /**
-     * Render additional JavaScript files
-     * 
-     * @return string HTML for JavaScript includes
-     */
+    // Pridá zvyšné JavaScript súbory
+    // niektoré načítame s atribútom defer, aby neblokovali vykresľovanie stránky
     protected function renderJsIncludes() {
         $html = '';
         
         if ($this->useCombinedFiles) {
-            // Use the combined file with a version parameter for cache busting
+            
             $version = filemtime(__DIR__ . '/../../../public/js/theme-switch.js') . 
                       filemtime(__DIR__ . '/../../../public/js/dynamic-theme.js');
             $html .= '<script src="/public/js/combine.php?v=' . $version . '"></script>' . PHP_EOL;
             
-            // Include any additional JS files that aren't part of the combined set
+            
             $skip = ['/public/js/theme-switch.js', '/public/js/dynamic-theme.js', '/public/js/event-modal.js',
                     '/public/js/theme.js', '/public/js/clock.js', '/public/js/form-validation.js', 
                     '/public/js/modal-handler.js', '/public/js/delete-task-handler.js', 
@@ -231,11 +194,8 @@ class Header {
         return $html;
     }
     
-    /**
-     * Render the complete header
-     * 
-     * @return string Complete HTML for header
-     */
+    // Vykreslí kompletný obsah hlavičky <head>
+    // vlastne len spojí výstupy všetkých renderovacích metód
     public function render() {
         $html = $this->renderMetaTags();
         $html .= $this->renderCssLinks();
@@ -246,9 +206,8 @@ class Header {
         return $html;
     }
     
-    /**
-     * Display the header
-     */
+    // Vypíše hlavičku priamo na výstup
+    // praktická metóda keď nechceme len vrátiť HTML, ale rovno ho aj vypísať
     public function display() {
         echo $this->render();
     }

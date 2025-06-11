@@ -2,24 +2,16 @@
 require_once('View.php');
 require_once(__DIR__ . '/../events/modals/DeleteTaskModal.php');
 
-/**
- * ProjectsView class for rendering the projects page
- */
+// Trieda ProjectsView pre zobrazenie stránky s projektami
+// Táto stránka umožňuje používateľovi spravovať projekty a úlohy v štýle Kanban boardu
 class ProjectsView extends View {
-    /**
-     * Constructor
-     * 
-     * @param array $data Data to be passed to the view
-     */
+    // Konštruktor - inicializuje základné vlastnosti
     public function __construct($data = []) {
         parent::__construct('Projects', false, $data);
     }
     
-    /**
-     * Render the head section with additional styles and scripts
-     * 
-     * @return string HTML for the head section
-     */
+    // Renderuje sekciu hlavičky s dodatočnými štýlmi a skriptami
+    // Tu pridávame všetky potrebné JavaScripty a CSS súbory pre projekty
     protected function renderHead() {
         $html = parent::renderHead();
         $html .= '<script src="/public/js/theme.js"></script>';
@@ -33,15 +25,12 @@ class ProjectsView extends View {
         $html .= '<link href="/public/css/modal-colors.css" rel="stylesheet" />';
         $html .= '<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet" type="text/css" />';
         
-        // Remove inline styles and use the CSS file instead
+        
         return $html;
     }
     
-    /**
-     * Render the projects list
-     * 
-     * @return string HTML for the projects list
-     */
+    // Renderuje zoznam projektov
+    // V tejto časti sa zobrazujú všetky projekty používateľa v ľavom stĺpci
     protected function renderProjectsList() {
         $projects = $this->getData('projects', []);
         
@@ -79,7 +68,7 @@ class ProjectsView extends View {
                 $html .= '<button type="button" class="border-0 btn-transition btn btn-outline-success" data-toggle="modal" data-target="#project-edit-' . $i . '">';
                 $html .= '<i class="fas fa-pencil-alt"></i></button>';
                 
-                // Include edit project modal
+                // Includujeme modál pre editáciu projektu
                 ob_start();
                 require_once __DIR__ . '/../../Controllers/ProjectEditModalController.php';
                 $html .= ob_get_clean();
@@ -87,7 +76,7 @@ class ProjectsView extends View {
                 $html .= '<button type="button" class="border-0 btn-transition btn btn-outline-danger" data-toggle="modal" data-target="#project-delete-' . $i . '">';
                 $html .= '<i class="fas fa-trash-alt"></i></button>';
                 
-                // Include delete project modal
+                // Includujeme modál pre vymazanie projektu
                 ob_start();
                 require_once __DIR__ . '/../../Controllers/ProjectDeleteModalController.php';
                 $html .= ob_get_clean();
@@ -95,7 +84,7 @@ class ProjectsView extends View {
                 $html .= '</div>';
                 $html .= '</div>';
                 
-                // Project description (if available)
+                // Popis projektu (ak je k dispozícii)
                 if ($p['project_description'] !== '') {
                     $html .= '<a class="d-flex justify-content-center nav-link text-primary p-0" data-toggle="collapse" data-target="#collapse-p-' . $i . '" aria-expanded="true">';
                     $html .= '<span class="accicon"><i class="fa fa-angle-down rotate-icon pl-2 pr-2"></i></span>';
@@ -123,18 +112,8 @@ class ProjectsView extends View {
         return $html;
     }
     
-    /**
-     * Render the task column for a specific status
-     * 
-     * @param array $tasks Tasks to display
-     * @param string $status Status identifier ('todo', 'progress', 'complete')
-     * @param string $title Column title
-     * @param string $icon Column icon
-     * @param int $statusCode Status code (1, 2, 3)
-     * @param bool $allowLeft Whether to allow left movement
-     * @param bool $allowRight Whether to allow right movement
-     * @return string HTML for the task column
-     */
+    // Renderuje stĺpec úloh pre konkrétny status
+    // Táto metóda generuje jeden zo stĺpcov Kanban boardu (To Do, In Progress, Complete)
     protected function renderTaskColumn($tasks, $status, $title, $icon, $statusCode, $allowLeft = true, $allowRight = true) {
         $html = '<div class="col-4">';
         $html .= '<div class="card-hover-shadow-2x mb-3 card text-dark">';
@@ -171,21 +150,21 @@ class ProjectsView extends View {
                     $html .= '</div>';
                     $html .= '</a>';
                     
-                    // Task edit and delete buttons
+                    // Tlačidlá pre editáciu a vymazanie úlohy
                     $html .= '<div class="widget-content-right ml-auto">';
                     $html .= '<button type="button" class="border-0 btn-transition btn btn-outline-success" data-toggle="modal" data-target="#task-edit-' . $i . '">';
                     $html .= '<i class="fas fa-pencil-alt"></i></button>';
                     
-                    // Include edit task modal
+                    // Includujeme modál pre editáciu úlohy
                     ob_start();
-                    $s = $task; // Set the current task for the editTask modal
+                    $s = $task; // Nastavíme aktuálnu úlohu pre editTask modál
                     require_once __DIR__ . '/../../Controllers/TaskEditModalController.php';
                     $html .= ob_get_clean();
                     
                     $html .= '<button type="button" class="border-0 btn-transition btn btn-outline-danger" data-toggle="modal" data-target="#task-delete-' . $i . '">';
                     $html .= '<i class="fas fa-trash-alt"></i></button>';
                     
-                    // Use OOP modal instead of include
+                    // Používame OOP modál namiesto include
                     ob_start();
                     $deleteTaskModal = new \App\Views\Modals\DeleteTaskModal($task, $i);
                     $html .= $deleteTaskModal->render();
@@ -194,10 +173,10 @@ class ProjectsView extends View {
                     $html .= '</div>';
                     $html .= '</div>';
                     
-                    // Navigation buttons
+                    // Navigačné tlačidlá pre presun úlohy medzi stĺpcami
                     $html .= '<div class="d-flex justify-content-center">';
                     
-                    // Left button
+                    // Tlačidlo vľavo
                     if ($allowLeft) {
                         $html .= '<form name="id_task_left-' . $i . '" action="/task/left" method="POST" role="form">';
                         $html .= '<input hidden name="id_task" value=' . $task['id_task'] . '>';
@@ -210,7 +189,7 @@ class ProjectsView extends View {
                         $html .= '<button type="submit" class="border-0 btn-transition btn btn-outline-secondary" disabled><i class="fa fa-arrow-left"></i></button>';
                     }
                     
-                    // Right button
+                    // Tlačidlo vpravo
                     if ($allowRight) {
                         $html .= '<form name="id_task_right-' . $i . '" action="/task/right" method="POST" role="form">';
                         $html .= '<input hidden name="id_task" value=' . $task['id_task'] . '>';
@@ -242,11 +221,8 @@ class ProjectsView extends View {
         return $html;
     }
     
-    /**
-     * Render the tasks list
-     * 
-     * @return string HTML for the tasks list
-     */
+    // Renderuje zoznam úloh
+    // Tu sa generuje hlavný Kanban board s tromi stĺpcami úloh
     protected function renderTasksList() {
         $showTasks = $this->getData('show_tasks', []);
         
@@ -255,11 +231,11 @@ class ProjectsView extends View {
         $html .= '<div class="card-header-tab card-header d-flex justify-content-between">';
         $html .= '<h4 class="card-header-title font-weight-normal"><i class="fas fa-clipboard-list pr-3"></i>TASKS</h4>';
         
-        // Only show "New task" button if a project is selected
+        // Tlačidlo "New task" sa zobrazí len ak je vybraný projekt
         if (isset($_GET['idProject'])) {
             $html .= '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#new-task-modal">New task</button>';
             
-            // Include new task modal
+            // Includujeme modál pre pridanie novej úlohy
             ob_start();
             require_once __DIR__ . '/../../Controllers/TaskAddModalController.php';
             $html .= ob_get_clean();
@@ -272,13 +248,13 @@ class ProjectsView extends View {
         $html .= '<div class="ps-content">';
         $html .= '<div class="row m-2 mt-4">';
         
-        // To Do column
+        // Stĺpec To Do
         $html .= $this->renderTaskColumn($showTasks, 'todo', 'TO DO', 'fas fa-list', 1, false, true);
         
-        // In Progress column
+        // Stĺpec In Progress
         $html .= $this->renderTaskColumn($showTasks, 'ip', 'IN PROGRESS', 'fas fa-cogs', 2, true, true);
         
-        // Complete column
+        // Stĺpec Complete
         $html .= $this->renderTaskColumn($showTasks, 'c', 'COMPLETE', 'fas fa-check', 3, true, false);
         
         $html .= '</div>';
@@ -292,31 +268,25 @@ class ProjectsView extends View {
         return $html;
     }
     
-    /**
-     * Render additional scripts for datepicker functionality
-     * 
-     * @return string HTML for the additional scripts
-     */
+    // Renderuje dodatočné skripty pre funkcionalitu datepickera
+    // Tieto skripty sú potrebné pre prácu s dátumami v projektoch a úlohách
     protected function renderAdditionalScripts() {
         $html = parent::renderScripts();
         $html .= '<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>';
         $html .= '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>';
         
-        // Create a datepicker.js file to handle this functionality
+        // Vytvorili sme datepicker.js súbor pre spracovanie tejto funkcionality
         $html .= '<script src="/public/js/datepicker-init.js"></script>';
         
         return $html;
     }
     
-    /**
-     * Render alert messages from session
-     * 
-     * @return string HTML for the alert messages
-     */
+    // Renderuje upozornenia zo session
+    // Zobrazuje chybové a úspešné hlášky z predchádzajúcich akcií
     protected function renderAlerts() {
         $html = '';
         
-        // Check for project error message
+        // Kontrola chybovej hlášky pre projekt
         if (isset($_SESSION['project_error'])) {
             $html .= '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
             $html .= $_SESSION['project_error'];
@@ -325,13 +295,13 @@ class ProjectsView extends View {
             $html .= '</button>';
             $html .= '</div>';
             
-            // Clear the message
+            // Vymažeme hlášku
             unset($_SESSION['project_error']);
         }
         
-        // Project success message has been removed as requested
+        // Hláška o úspešnom projekte bola odstránená podľa požiadavky
         
-        // Check for task error message
+        // Kontrola chybovej hlášky pre úlohu
         if (isset($_SESSION['task_error'])) {
             $html .= '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
             $html .= $_SESSION['task_error'];
@@ -340,20 +310,17 @@ class ProjectsView extends View {
             $html .= '</button>';
             $html .= '</div>';
             
-            // Clear the message
+            // Vymažeme hlášku
             unset($_SESSION['task_error']);
         }
         
-        // Task success message has been removed as requested
+        // Hláška o úspešnej úlohe bola odstránená podľa požiadavky
         
         return $html;
     }
     
-    /**
-     * Render the content section
-     * 
-     * @return string HTML for the content section
-     */
+    // Renderuje sekciu obsahu
+    // Tu poskladáme celú stránku s projektami a úlohami
     protected function renderContent() {
         // Nastavenie premenných pre navbar.php
         $isPublic = false;
@@ -366,12 +333,12 @@ class ProjectsView extends View {
         include_once __DIR__.'/../parts/navbar.php';
         $html = ob_get_clean();
 
-        // Include new project modal
+        // Includujeme modál pre pridanie nového projektu
         ob_start();
         require_once __DIR__ . '/../../Controllers/ProjectAddModalController.php';
         $modalContent = ob_get_clean();
         
-        // Display alert messages without container
+        // Zobrazíme upozornenia bez kontajnera
         $html .= $this->renderAlerts();
         
         $html .= '<div class="row d-flex m-0 p-0 mt-4">';
@@ -379,38 +346,35 @@ class ProjectsView extends View {
         $html .= $this->renderTasksList();
         $html .= '</div>';
         
-        // Footer
+        // Pätička
         ob_start();
         require __DIR__ . '/../parts/footer.php';
         $html .= ob_get_clean();
         
-        // Add modal content at the end
+        // Pridáme obsah modálu na koniec
         $html .= $modalContent;
         
         return $html;
     }
     
-    /**
-     * Render the complete page
-     * 
-     * @return string Complete HTML for the page
-     */
+    // Renderuje kompletnú stránku
+    // Poskladá všetky časti do výsledného HTML
     public function render() {
         $html = '<!DOCTYPE html>';
         $html .= '<html lang="en">';
         
-        // Head section
+        // Sekcia head
         $html .= '<head>';
         $html .= $this->renderHead();
         $html .= '</head>';
         
-        // Body section with background class
+        // Sekcia body s triedou pozadia
         $html .= '<body class="bg">';
         
-        // Content
+        // Obsah
         $html .= $this->renderContent();
         
-        // Additional scripts for datepicker
+        // Dodatočné skripty pre datepicker
         $html .= $this->renderAdditionalScripts();
         
         $html .= '</body>';

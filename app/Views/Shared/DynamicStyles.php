@@ -12,14 +12,10 @@ use App\Utility\Utility;
  */
 class DynamicStyles 
 {
-    /**
-     * Konfigurácia obrázkov
-     */
+    
     private $imagesConfig;
     
-    /**
-     * Konštruktor
-     */
+    
     public function __construct() 
     {
         // Nastavenie typu obsahu na CSS
@@ -29,11 +25,7 @@ class DynamicStyles
         $this->imagesConfig = Utility::getImagesConfig();
     }
     
-    /**
-     * Generuje CSS pre pozadie
-     * 
-     * @return string CSS pre pozadie
-     */
+    
     protected function generateBackgroundCSS() 
     {
         $bgImagePath = $this->imagesConfig['backgrounds']['main'];
@@ -45,11 +37,7 @@ class DynamicStyles
         return $css;
     }
     
-    /**
-     * Generuje CSS pre tmavý režim
-     * 
-     * @return string CSS pre tmavý režim
-     */
+
     protected function generateDarkModeCSS() 
     {
         $bgImagePath = $this->imagesConfig['backgrounds']['main'];
@@ -61,11 +49,7 @@ class DynamicStyles
         return $css;
     }
     
-    /**
-     * Generuje CSS pre stránky
-     * 
-     * @return string CSS pre stránky
-     */
+
     protected function generatePagesCSS() 
     {
         $css = "";
@@ -89,11 +73,7 @@ class DynamicStyles
         return $css;
     }
     
-    /**
-     * Generuje kompletné CSS
-     * 
-     * @return string Kompletné CSS
-     */
+    
     public function generate() 
     {
         $css = $this->generateBackgroundCSS();
@@ -103,9 +83,7 @@ class DynamicStyles
         return $css;
     }
     
-    /**
-     * Zobrazí CSS
-     */
+    
     public function render() 
     {
         echo $this->generate();

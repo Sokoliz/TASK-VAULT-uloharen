@@ -1,7 +1,7 @@
-# 🗓️ TASK VAULT – Moderný študentský kalendár a manažment úloh
+# 🗓️ PRODUCTIVITY HUB – Moderný kalendár a manažment úloh
 
-Vitajte v mojom záverečnom študentskom projekte!
-**TASK VAULT** je webová aplikácia, ktorá pomáha študentom efektívne plánovať úlohy, organizovať čas a mať prehľad o všetkých dôležitých termínoch na jednom mieste. Koniec s chaotickými poznámkami a zabudnutými termínmi!
+Vitajte v našom prepracovanom projekte!
+**PRODUCTIVITY HUB** je webová aplikácia, ktorá pomáha efektívne plánovať úlohy, organizovať čas a mať prehľad o všetkých dôležitých termínoch na jednom mieste. Koniec s chaotickými poznámkami a zabudnutými termínmi!
 
 ---
 
@@ -14,6 +14,14 @@ Vitajte v mojom záverečnom študentskom projekte!
 - **Denný prehľad** – rýchly pohľad na všetky dnešné úlohy, projekty a udalosti
 - **Bezpečné prihlásenie a registrácia** – s ochranou hesiel a správou používateľských relácií
 - **Responzívny dizajn** – vďaka Bootstrapu použiteľné na počítači aj mobile
+- **Dark/Light mode** – prepínanie medzi tmavým a svetlým režimom pre pohodlnú prácu
+
+---
+
+## 🆕 Vylepšenia v novej verzii
+
+- **Cache pre statické súbory** – rýchlejšie načítavanie stránok
+- **Vylepšená UX** – intuitívnejšie používateľské rozhranie
 
 ---
 
@@ -80,10 +88,10 @@ Vitajte v mojom záverečnom študentskom projekte!
 
    ```bash
    cd cesta/k/projektu
-   php -S localhost:1234
+   php -S localhost:8000
    ```
 
-   Potom otvorte prehliadač a prejdite na adresu `http://localhost:1234`
+   Potom otvorte prehliadač a prejdite na adresu `http://localhost:8000`
 
 7. **Otvorte aplikáciu v prehliadači** a prihláste sa alebo si vytvorte nový účet.
 
@@ -95,6 +103,7 @@ Vitajte v mojom záverečnom študentskom projekte!
 - **Chyba pri vytváraní úlohy:** Uistite sa, že všetky zadané hodnoty spĺňajú požadované formáty.
 - **Nezobrazia sa projekty:** Skontrolujte tabuľku 'PROJECTS' v databáze, či obsahuje správne dáta.
 - **Problémy s URL smerovaním:** Skontrolujte, či súbory .htaccess sú správne nakonfigurované.
+- **Problémy s cache:** Ak sa nezobrazia najnovšie zmeny, vyčistite cache prehliadača.
 
 ---
 
@@ -104,6 +113,10 @@ Vitajte v mojom záverečnom študentskom projekte!
   - `Controllers/` – Kontroléry pre spracovanie požiadaviek
   - `Models/` – Modely pre prácu s databázou
   - `Views/` – Pohľady a šablóny
+    - `page/` – Hlavné pohľady stránok
+    - `parts/` – Časti pohľadov (hlavička, pätička, atď.)
+    - `Project/` – Špeciálne pohľady pre projekty
+    - `Today/` – Špeciálne pohľady pre denný prehľad
   - `Core/` – Základné triedy a funkcie aplikácie
 - `config/` – Konfiguračné súbory
 - `public/` – Verejne dostupné súbory

@@ -4,27 +4,34 @@ namespace App\Views\Events\Modals;
 require_once(__DIR__ . '/Modal.php');
 
 /**
- * ProjectDeleteModal class for confirming project deletion
+ * Trieda ProjectDeleteModal pre potvrdenie vymazania projektu
+ * 
+ * Táto trieda vytvára modálne okno na potvrdenie vymazania projektu.
+ * Je dôležitá, lebo vymazanie projektu je vážna vec - spolu s projektom
+ * sa vymažú aj všetky úlohy, ktoré k nemu patria.
  */
 class ProjectDeleteModal extends Modal {
     /**
-     * Project data
+     * Dáta projektu
+     * Obsahujú informácie o projekte, ktorý sa má vymazať
      */
     private $projectData;
     
     /**
-     * Project index for generating unique modal ID
+     * Index projektu pre generovanie unikátneho ID modálneho okna
+     * Potrebujeme to, aby sme mali unikátne ID pre každý modál na stránke
      */
     private $projectIndex;
     
     /**
-     * Constructor
+     * Konštruktor
      * 
-     * @param array $projectData Project data
-     * @param int $index Project index for generating unique modal ID
+     * @param array $projectData Dáta projektu
+     * @param int $index Index projektu pre generovanie unikátneho ID modálneho okna
      */
     public function __construct($projectData, $index) {
-        // Initialize with default values to prevent undefined array key warnings
+        // Inicializácia s predvolenými hodnotami, aby sme predišli warningom pre neexistujúce kľúče
+        // To je celkom fajn trik - vždy dať nejaké predvolené hodnoty, aby sme sa vyhli chybám
         $this->projectData = array_merge([
             'project_name' => 'Unnamed Project',
             'id_project' => 0
@@ -34,12 +41,15 @@ class ProjectDeleteModal extends Modal {
         
         parent::__construct('project-delete-' . $index, 'Delete Project', '/project/edit');
         
-        // Initialize fields
+        // Inicializácia polí formulára - v tomto prípade ich veľa nie je
         $this->initializeFields();
     }
     
     /**
-     * Custom header rendering to match the original style
+     * Vlastná metóda na vykreslenie hlavičky, aby zodpovedala pôvodnému štýlu
+     * 
+     * Prepíšeme rodičovskú metódu, aby hlavička mala červený nadpis
+     * a vyzerala výstražne - predsa len, ideme mazať projekt.
      */
     protected function renderHeader() {
         return '<div class="modal-header">
@@ -49,7 +59,10 @@ class ProjectDeleteModal extends Modal {
     }
     
     /**
-     * Override render body to include confirmation message
+     * Prepísanie metódy renderBody pre zahrnutie potvrdzujúcej správy
+     * 
+     * Telo modálneho okna obsahuje potvrdzujúcu správu a upozornenie,
+     * že sa vymažú aj všetky úlohy v projekte.
      */
     protected function renderBody() {
         $html = '<div class="modal-body">';
@@ -57,16 +70,20 @@ class ProjectDeleteModal extends Modal {
         $html .= '<p><strong>' . $this->projectData['project_name'] . '</strong></p>';
         $html .= '<p class="text-danger">All tasks in this project will also be deleted!</p>';
         
-        // Add hidden fields
+        // Pridanie skrytých polí - ID projektu a príznak pre vymazanie
+        // Tie potrebujeme, aby controller vedel, čo má robiť
         $html .= '<input type="hidden" name="id_project" value="' . $this->projectData['id_project'] . '">';
-        $html .= '<input type="hidden" name="delete" value="1">'; // Add this field for deletion logic
+        $html .= '<input type="hidden" name="delete" value="1">'; // Toto hovorí controlleru, že chceme vymazať
         $html .= '</div>';
         
         return $html;
     }
     
     /**
-     * Override renderFooter to customize buttons
+     * Prepísanie metódy renderFooter pre úpravu tlačidiel
+     * 
+     * V päte modálneho okna sú tlačidlá na zrušenie a potvrdenie vymazania.
+     * Tlačidlo na vymazanie je červené, aby bolo jasné, že ide o deštruktívnu akciu.
      */
     protected function renderFooter($submitText = 'Delete') {
         return '<div class="modal-footer">
@@ -76,7 +93,10 @@ class ProjectDeleteModal extends Modal {
     }
     
     /**
-     * Override render method to add a custom ID to the form
+     * Prepísanie metódy render pre pridanie vlastného ID formuláru
+     * 
+     * Táto metóda vytvára kompletný HTML kód modálneho okna
+     * s formulárom na vymazanie projektu.
      */
     public function render($submitText = 'Save') {
         $html = '<div id="project-delete-' . $this->projectIndex . '" class="modal fade" role="dialog">';
@@ -95,9 +115,12 @@ class ProjectDeleteModal extends Modal {
     }
     
     /**
-     * Initialize modal fields (no visible fields in this modal)
+     * Inicializácia polí formulára (žiadne viditeľné polia v tomto modálnom okne)
+     * 
+     * V tomto prípade nepotrebujeme žiadne viditeľné polia, len skryté
+     * polia pre ID projektu a príznak vymazania, ktoré sú pridané v renderBody.
      */
     private function initializeFields() {
-        // No visible fields needed
+        // Žiadne viditeľné polia nie sú potrebné
     }
 } 

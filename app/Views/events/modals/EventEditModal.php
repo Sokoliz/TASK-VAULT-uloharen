@@ -4,34 +4,44 @@ namespace App\Views\Events\Modals;
 require_once(__DIR__ . '/Modal.php');
 
 /**
- * EventEditModal class for editing events
+ * Trieda EventEditModal pre editáciu existujúcich udalostí
+ * 
+ * Táto trieda vytvára modálne okno pre úpravu už existujúcich udalostí
+ * v kalendári. Okrem editácie umožňuje aj vymazanie udalosti.
+ * Rozširuje základnú triedu Modal.
  */
 class EventEditModal extends Modal {
 	/**
-	 * Event data for pre-filling fields
+	 * Dáta udalosti pre predvyplnenie polí
+	 * Tu sa ukladajú informácie o existujúcej udalosti, ktoré sa
+	 * potom použijú ako predvolené hodnoty vo formulári
 	 */
 	private $eventData;
 	
 	/**
-	 * Constructor
+	 * Konštruktor
 	 * 
-	 * @param array $eventData Optional event data to pre-fill the form
+	 * @param array $eventData Voliteľné dáta udalosti pre predvyplnenie formulára
 	 */
 	public function __construct($eventData = null) {
-		// Update the form action to point to the calendar controller edit method
+		// Aktualizácia akcie formulára, aby smerovala na metódu edit v controlleri kalendára
 		parent::__construct('ModalEdit', 'Event', '/calendar/edit');
 		
 		$this->eventData = $eventData;
 		
-		// Initialize fields
+		// Inicializácia polí formulára
 		$this->initializeFields();
 	}
 	
 	/**
-	 * Initialize modal fields
+	 * Inicializácia polí formulára
+	 * 
+	 * Pridáva všetky potrebné polia pre editáciu udalosti
+	 * a predvyplní ich hodnotami z existujúcej udalosti
 	 */
 	private function initializeFields() {
-		// Get values from event data if available
+		// Získanie hodnôt z dát udalosti, ak sú k dispozícii
+		// Pre každé pole skontrolujeme, či existuje v dátach, a ak áno, použijeme ho
 		$title = isset($this->eventData['title']) ? $this->eventData['title'] : '';
 		$description = isset($this->eventData['description']) ? $this->eventData['description'] : '';
 		$colour = isset($this->eventData['colour']) ? $this->eventData['colour'] : '';
@@ -39,13 +49,14 @@ class EventEditModal extends Modal {
 		$end_date = isset($this->eventData['end_date']) ? $this->eventData['end_date'] : '';
 		$id_event = isset($this->eventData['id_event']) ? $this->eventData['id_event'] : '';
 		
-		// Add title field
+		// Pridanie poľa pre názov udalosti - povinné
 		$this->addTextField('title', 'Title', $title, true, 'Title');
 		
-		// Add description field
+		// Pridanie poľa pre popis udalosti - nepovinné
 		$this->addTextareaField('description', 'Description', $description, false, 'Description');
 		
-		// Add colour select field
+		// Pridanie výberu farby udalosti
+		// Každá farba má svoj štýl a text so symbolom pre lepšiu vizualizáciu
 		$colorOptions = [
 			'#0275d8' => ['text' => '<span style="color:#0275d8; font-weight:bold;">&#9724;</span> Blue', 'style' => 'color:#0275d8; font-weight:bold;'],
 			'#5bc0de' => ['text' => '<span style="color:#5bc0de; font-weight:bold;">&#9724;</span> Tile', 'style' => 'color:#5bc0de; font-weight:bold;'],
@@ -57,29 +68,38 @@ class EventEditModal extends Modal {
 		
 		$this->addSelectField('colour', 'Colour', $colorOptions, $colour, true);
 		
-		// Add date fields
+		// Pridanie dátumových polí pre začiatok a koniec udalosti
 		$this->addDateField('start_date', 'Start date', $start_date, true);
 		$this->addDateField('end_date', 'End date', $end_date, true);
 		
-		// Add hidden field for event ID
+		// Pridanie skrytého poľa pre ID udalosti - toto je kľúčové pre identifikáciu
+		// ktorú udalosť vlastne chceme upraviť
 		$this->addHiddenField('id_event', $id_event);
 	}
 	
 	/**
-	 * Override render method to add script reference
+	 * Prepísanie metódy render pre pridanie odkazu na skript
+	 * 
+	 * Táto metóda rozširuje štandardné vykreslenie o pridanie
+	 * odkazu na externý JavaScript súbor, ktorý zabezpečuje
+	 * funkcionalitu modálneho okna pre udalosti
 	 */
 	public function render($submitText = 'Save') {
-		// Use the parent render method
+		// Použitie rodičovskej metódy render
 		$html = parent::render($submitText);
 		
-		// Add script reference to the external JavaScript file
+		// Pridanie odkazu na externý JavaScript súbor
+		// Toto je kľúčové, aby fungovala validácia a interaktivita
 		$html .= '<script src="/public/js/event-modal.js"></script>';
 		
 		return $html;
 	}
 	
 	/**
-	 * Custom renderField method to handle our custom field type
+	 * Vlastná metóda renderField na spracovanie vlastného typu poľa
+	 * 
+	 * Umožňuje pridať vlastný HTML kód pre niektoré polia,
+	 * namiesto použitia štandardných typov polí
 	 */
 	protected function renderField($field) {
 		if (isset($field['type']) && $field['type'] === 'custom') {
@@ -90,7 +110,10 @@ class EventEditModal extends Modal {
 	}
 	
 	/**
-	 * Override renderFooter to add a delete button
+	 * Prepísanie renderFooter pre pridanie tlačidla na vymazanie
+	 * 
+	 * V päte modálneho okna pre editáciu udalosti pridávame
+	 * aj tlačidlo na vymazanie, ktoré má hodnotu delete=1
 	 */
 	protected function renderFooter($submitText = 'Save') {
 		return '<div class="modal-footer">

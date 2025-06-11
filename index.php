@@ -78,48 +78,48 @@ use App\Controllers\TodayController;
 use App\Controllers\IndexViewController;
 use App\Core\Router;
 
-// Create router instance
+// Vytvoríme inštanciu routera - ten sa stará o smerovanie URL adries
 $router = new Router();
 
-// Define routes
+// Definujeme cesty - každá URL má priradenú triedu a metódu, ktorá sa zavolá
 $router->addRoutes([
-    // Default route
+    // Základná cesta - domovská stránka
     '/' => [IndexViewController::class, 'processRequest'],
     
-    // Auth routes
+    // Autentifikačné cesty - prihlásenie, registrácia, odhlásenie
     '/register' => [AuthController::class, 'register'],
     '/login' => [AuthController::class, 'login'],
     '/logout' => [AuthController::class, 'logout'],
     
-    // Content routes
+    // Cesty pre obsah - hlavná časť aplikácie
     '/content' => [ContentController::class, 'index'],
     
-    // Calendar routes
+    // Cesty pre kalendár - zobrazenie, vytváranie a úprava udalostí
     '/calendar' => [CalendarController::class, 'index'],
     '/calendar/create' => [CalendarController::class, 'create'],
     '/calendar/edit' => [CalendarController::class, 'edit'],
     
-    // Project routes
+    // Cesty pre projekty - kanban board a správa projektov
     '/projects' => [ProjectController::class, 'index'],
     '/project/create' => [ProjectController::class, 'create'],
     '/project/edit' => [ProjectController::class, 'edit'],
     
-    // Task routes
+    // Cesty pre úlohy - vytváranie, úprava a presúvanie medzi stĺpcami
     '/task/create' => [TaskController::class, 'create'],
     '/task/edit' => [TaskController::class, 'edit'],
     '/task/right' => [TaskController::class, 'move'],
     '/task/left' => [TaskController::class, 'move'],
     
-    // Today routes
+    // Cesty pre dnešné aktivity - prehľad toho, čo je dnes na pláne
     '/today' => [TodayController::class, 'index'],
 ]);
 
-// Add special routes
+// Pridáme špeciálnu cestu pre AJAX kontrolu používateľského mena pri registrácii
 $router->addRoute('/check-username', function() {
     require_once './app/Controllers/CheckUsernameController.php';
     $controller = new CheckUsernameController();
     $controller->handle();
 });
 
-// Dispatch the request
+// Spustíme spracovanie požiadavky - router rozhodne, ktorý kontrolér sa má zavolať
 $router->dispatch();

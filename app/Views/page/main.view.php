@@ -1,25 +1,18 @@
-	<?php 
+<?php 
 require_once('View.php');
 
-/**
- * MainView class for rendering the main (home) page
- */
+// Trieda MainView pre zobrazenie úvodnej stránky
+// Toto je prvá stránka, ktorú návštevníci vidia - landing page
 class MainView extends View {
-	/**
-	 * Constructor
-	 * 
-	 * @param array $data Data to be passed to the view
-	 */
+	
+	// Konštruktor - inicializuje základné vlastnosti
+	// Nastavuje, že stránka je verejná (nevyžaduje prihlásenie)
 	public function __construct($data = []) {
 		parent::__construct('Productivity Hub', true, $data);
 	}
 	
-	/**
-	 * Render the content with features
-	 * 
-	 * @return string HTML for the features content
-	 */
-	
+	// Renderuje obsah s funkciami aplikácie
+	// Tu prezentujeme hlavné výhody aplikácie pre návštevníkov
 	protected function renderFeatures() {
 		$html = '<div class="col-6 p-5">';
 		$html .= '<div class="container mx-5 mt-3">';
@@ -43,22 +36,16 @@ class MainView extends View {
 		return $html;
 	}
 	
-	/**
-	 * Render the image column
-	 * 
-	 * @return string HTML for the image column
-	 */
+	// Renderuje stĺpec s obrázkom
+	// Vizuálne vylepšuje úvodnú stránku
 	protected function renderImageColumn() {
 		return '<div class="col-4 ml-5 mt-5">
     <img class="img-fluid" src="/public/img/main.jpg">
 		</div>';
 	}
 	
-	/**
-	 * Render the content section
-	 * 
-	 * @return string HTML for the content section
-	 */
+	// Renderuje sekciu obsahu
+	// Tu poskladáme celú úvodnú stránku
 	protected function renderContent() {
 		// Nastavenie premenných pre navbar.php
 		$isPublic = true;
@@ -80,7 +67,8 @@ class MainView extends View {
 	}
 }
 
-// Instantiate and display the view
+// Vytvorenie inštancie a zobrazenie view
+// Toto automaticky vyrenderuje a zobrazí stránku
 $mainView = new MainView(isset($viewData) ? $viewData : []);
 $mainView->display();
 ?>

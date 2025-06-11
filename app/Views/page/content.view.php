@@ -1,29 +1,23 @@
 <?php
 require_once('View.php');
 
-/**
- * ContentView class for rendering the main content page with navigation cards
- */
+// Trieda ContentView pre zobrazenie hlavnej stránky s navigačnými kartami
+// Toto je stránka, ktorú vidí používateľ po prihlásení, taký dashboard
 class ContentView extends View {
-    /**
-     * Constructor
-     * 
-     * @param array $data Data to be passed to the view
-     */
+    
+    // Konštruktor - inicializuje základné vlastnosti
     public function __construct($data = []) {
         parent::__construct('Content', false, $data);
     }
     
-    /**
-     * Render the navigation cards
-     * 
-     * @return string HTML for the navigation cards
-     */
+    // Renderuje navigačné karty
+    // Tieto karty slúžia na presmerovanie na hlavné sekcie aplikácie
     protected function renderNavigationCards() {
         $html = '<div class="container mt-0 mb-4">';
         $html .= '<div class="row d-flex m-2 mt-0">';
         
-        // Today card
+        // Karta pre dnešné úlohy
+        // Používateľ si tu môže pozrieť, čo má dnes na pláne
         $html .= '<div class="col-sm-4 col-md-4">';
         $html .= '<a class="card my-card text-dark" href="/today">';
         $html .= '<div class="card-img-container">';
@@ -35,7 +29,8 @@ class ContentView extends View {
         $html .= '</a>';
         $html .= '</div>';
         
-        // Projects card
+        // Karta pre projekty
+        // Tu môže používateľ spravovať svoje projekty a úlohy
         $html .= '<div class="col-sm-4 col-md-4">';
         $html .= '<a class="card my-card text-dark" href="/projects">';
         $html .= '<div class="card-img-container">';
@@ -47,7 +42,8 @@ class ContentView extends View {
         $html .= '</a>';
         $html .= '</div>';
         
-        // Calendar card
+        // Karta pre kalendár
+        // Pre zobrazenie a plánovanie udalostí v kalendári
         $html .= '<div class="col-sm-4 col-md-4">';
         $html .= '<a class="card my-card text-dark" href="/calendar">';
         $html .= '<div class="card-img-container">';
@@ -65,30 +61,24 @@ class ContentView extends View {
         return $html;
     }
     
-    /**
-     * Render additional scripts specific to content page
-     * 
-     * @return string HTML for the additional scripts
-     */
+    // Renderuje dodatočné skripty špecifické pre content stránku
+    // Tu pridávame všetky potrebné JavaScripty pre interaktivitu
     protected function renderAdditionalScripts() {
         $html = parent::renderScripts();
         $html .= '<script src="/public/js/theme.js"></script>';
         $html .= '<script src="/public/js/dynamic-theme.js"></script>';
         $html .= '<link href="/public/css/dynamic-theme.css" rel="stylesheet" />';
         
-        // Use external clock script instead of inline
+        // Používame externý skript pre hodiny namiesto inline
         $html .= '<script src="/public/js/clock.js"></script>';
         
-        // Add tooltip initialization to dynamic-theme.js
+        // Pridávame inicializáciu tooltip do dynamic-theme.js
         
         return $html;
     }
     
-    /**
-     * Render the content section
-     * 
-     * @return string HTML for the content section
-     */
+    // Renderuje sekciu obsahu
+    // Tu poskladáme celú stránku s navigačnými kartami
     protected function renderContent() {
         // Nastavenie premenných pre navbar.php
         $isPublic = false;
@@ -106,27 +96,24 @@ class ContentView extends View {
         return $html;
     }
     
-    /**
-     * Render the complete page
-     * 
-     * @return string Complete HTML for the page
-     */
+    // Renderuje kompletnú stránku
+    // Prepisujeme rodičovskú metódu, aby sme pridali špeciálne skripty pre content
     public function render() {
         $html = '<!DOCTYPE html>';
         $html .= '<html lang="en">';
         
-        // Head section
+        // Sekcia head
         $html .= '<head>';
         $html .= $this->renderHead();
         $html .= '</head>';
         
-        // Body section with background class
+        // Sekcia body s triedou pozadia
         $html .= '<body class="bg">';
         
-        // Content
+        // Obsah
         $html .= $this->renderContent();
         
-        // Scripts with additional content-specific scripts
+        // Skripty s dodatočnými skriptami špecifickými pre content
         $html .= $this->renderAdditionalScripts();
         
         $html .= '</body>';

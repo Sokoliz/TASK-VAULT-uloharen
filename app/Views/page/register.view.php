@@ -1,24 +1,15 @@
 <?php 
 require_once('View.php');
 
-/**
- * RegisterView class for rendering the registration page
- */
+// Trieda RegisterView pre zobrazenie registračnej stránky
+// Táto stránka umožňuje novým používateľom vytvoriť si účet
 class RegisterView extends View {
-	/**
-	 * Constructor
-	 * 
-	 * @param array $data Data to be passed to the view
-	 */
+	
 	public function __construct($data = []) {
 		parent::__construct('Productivity Hub', true, $data);
 	}
 	
-	/**
-	 * Render the registration form
-	 * 
-	 * @return string HTML for the registration form
-	 */
+	
 	protected function renderRegisterForm() {
 		$errors = $this->getData('errors', '');
 		
@@ -26,7 +17,8 @@ class RegisterView extends View {
 		$html .= '<p class="text-center h1 fw-bold m-5">SIGN UP</p>';
 		$html .= '<form class="px-5" name="signup" action="/register" method="POST">';
 		
-		// Username field
+		// Pole pre používateľské meno
+		// Toto musí byť unikátne v systéme
 		$html .= '<div class="mb-4">';
 		$html .= '<div class="input-group">';
 		$html .= '<div class="input-group-prepend">';
@@ -36,7 +28,8 @@ class RegisterView extends View {
 		$html .= '</div>';
 		$html .= '</div>';
 		
-		// Password field
+		// Pole pre heslo
+		// Heslo by malo byť dostatočne silné
 		$html .= '<div class="mb-4">';
 		$html .= '<div class="input-group">';
 		$html .= '<div class="input-group-prepend">';
@@ -46,7 +39,8 @@ class RegisterView extends View {
 		$html .= '</div>';
 		$html .= '</div>';
 		
-		// Confirm password field
+		// Pole pre potvrdenie hesla
+		// Musí sa zhodovať s prvým heslom
 		$html .= '<div class="mb-4">';
 		$html .= '<div class="input-group">';
 		$html .= '<div class="input-group-prepend">';
@@ -56,19 +50,21 @@ class RegisterView extends View {
 		$html .= '</div>';
 		$html .= '</div>';
 		
-		// Password match warning
+		// Upozornenie na nezhodujúce sa heslá
+		// Zobrazí sa pomocou JavaScriptu, keď sa heslá nezhodujú
 		$html .= '<div class="mb-4 d-none" id="password-warning">';
 		$html .= '<div class="alert alert-danger" role="alert">';
 		$html .= 'Hesla sa nezhodujú. Prosím, zadajte rovnaké heslo.';
 		$html .= '</div>';
 		$html .= '</div>';
 		
-		// Submit button
+		// Tlačidlo pre odoslanie formulára
 		$html .= '<div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">';
 		$html .= '<input type="submit" value="Register" class="btn btn-primary">';
 		$html .= '</div>';
 		
-		// Display errors if any
+		// Zobrazenie chybových hlášok, ak existujú
+		// Ak validácia zlyhá, tu sa zobrazia chyby
 		if (!empty($errors)) {
 			$html .= '<div class="err">';
 			$html .= '<ul>' . $errors . '</ul>';
@@ -77,12 +73,14 @@ class RegisterView extends View {
 		
 		$html .= '</form>';
 		
-		// Link to login
+		// Odkaz na prihlásenie
+		// Pre existujúcich používateľov, ktorí už majú účet
 		$html .= '<span class="d-flex justify-content-center">Already have an account?<a class="nav-link text-primary m-0 p-0 pl-2" href="/login">Log in</a></span>';
 		
-		// Add script references
+		// Pridanie referencií na skripty
+		// Tieto skripty zabezpečujú validáciu formulára
 		$html .= '<script src="/public/js/password-validation.js"></script>';
-		// Username validator is now loaded in the header
+		// Validator pre používateľské meno sa načítava v headeri
 		
 		$html .= '</div>';
 		
@@ -90,7 +88,8 @@ class RegisterView extends View {
 	}
 	
 	/**
-	 * Render the image column
+	 * Renderuje stĺpec s obrázkom
+	 * Vizuálne vylepšuje registračnú stránku
 	 * 
 	 * @return string HTML for the image column
 	 */
@@ -101,7 +100,8 @@ class RegisterView extends View {
 	}
 	
 	/**
-	 * Render the content section
+	 * Renderuje sekciu obsahu
+	 * Tu poskladáme celú registračnú stránku
 	 * 
 	 * @return string HTML for the content section
 	 */
@@ -138,21 +138,21 @@ class RegisterView extends View {
 		$html = '<!DOCTYPE html>';
 		$html .= '<html lang="en">';
 		
-		// Head section
+		// Sekcia head
 		$html .= '<head>';
 		$html .= $this->renderHead();
 		$html .= '</head>';
 		
-		// Body section with register-specific class
+		// Sekcia body so špeciálnou triedou pre register
 		$html .= '<body class="bg bg-register">';
 		
-		// Content
+		// Obsah
 		$html .= $this->renderContent();
 		
-		// Footer section
+		// Sekcia footer
 		$html .= $this->renderFooter();
 		
-		// JavaScript imports
+		// JavaScript importy
 		$html .= $this->renderScripts();
 		
 		$html .= '</body>';

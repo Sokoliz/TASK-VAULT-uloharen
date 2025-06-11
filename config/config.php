@@ -8,21 +8,13 @@ namespace App\Config;
  * Používa návrhový vzor Singleton
  */
 class Config {
-    /**
-     * Inštancia triedy (Singleton)
-     * @var Config
-     */
+    
     private static $instance = null;
     
-    /**
-     * Konfiguračné dáta
-     * @var array
-     */
+    
     private $config = [];
     
-    /**
-     * Privátny konštruktor (Singleton)
-     */
+    
     private function __construct() {
         // Základná konfigurácia
         $this->config = [
@@ -35,11 +27,7 @@ class Config {
         ];
     }
     
-    /**
-     * Získanie inštancie triedy (Singleton)
-     * 
-     * @return Config Inštancia triedy
-     */
+    
     public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -48,13 +36,8 @@ class Config {
         return self::$instance;
     }
     
-    /**
-     * Získanie hodnoty z konfigurácie
-     * 
-     * @param string $key Kľúč konfigurácie (napr. 'db.host')
-     * @param mixed $default Predvolená hodnota, ak kľúč neexistuje
-     * @return mixed Hodnota konfigurácie alebo predvolená hodnota
-     */
+    // Získanie hodnoty z konfigurácie
+     
     public function get($key, $default = null) {
         $keys = explode('.', $key);
         $value = $this->config;
@@ -70,13 +53,8 @@ class Config {
         return $value;
     }
     
-    /**
-     * Nastavenie hodnoty v konfigurácii
-     * 
-     * @param string $key Kľúč konfigurácie (napr. 'db.host')
-     * @param mixed $value Hodnota na nastavenie
-     * @return self
-     */
+    //Nastavenie hodnoty v konfigurácii
+     
     public function set($key, $value) {
         $keys = explode('.', $key);
         $config = &$this->config;
@@ -96,31 +74,20 @@ class Config {
         return $this;
     }
     
-    /**
-     * Kontrola, či kľúč existuje v konfigurácii
-     * 
-     * @param string $key Kľúč konfigurácie (napr. 'db.host')
-     * @return bool
-     */
+    // Kontrola, či kľúč existuje v konfigurácii
+     
     public function has($key) {
         return $this->get($key, $this) !== $this;
     }
     
-    /**
-     * Získanie celej konfigurácie
-     * 
-     * @return array Celá konfigurácia
-     */
+    //Získanie celej konfigurácie
+     
     public function all() {
         return $this->config;
     }
     
-    /**
-     * Načítanie konfigurácie zo súboru
-     * 
-     * @param string $file Cesta k súboru
-     * @return self
-     */
+    //Načítanie konfigurácie zo súboru
+     
     public function loadFromFile($file) {
         if (file_exists($file)) {
             $fileConfig = require $file;
@@ -133,15 +100,12 @@ class Config {
         return $this;
     }
     
-    /**
-     * Zabránenie klonovaniu (Singleton)
-     */
+    //Zabránenie klonovaniu (Singleton)
+     
     private function __clone() {}
     
-    /**
-     * Zabránenie deserializácii (Singleton)
-     * @throws \Exception
-     */
+    // Zabránenie deserializácii (Singleton)
+     
     public function __wakeup() {
         throw new \Exception("Nemôžete deserializovať singleton");
     }

@@ -6,12 +6,14 @@ Tento dokument vysvetľuje teoretické koncepty a technologické princípy použ
 
 1. [MVC Architektúra](#mvc-architektúra)
 2. [Objektovo-orientované programovanie (OOP)](#objektovo-orientované-programovanie-oop)
-3. [Composer a správa závislostí](#composer-a-správa-závislostí)
-4. [Autoloading tried](#autoloading-tried)
-5. [Práca s databázou pomocou PDO](#práca-s-databázou-pomocou-pdo)
-6. [URL Routing](#url-routing)
-7. [Session Management](#session-management)
-8. [Štruktúra priečinkov](#štruktúra-priečinkov)
+3. [Štýl komentovania kódu](#štýl-komentovania-kódu)
+4. [Composer a správa závislostí](#composer-a-správa-závislostí)
+5. [Autoloading tried](#autoloading-tried)
+6. [Práca s databázou pomocou PDO](#práca-s-databázou-pomocou-pdo)
+7. [URL Routing](#url-routing)
+8. [Session Management](#session-management)
+9. [Cache pre statické súbory](#cache-pre-statické-súbory)
+10. [Štruktúra priečinkov](#štruktúra-priečinkov)
 
 ---
 
@@ -30,7 +32,8 @@ TASK VAULT je postavený na architektonickom vzore Model-View-Controller (MVC), 
 
 - Zobrazuje dáta používateľovi a poskytuje používateľské rozhranie
 - V projekte sa nachádza v priečinku `app/Views/`
-- Príklady: `login.php`, `register.php`, `calendar.php`, `projects.php`
+- Podadresáre: `page/`, `parts/`, `Project/`, `Today/`
+- Príklady: `login.view.php`, `register.view.php`, `calendar.view.php`, `projects.view.php`
 - Pohľady obsahujú minimálnu logiku, väčšinou len zobrazovanie dát
 
 ### Controller (Kontrolér)
@@ -84,7 +87,7 @@ Triedy skrývajú svoju internú implementáciu a poskytujú len verejné rozhra
 
 ### Dedičnosť (Inheritance)
 
-Dedičnosť je použitá na vytváranie špecializovaných tried, ktoré zdieľajú vlastnosti a metódy so svojimi rodičovskými triedami.
+Dedičnosť je použitá na vytváranie špecializovaných tried, ktoré zdieľajú vlastnosti a metódy so svojimi rodičovskými triedami. Napríklad všetky view triedy dedia od základnej triedy `View`.
 
 ### Polymorfizmus
 
@@ -94,6 +97,54 @@ Umožňuje rôznym triedam implementovať rovnaké metódy rôznymi spôsobmi.
 
 - **Singleton** - použitý v triede `Database` pre zabezpečenie jedného pripojenia k databáze
 - **Front Controller** - všetky požiadavky prechádzajú cez hlavný `index.php` súbor
+
+---
+
+## Štýl komentovania kódu
+
+V projekte sme implementovali špecifický štýl komentovania, ktorý zlepšuje čitateľnosť a zrozumiteľnosť kódu pre slovensky hovoriacich vývojárov.
+
+### Slovenské konverzačné komentáre
+
+Namiesto tradičných PHP docblock komentárov používame jednoriadkové slovenské komentáre v konverzačnom štýle:
+
+#### Pôvodný docblock štýl:
+
+```php
+/**
+ * ProjectsView class
+ *
+ * Object-oriented wrapper for the projects view
+ */
+class ProjectsView
+{
+    /**
+     * Data to be passed to the view
+     * @var array
+     */
+    private $viewData;
+}
+```
+
+#### Nový konverzačný štýl:
+
+```php
+// Trieda ProjectsView - obaľuje pohľad pre projekty
+// používa OOP prístup aby sa to krajšie integrovalo do zvyšku kódu
+class ProjectsView
+{
+    // Dáta, ktoré posunieme do pohľadu - taká malá krabička s vecami
+    private $viewData;
+}
+```
+
+### Výhody konverzačného štýlu
+
+1. **Lepšia zrozumiteľnosť** - komentáre vysvetľujú účel kódu prirodzeným jazykom
+2. **Lokalizácia** - slovenský jazyk robí kód prístupnejším pre domácich vývojárov
+3. **Menej formálnosti** - ľahšie pochopiteľné než tradičné technické dokumentačné komentáre
+4. **Kontext** - komentáre často poskytujú nielen čo kód robí, ale aj prečo to robí
+5. **Prívetivosť pre začiatočníkov** - nižšia vstupná bariéra pre pochopenie kódu
 
 ---
 
@@ -251,9 +302,30 @@ public function getAllByUser($userId)
 
 TASK VAULT používa efektívny systém smerovania na spracovanie požiadaviek používateľa.
 
-### Front Controller Pattern
+### Router trieda
 
-Všetky požiadavky sú spracované cez jediný vstupný bod - `index.php`. Tento prístup sa nazýva "Front Controller Pattern" a pomáha centralizovať riadenie aplikácie.
+V projekte je implementovaná trieda `Router` v `app/Core/Router.php`, ktorá umožňuje definovať a spracovávať rôzne URL cesty:
+
+```php
+// V index.php
+$router = new Router();
+
+// Definujeme cesty - každá URL má priradenú triedu a metódu, ktorá sa zavolá
+$router->addRoutes([
+    // Základná cesta - domovská stránka
+    '/' => [IndexViewController::class, 'processRequest'],
+
+    // Autentifikačné cesty - prihlásenie, registrácia, odhlásenie
+    '/register' => [AuthController::class, 'register'],
+    '/login' => [AuthController::class, 'login'],
+    '/logout' => [AuthController::class, 'logout'],
+
+    // ďalšie cesty...
+]);
+
+// Spustíme spracovanie požiadavky
+$router->dispatch();
+```
 
 ### Apache .htaccess
 
@@ -269,27 +341,6 @@ Pre presmerovanie všetkých požiadaviek na `index.php` sa používa súbor `.h
 ```
 
 Tento kód zabezpečuje, že všetky požiadavky, ktoré neodkazujú na existujúci súbor alebo adresár, sú presmerované na `index.php`.
-
-### Router v index.php
-
-Súbor `index.php` funguje ako router, ktorý analyzuje URL a presmeruje požiadavku na príslušný kontrolér:
-
-```php
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
-switch ($uri) {
-    case '/login':
-        $auth->login();
-        break;
-    case '/register':
-        $auth->register();
-        break;
-    // ďalšie cesty...
-    default:
-        require_once "./app/Views/index.php";
-        break;
-}
-```
 
 ### Výhody tohto prístupu
 
@@ -369,6 +420,73 @@ if (!Session::isLoggedIn()) {
 
 ---
 
+## Cache pre statické súbory
+
+V projekte je implementovaný systém pre cachovanie statických súborov, čo výrazne zlepšuje výkon aplikácie.
+
+### Implementácia v index.php
+
+```php
+// Optimalizácia - cachovanie pre statické súbory
+$cssCache = 31536000; // 1 rok v sekundách
+$jsCache = 31536000;  // 1 rok v sekundách
+$imgCache = 31536000; // 1 rok v sekundách
+
+$requestUri = $_SERVER['REQUEST_URI'];
+$fileExtension = pathinfo($requestUri, PATHINFO_EXTENSION);
+
+// Nastav cache headery pre statické súbory
+if (in_array($fileExtension, ['css', 'js', 'jpg', 'jpeg', 'png', 'gif', 'svg', 'woff', 'woff2', 'ttf'])) {
+    $filePath = __DIR__ . $requestUri;
+    if (file_exists($filePath)) {
+        switch ($fileExtension) {
+            case 'css':
+                header('Content-Type: text/css');
+                header('Cache-Control: public, max-age=' . $cssCache);
+                break;
+            // ďalšie typy súborov...
+        }
+
+        // Použi ETag pre optimalizáciu
+        $etag = md5_file($filePath);
+        header("ETag: \"$etag\"");
+
+        if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) == "\"$etag\"") {
+            // Súbor sa nezmenil, klient má aktuálnu verziu
+            header("HTTP/1.1 304 Not Modified");
+            exit;
+        }
+
+        // Výstup statického súboru
+        readfile($filePath);
+        exit;
+    }
+}
+```
+
+### Výhody cachovania
+
+1. **Rýchlejšie načítavanie stránok** - prehliadač nesťahuje opakovane statické súbory
+2. **Zníženie záťaže servera** - menej požiadaviek na server
+3. **Lepšia používateľská skúsenosť** - stránky sa načítavajú rýchlejšie
+4. **Úspora šírky pásma** - menej dát prenesených medzi serverom a klientom
+
+### Kombinované súbory
+
+Okrem štandardného cachovania projekt používa aj kombinovanie CSS a JavaScript súborov:
+
+```php
+// Príklad z Header.php
+if ($this->useCombinedFiles) {
+    // Use the combined file with a version parameter for cache busting
+    $version = filemtime(__DIR__ . '/../../../public/css/style.css') .
+              filemtime(__DIR__ . '/../../../public/css/dynamic-theme.css');
+    $html .= '<link rel="stylesheet" href="/public/css/combine.php?v=' . $version . '">' . PHP_EOL;
+}
+```
+
+---
+
 ## Štruktúra priečinkov
 
 TASK VAULT má jasnú a logickú štruktúru priečinkov, ktorá odráža MVC architektúru:
@@ -379,7 +497,11 @@ TASK VAULT má jasnú a logickú štruktúru priečinkov, ktorá odráža MVC ar
   - **Controllers/** - Kontroléry pre spracovanie požiadaviek
   - **Models/** - Modely pre prácu s databázou
   - **Views/** - Pohľady a šablóny
-  - **Core/** - Základné triedy a funkcie aplikácie (Database, Session)
+    - **page/** - Hlavné pohľady stránok
+    - **parts/** - Časti pohľadov (hlavička, pätička)
+    - **Project/** - Špecializované pohľady pre projekty
+    - **Today/** - Špecializované pohľady pre denný prehľad
+  - **Core/** - Základné triedy a funkcie aplikácie (Database, Session, Router)
 - **config/** - Konfiguračné súbory
   - **config.php** - Základná konfigurácia (databáza)
 - **public/** - Verejne dostupné súbory

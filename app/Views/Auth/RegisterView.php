@@ -2,51 +2,41 @@
 namespace App\Views\Auth;
 
 /**
- * RegisterView class
+ * RegisterView trieda
  * 
- * Object-oriented wrapper for the register view
+ * Objektovo-orientovaný wrapper pre registračný pohľad
  */
 class RegisterView 
 {
-    /**
-     * Data to be passed to the view
-     * @var array
-     */
+    // Dáta, ktoré budú poslané do view
     private $viewData;
     
-    /**
-     * Constructor
-     * 
-     * @param array $data Data to be passed to the view
-     */
+    
     public function __construct($data = [])
     {
+        // Uloženie dát do atribútu triedy
+        // Tieto dáta môžu obsahovať chybové správy alebo údaje z formulára
         $this->viewData = $data;
     }
     
-    /**
-     * Render the view
-     * 
-     * @return string The rendered HTML
-     */
+    
     public function render()
     {
-        // Load the required view class
+        // Načítanie súboru s konkrétnou implementáciou view
+        // Toto je trochu zvláštne riešenie, ale funguje
         require_once __DIR__ . '/../page/register.view.php';
         
-        // Create an instance of the RegisterView class and render it
+        // Vytvorenie inštancie a renderovanie
+        // V podstate tu idem z jednej triedy do druhej
         $registerView = new \RegisterView($this->viewData);
         return $registerView->render();
     }
     
-    /**
-     * Static factory method to create and render the view
-     * 
-     * @param array $data Data to be passed to the view
-     * @return string The rendered HTML
-     */
+    
     public static function display($data = [])
     {
+        // Statická metóda pre jednoduchšie použitie
+        // Takto nemusím vytvárať inštanciu explicitne
         $renderer = new self($data);
         return $renderer->render();
     }

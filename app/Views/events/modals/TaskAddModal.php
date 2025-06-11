@@ -4,30 +4,38 @@ namespace App\Views\Events\Modals;
 require_once(__DIR__ . '/Modal.php');
 
 /**
- * TaskModal class for creating new tasks
+ * Trieda TaskAddModal pre vytváranie nových úloh
+ * 
+ * Táto trieda vytvára modálne okno pre pridávanie nových úloh
+ * do existujúceho projektu. Obsahuje formulár s poliami pre
+ * status, názov, popis, prioritu a deadline úlohy.
  */
 class TaskAddModal extends Modal {
     /**
-     * Project ID for the task
+     * ID projektu, ku ktorému úloha patrí
+     * Toto potrebujeme, aby sme úlohu priradili k správnemu projektu
      */
     private $project_id;
     
     /**
-     * Constructor
+     * Konštruktor
      * 
-     * @param int $project_id Project ID for the task
+     * @param int $project_id ID projektu, ku ktorému úloha patrí
      */
     public function __construct($project_id) {
         parent::__construct('new-task-modal', 'Create a New Task', '/task/create');
         
         $this->project_id = $project_id;
         
-        // Initialize fields
+        // Inicializácia polí formulára
         $this->initializeFields();
     }
     
     /**
-     * Custom header rendering to match the original style
+     * Vlastná metóda na vykreslenie hlavičky, aby zodpovedala pôvodnému štýlu
+     * 
+     * Prepíšeme rodičovskú metódu, aby hlavička vyzerala presne
+     * tak, ako potrebujeme pre úlohy.
      */
     protected function renderHeader() {
         return '<div class="modal-header">
@@ -37,7 +45,10 @@ class TaskAddModal extends Modal {
     }
     
     /**
-     * Custom method to add radio buttons for task status
+     * Vlastná metóda na pridanie radio buttonov pre status úlohy
+     * 
+     * Táto metóda vytvára trojicu radio buttonov pre nastavenie
+     * statusu úlohy: To do, In progress, alebo Complete.
      */
     private function addStatusRadioButtons() {
         $html = '<label class="text-dark">Status<span class="text-danger pl-1">*</span></label>';
@@ -64,7 +75,10 @@ class TaskAddModal extends Modal {
     }
     
     /**
-     * Custom method to render deadline field
+     * Vlastná metóda na vykreslenie poľa pre deadline
+     * 
+     * Táto metóda vytvára pole pre zadanie termínu dokončenia úlohy,
+     * s dnešným dátumom ako minimálnou hodnotou.
      */
     private function renderDeadlineField() {
         $html = '<div class="form-group d-flex justify-content-between mt-2">';
@@ -78,30 +92,36 @@ class TaskAddModal extends Modal {
     }
     
     /**
-     * Override render body to include custom fields
+     * Prepísanie metódy renderBody pre zahrnutie vlastných polí
+     * 
+     * Táto metóda upravuje telo modálneho okna, aby obsahovalo
+     * všetky potrebné polia pre vytvorenie novej úlohy.
      */
     protected function renderBody() {
         $html = '<div class="modal-body">';
         
-        // Add validation error container
+        // Pridanie kontajnera pre chybové hlášky validácie
+        // Toto pomáha zobrazovať validačné chyby pekne formátované
         $html .= '<div class="alert alert-danger validation-errors" style="display:none;"></div>';
         
-        // Add status radio buttons
+        // Pridanie radio buttonov pre status úlohy
         $html .= $this->addStatusRadioButtons();
         
-        // Render regular fields
+        // Vykreslenie štandardných polí
         foreach ($this->fields as $field) {
             $html .= $this->renderField($field);
         }
         
-        // Add deadline field
+        // Pridanie poľa pre deadline
         $html .= $this->renderDeadlineField();
         
-        // Add hidden fields
+        // Pridanie skrytých polí
+        // ID projektu - kam úloha patrí
         $html .= '<div class="form-group">';
         $html .= '<input hidden id="id_task_project" name="id_project" value="' . $this->project_id . '">';
         $html .= '</div>';
         
+        // ID užívateľa - kto úlohu vytvoril
         $html .= '<div class="form-group">';
         $html .= '<input hidden id="id_user" name="id_user" value="' . $_SESSION['user_id'] . '">';
         $html .= '</div>';
@@ -112,7 +132,11 @@ class TaskAddModal extends Modal {
     }
     
     /**
-     * Override render method to ensure form wraps both body and footer
+     * Prepísanie metódy render, aby sme zaistili, že formulár
+     * obopína aj telo aj pätu modálneho okna
+     * 
+     * Táto metóda vytvára kompletný HTML kód modálneho okna
+     * vrátane formulára, ktorý obopína všetky polia.
      */
     public function render($submitText = 'Create Task') {
         $html = '<div class="modal fade" id="' . $this->modalId . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
@@ -121,13 +145,13 @@ class TaskAddModal extends Modal {
         
         $html .= $this->renderHeader();
         
-        // Open the form here to include both body and footer
+        // Otvorenie formulára pred telom, aby zahŕňal aj telo aj pätu
         $html .= '<form class="form-horizontal" method="post" action="' . $this->action . '">';
         
         $html .= $this->renderBody();
         $html .= $this->renderFooter($submitText);
         
-        // Close the form here after the footer
+        // Zatvorenie formulára po päte
         $html .= '</form>';
         
         $html .= '</div>';
@@ -138,16 +162,20 @@ class TaskAddModal extends Modal {
     }
     
     /**
-     * Initialize modal fields
+     * Inicializácia polí formulára
+     * 
+     * Táto metóda pridáva všetky potrebné polia pre vytvorenie
+     * novej úlohy, ako názov, popis a priorita.
      */
     private function initializeFields() {
-        // Add task name field
+        // Pridanie poľa pre názov úlohy - povinné pole
         $this->addTextField('task_name', 'Task Name<span class="text-danger pl-1">*</span>', '', true);
         
-        // Add description field
+        // Pridanie poľa pre popis úlohy - nepovinné
         $this->addTextareaField('task_description', 'Description', '', false);
         
-        // Add priority select field
+        // Pridanie výberu priority úlohy - nízka, stredná, vysoká
+        // Každá priorita má svoju farbu pre lepšiu prehľadnosť
         $priorityOptions = [
             '#5cb85c' => ['text' => '<span style="color:#5cb85c; font-weight:bold;">&#9724;</span> Low', 'style' => 'color:#5cb85c; font-weight:bold;'],
             '#f0ad4e' => ['text' => '<span style="color:#f0ad4e; font-weight:bold;">&#9724;</span> Medium', 'style' => 'color:#f0ad4e; font-weight:bold;'],

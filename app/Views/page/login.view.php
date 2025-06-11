@@ -1,24 +1,15 @@
 <?php 
 require_once('View.php');
 
-/**
- * LoginView class for rendering the login page
- */
+// Trieda LoginView pre zobrazenie prihlasovacej stránky
+// Táto stránka umožňuje používateľom prihlásiť sa do systému
 class LoginView extends View {
-	/**
-	 * Constructor
-	 * 
-	 * @param array $data Data to be passed to the view
-	 */
+	
 	public function __construct($data = []) {
 		parent::__construct('Productivity Hub', true, $data);
 	}
 	
-	/**
-	 * Render the login form
-	 * 
-	 * @return string HTML for the login form
-	 */
+	
 	protected function renderLoginForm() {
 		$errors = $this->getData('errors', '');
 		
@@ -26,7 +17,8 @@ class LoginView extends View {
 		$html .= '<p class="text-center h1 fw-bold m-5">LOG IN</p>';
 		$html .= '<form id="login" class="px-5" name="login" action="/login" method="POST">';
 		
-		// Username field
+		// Pole pre používateľské meno
+		// Ikona používateľa pekne vizuálne dopĺňa formulár
 		$html .= '<div class="mb-4">';
 		$html .= '<div class="input-group">';
 		$html .= '<div class="input-group-prepend">';
@@ -36,7 +28,8 @@ class LoginView extends View {
 		$html .= '</div>';
 		$html .= '</div>';
 		
-		// Password field
+		// Pole pre heslo
+		// Ikona zámku symbolizuje bezpečnosť
 		$html .= '<div class="mb-4">';
 		$html .= '<div class="input-group">';
 		$html .= '<div class="input-group-prepend">';
@@ -46,12 +39,13 @@ class LoginView extends View {
 		$html .= '</div>';
 		$html .= '</div>';
 		
-		// Submit button
+		// Tlačidlo pre odoslanie formulára
 		$html .= '<div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">';
 		$html .= '<button type="submit" class="btn btn-primary">LOG IN</button>';
 		$html .= '</div>';
 		
-		// Display errors if any
+		// Zobrazenie chybových hlášok, ak existujú
+		// Ak validácia zlyhá, tu sa zobrazia chyby
 		if (!empty($errors)) {
 			$html .= '<div class="err">';
 			$html .= '<ul>' . $errors . '</ul>';
@@ -60,7 +54,8 @@ class LoginView extends View {
 		
 		$html .= '</form>';
 		
-		// Link to registration
+		// Odkaz na registráciu
+		// Pre nových používateľov, ktorí ešte nemajú účet
 		$html .= '<span class="d-flex justify-content-center">Don\'t you have an account?<a class="nav-link text-primary m-0 p-0 pl-2" href="/register">Sign Up</a></span>';
 		$html .= '</div>';
 		
@@ -68,7 +63,8 @@ class LoginView extends View {
 	}
 	
 	/**
-	 * Render the image column
+	 * Renderuje stĺpec s obrázkom
+	 * Obrázok vizuálne vylepšuje prihlasovaciu stránku
 	 * 
 	 * @return string HTML for the image column
 	 */
@@ -79,7 +75,8 @@ class LoginView extends View {
 	}
 	
 	/**
-	 * Render the content section
+	 * Renderuje sekciu obsahu
+	 * Tu poskladáme celú prihlasovaciu stránku
 	 * 
 	 * @return string HTML for the content section
 	 */

@@ -4,30 +4,41 @@ namespace App\Views\Events\Modals;
 require_once(__DIR__ . '/Modal.php');
 
 /**
- * EventAddModal class for adding new events
+ * Trieda EventAddModal pre pridávanie nových udalostí
+ * 
+ * Táto trieda vytvára modálne okno pre pridanie novej udalosti do kalendára.
+ * Rozširuje základnú triedu Modal a pridáva špecifické polia a funkcie
+ * pre formulár na vytváranie udalostí.
  */
 class EventAddModal extends Modal {
     /**
-     * Constructor
+     * Konštruktor
+     * 
+     * Inicializuje modálne okno s ID 'ModalAdd', titulkom 'New event'
+     * a akciou, ktorá smeruje na '/calendar/create' endpoint.
      */
     public function __construct() {
         parent::__construct('ModalAdd', 'New event', '/calendar/create');
         
-        // Initialize fields
+        // Inicializácia polí formulára
         $this->initializeFields();
     }
     
     /**
-     * Initialize modal fields
+     * Inicializácia polí formulára
+     * 
+     * Pridáva všetky potrebné polia pre vytvorenie novej udalosti,
+     * ako názov, popis, farba, dátum začiatku a konca.
      */
     private function initializeFields() {
-        // Add title field
+        // Pridanie poľa pre názov udalosti - povinné pole
         $this->addTextField('title', 'Title', '', true, 'title');
         
-        // Add description field
+        // Pridanie poľa pre popis udalosti - nepovinné
         $this->addTextareaField('description', 'Description', '', false, 'Description');
         
-        // Add colour select field
+        // Pridanie výberu farby udalosti - vizuálne odlíšenie v kalendári
+        // Každá farba má svoj vlastný kód a text so symbolom
         $colorOptions = [
             '#0275d8' => ['text' => '&#9724; Blue', 'style' => 'color:#0275d8'],
             '#5bc0de' => ['text' => '&#9724; Tile', 'style' => 'color:#5bc0de'],
@@ -39,13 +50,17 @@ class EventAddModal extends Modal {
         
         $this->addSelectField('colour', 'Colour', $colorOptions, '', true);
         
-        // Add date fields
+        // Pridanie dátumových polí pre začiatok a koniec udalosti
         $this->addDateField('start_date', 'Start date', '', true);
         $this->addDateField('end_date', 'End date', '', true);
     }
     
     /**
-     * Override render method to ensure form wraps both body and footer
+     * Prepísanie metódy render, aby sme zaistili, že formulár
+     * obopína aj telo aj pätu modálneho okna
+     * 
+     * Toto je dôležité, lebo potrebujeme, aby všetky polia boli
+     * v jednom formulári, ktorý sa odošle na server.
      */
     public function render($submitText = 'Save') {
         $html = '<div class="modal fade" id="' . $this->modalId . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
@@ -54,13 +69,13 @@ class EventAddModal extends Modal {
         
         $html .= $this->renderHeader();
         
-        // Open the form here to include both body and footer
+        // Otvorenie formulára pred telom, aby zahŕňal aj telo aj pätu
         $html .= '<form class="form-horizontal" method="post" action="' . $this->action . '">';
         
         $html .= $this->renderBody();
         $html .= $this->renderFooter($submitText);
         
-        // Close the form here after the footer
+        // Zatvorenie formulára po päte
         $html .= '</form>';
         
         $html .= '</div>';

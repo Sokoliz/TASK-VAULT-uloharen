@@ -2,25 +2,20 @@
 namespace App\Views\Auth;
 
 /**
- * LoginView class
+ * LoginView trieda
  * 
- * Object-oriented wrapper for the login view
+ * Objektovo-orientovaný wrapper pre login pohľad
  */
 class LoginView 
 {
-    /**
-     * Data to be passed to the view
-     * @var array
-     */
+    // Dáta, ktoré budú poslané do view
     private $viewData;
     
-    /**
-     * Constructor
-     * 
-     * @param array $data Data to be passed to the view
-     */
+    
     public function __construct($data = [])
     {
+        // Uloženie dát pre použitie pri renderovaní
+        // Môžu tu byť napr. chybové správy alebo predvyplnené údaje
         $this->viewData = $data;
     }
     
@@ -31,22 +26,21 @@ class LoginView
      */
     public function render()
     {
-        // Load the required view class
+        // Načítanie požadovanej view triedy
+        // Používam relatívnu cestu, aby to fungovalo všade
         require_once __DIR__ . '/../page/login.view.php';
         
-        // Create an instance of the LoginView class and render it
+        // Vytvorenie inštancie LoginView triedy a jej renderovanie
+        // Posielam dáta do view, aby mohlo pracovať s premennými
         $loginView = new \LoginView($this->viewData);
         return $loginView->render();
     }
     
-    /**
-     * Static factory method to create and render the view
-     * 
-     * @param array $data Data to be passed to the view
-     * @return string The rendered HTML
-     */
+    
     public static function display($data = [])
     {
+        // Statická factory metóda pre vytvorenie a renderovanie view
+        // Toto zjednodušuje použitie, keď chcem rýchlo zobraziť login
         $renderer = new self($data);
         return $renderer->render();
     }

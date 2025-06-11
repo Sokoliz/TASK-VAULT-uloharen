@@ -7,11 +7,9 @@ namespace App\Utility;
  * This class contains utility methods used throughout the application
  */
 class Utility {
-    /**
-     * Vráti konfiguráciu obrázkov pre aplikáciu
-     * 
-     * @return array Konfigurácia obrázkov
-     */
+    // Vráti konfiguráciu obrázkov pre aplikáciu
+      
+     
     public static function getImagesConfig() {
         // Načítame konfiguráciu z JSON súboru
         $configFile = __DIR__ . '/images.json';
@@ -45,36 +43,22 @@ class Utility {
         ];
     }
 
-    /**
-     * Formátuje dátum do čitateľného formátu
-     * 
-     * @param string $date Dátum vo formáte Y-m-d
-     * @return string Formátovaný dátum
-     */
+    //Formátuje dátum do čitateľného formátu
+     
     public static function formatDate($date) {
         $timestamp = strtotime($date);
         return date('d. m. Y', $timestamp);
     }
 
-    /**
-     * Formátuje čas do čitateľného formátu
-     * 
-     * @param string $time Čas vo formáte H:i:s
-     * @return string Formátovaný čas
-     */
+    //Formátuje čas do čitateľného formátu
+     
     public static function formatTime($time) {
         $timestamp = strtotime($time);
         return date('H:i', $timestamp);
     }
 
-    /**
-     * Skráti text na určitý počet znakov
-     * 
-     * @param string $text Text na skrátenie
-     * @param int $length Maximálna dĺžka
-     * @param string $append Text na pridanie na koniec skráteného textu
-     * @return string Skrátený text
-     */
+    // Skráti text na určitý počet znakov
+     
     public static function truncateText($text, $length = 100, $append = '...') {
         if (strlen($text) <= $length) {
             return $text;

@@ -2,51 +2,41 @@
 namespace App\Views\Content;
 
 /**
- * ContentView class
+ * ContentView trieda
  * 
- * Object-oriented wrapper for the content view
+ * Objektovo-orientovaný wrapper pre pohľad obsahu
  */
 class ContentView 
 {
-    /**
-     * Data to be passed to the view
-     * @var array
-     */
+    // Dáta, ktoré budú poslané do view
     private $viewData;
     
-    /**
-     * Constructor
-     * 
-     * @param array $data Data to be passed to the view
-     */
+    
     public function __construct($data = [])
     {
+        // Uloženie dát do premennej triedy
+        // Tieto dáta sa neskôr použijú pri renderovaní
         $this->viewData = $data;
     }
     
-    /**
-     * Render the view
-     * 
-     * @return string The rendered HTML
-     */
+    
     public function render()
     {
-        // Load the required view class
+        // Načítanie požadovanej view triedy
+        // Musím použiť absolútnu cestu, aby to fungovalo správne
         require_once __DIR__ . '/../page/content.view.php';
         
-        // Create an instance of the ContentView class and render it
+        // Vytvorenie inštancie ContentView a jej renderovanie
+        // Tu mám takú malú rekurziu - volám triedu s rovnakým názvom, ale z iného namespace
         $contentView = new \ContentView($this->viewData);
         return $contentView->render();
     }
     
-    /**
-     * Static factory method to create and render the view
-     * 
-     * @param array $data Data to be passed to the view
-     * @return string The rendered HTML
-     */
+    
     public static function display($data = [])
     {
+        // Statická factory metóda pre jednoduchšie použitie
+        // Takto môžem priamo volať ContentView::display() bez vytvárania inštancie
         $renderer = new self($data);
         return $renderer->render();
     }

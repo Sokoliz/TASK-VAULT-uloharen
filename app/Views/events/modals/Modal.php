@@ -2,47 +2,33 @@
 namespace App\Views\Events\Modals;
 
 /**
- * Base Modal class for handling modal dialogs
+ * Základná trieda Modal na prácu s modálnymi oknami
+ * 
+ * Táto trieda slúži ako základ pre všetky modálne okná v aplikácii.
+ * Je to také "matka všetkých modálov" - ostatné triedy ju rozširujú
+ * a pridávajú vlastnú funkcionalitu. Takto nemusíme opakovať ten istý kód.
  */
 class Modal {
-    /**
-     * ID of the modal
-     */
+    
     protected $modalId;
     
-    /**
-     * Title of the modal
-     */
+    
     protected $title;
     
-    /**
-     * Action URL for the form
-     */
+    
     protected $action;
     
-    /**
-     * Modal form fields
-     */
+    
     protected $fields = [];
     
-    /**
-     * Constructor
-     * 
-     * @param string $modalId ID of the modal
-     * @param string $title Title of the modal
-     * @param string $action Action URL for the form
-     */
+    
     public function __construct($modalId, $title, $action) {
         $this->modalId = $modalId;
         $this->title = $title;
         $this->action = $action;
     }
     
-    /**
-     * Render the modal header
-     * 
-     * @return string HTML for the modal header
-     */
+    
     protected function renderHeader() {
         return '<div class="modal-header d-flex justify-content-between">
                     <h4 class="modal-title" id="myModalLabel">' . $this->title . '</h4>
@@ -51,10 +37,10 @@ class Modal {
     }
     
     /**
-     * Render the modal footer with submit button
+     * Vygeneruje pätu modálneho okna s tlačidlom odoslania
      * 
-     * @param string $submitText Text for the submit button
-     * @return string HTML for the modal footer
+     * @param string $submitText Text pre tlačidlo odoslania
+     * @return string HTML kód päty modálneho okna
      */
     protected function renderFooter($submitText = 'Save') {
         return '<div class="modal-footer">
@@ -64,13 +50,16 @@ class Modal {
     }
     
     /**
-     * Add a text field to the modal
+     * Pridá textové pole do modálneho okna
      * 
-     * @param string $name Name of the field
-     * @param string $label Label for the field
-     * @param string $value Default value
-     * @param bool $required Whether the field is required
-     * @param string $placeholder Placeholder text
+     * Najčastejšie používané pole - pre krátke textové vstupy
+     * ako mená, názvy atď.
+     * 
+     * @param string $name Názov poľa
+     * @param string $label Popisok poľa
+     * @param string $value Predvolená hodnota
+     * @param bool $required Či je pole povinné
+     * @param string $placeholder Zástupný text
      */
     public function addTextField($name, $label, $value = '', $required = false, $placeholder = '') {
         $this->fields[] = [
@@ -84,13 +73,15 @@ class Modal {
     }
     
     /**
-     * Add a textarea field to the modal
+     * Pridá viacriadkové textové pole do modálneho okna
      * 
-     * @param string $name Name of the field
-     * @param string $label Label for the field
-     * @param string $value Default value
-     * @param bool $required Whether the field is required
-     * @param string $placeholder Placeholder text
+     * Používa sa pre dlhšie texty, ako popisy alebo komentáre
+     * 
+     * @param string $name Názov poľa
+     * @param string $label Popisok poľa
+     * @param string $value Predvolená hodnota
+     * @param bool $required Či je pole povinné
+     * @param string $placeholder Zástupný text
      */
     public function addTextareaField($name, $label, $value = '', $required = false, $placeholder = '') {
         $this->fields[] = [
@@ -104,12 +95,14 @@ class Modal {
     }
     
     /**
-     * Add a date field to the modal
+     * Pridá dátumové pole do modálneho okna
      * 
-     * @param string $name Name of the field
-     * @param string $label Label for the field
-     * @param string $value Default value
-     * @param bool $required Whether the field is required
+     * Na zadávanie dátumov ako deadliny, začiatky projektov atď.
+     * 
+     * @param string $name Názov poľa
+     * @param string $label Popisok poľa
+     * @param string $value Predvolená hodnota
+     * @param bool $required Či je pole povinné
      */
     public function addDateField($name, $label, $value = '', $required = false) {
         $this->fields[] = [
@@ -122,10 +115,13 @@ class Modal {
     }
     
     /**
-     * Add a hidden field to the modal
+     * Pridá skryté pole do modálneho okna
      * 
-     * @param string $name Name of the field
-     * @param string $value Value of the field
+     * Super užitočné pre posielanie ID a podobných vecí,
+     * ktoré užívateľ nemusí vidieť ale potrebujeme ich poslať
+     * 
+     * @param string $name Názov poľa
+     * @param string $value Hodnota poľa
      */
     public function addHiddenField($name, $value) {
         // Špeciálna kontrola pre id_event, aby sme zabezpečili, že nie je prázdne
@@ -144,13 +140,16 @@ class Modal {
     }
     
     /**
-     * Add a select field to the modal
+     * Pridá výberové pole (dropdown) do modálneho okna
      * 
-     * @param string $name Name of the field
-     * @param string $label Label for the field
-     * @param array $options Options for the select
-     * @param string $selectedValue Selected option value
-     * @param bool $required Whether the field is required
+     * Používa sa, keď má užívateľ vybrať jednu možnosť z viacerých,
+     * napríklad farbu alebo prioritu
+     * 
+     * @param string $name Názov poľa
+     * @param string $label Popisok poľa
+     * @param array $options Možnosti pre výber
+     * @param string $selectedValue Vybraná hodnota
+     * @param bool $required Či je pole povinné
      */
     public function addSelectField($name, $label, $options, $selectedValue = '', $required = false) {
         $this->fields[] = [
@@ -164,11 +163,13 @@ class Modal {
     }
     
     /**
-     * Add a checkbox field to the modal
+     * Pridá zaškrtávacie pole (checkbox) do modálneho okna
      * 
-     * @param string $name Name of the field
-     * @param string $label Label for the field
-     * @param bool $checked Whether the checkbox is checked
+     * Pre áno/nie voľby, ako napríklad "Dokončené" alebo "Aktívne"
+     * 
+     * @param string $name Názov poľa
+     * @param string $label Popisok poľa
+     * @param bool $checked Či je pole zaškrtnuté
      */
     public function addCheckboxField($name, $label, $checked = false) {
         $this->fields[] = [
@@ -180,16 +181,21 @@ class Modal {
     }
     
     /**
-     * Render a field based on its type
+     * Vygeneruje HTML kód pre jedno pole podľa jeho typu
      * 
-     * @param array $field Field data
-     * @return string HTML for the field
+     * Táto metóda je asi najdôležitejšia, lebo tu sa generuje
+     * HTML pre všetky typy polí. Je to dosť rozsiahle, ale vlastne
+     * len generuje správne HTML značky podľa typu poľa.
+     * 
+     * @param array $field Dáta poľa
+     * @return string HTML kód poľa
      */
     protected function renderField($field) {
         $html = '';
         
         switch ($field['type']) {
             case 'text':
+                // Obyčajné textové pole - input type="text"
                 $html .= '<div class="form-group">';
                 $html .= '<label for="' . $field['name'] . '" class="col-sm-4 control-label">' . $field['label'] . '</label>';
                 $html .= '<div class="col-sm-12">';
@@ -208,7 +214,7 @@ class Modal {
                 }
                 
                 $html .= '>';
-                // Add a div for validation messages
+                // Pridáme div pre validačné správy - fajn pre JavaScript validáciu
                 if ($field['name'] === 'title') {
                     $html .= '<div class="validation-message"></div>';
                 }
@@ -217,6 +223,7 @@ class Modal {
                 break;
                 
             case 'textarea':
+                // Viacriadkové textové pole - pre dlhšie texty
                 $html .= '<div class="form-group">';
                 $html .= '<label for="' . $field['name'] . '" class="col-sm-4 control-label">' . $field['label'] . '</label>';
                 $html .= '<div class="col-sm-12">';
@@ -242,6 +249,7 @@ class Modal {
                 break;
                 
             case 'select':
+                // Výberové pole (dropdown) - pre výber z viacerých možností
                 $html .= '<div class="form-group">';
                 $html .= '<label for="' . $field['name'] . '" class="col-sm-4 control-label">' . $field['label'] . '</label>';
                 $html .= '<div class="col-sm-12">';
@@ -271,7 +279,7 @@ class Modal {
                 foreach ($field['options'] as $value => $option) {
                     $selected = ($value === $field['selected']) ? 'selected' : '';
                     
-                    // Handle both string and array option formats
+                    // Spracovanie rôznych formátov možností - môžu byť buď reťazce alebo polia
                     if (is_array($option)) {
                         $optionStyle = isset($option['style']) ? $option['style'] : '';
                         $optionText = isset($option['text']) ? $option['text'] : $value;
@@ -289,6 +297,7 @@ class Modal {
                 break;
                 
             case 'date':
+                // Dátumové pole - používa sa špeciálny date-picker pre lepší výber dátumu
                 $html .= '<div class="form-group">';
                 $html .= '<label for="' . $field['name'] . '" class="col-sm-4 control-label">' . $field['label'] . '</label>';
                 $html .= '<div class="col-sm-12">';
@@ -308,10 +317,12 @@ class Modal {
                 break;
                 
             case 'hidden':
+                // Skryté pole - užívateľ ho nevidí, ale je súčasťou formulára
                 $html .= '<input type="hidden" name="' . $field['name'] . '" id="' . $field['name'] . '" value="' . $field['value'] . '">';
                 break;
                 
             case 'checkbox':
+                // Zaškrtávacie pole - pre áno/nie voľby
                 $checked = $field['checked'] ? 'checked' : '';
                 $html .= '<div class="form-group">';
                 $html .= '<div class="col-sm-offset-4 col-sm-12">';
@@ -329,9 +340,11 @@ class Modal {
     }
     
     /**
-     * Render the modal body with form fields
+     * Vygeneruje telo modálneho okna s formulárovými poliami
      * 
-     * @return string HTML for the modal body
+     * Prejde všetky polia a pre každé zavolá renderField
+     * 
+     * @return string HTML kód tela modálneho okna
      */
     protected function renderBody() {
         $html = '<div class="modal-body">';
@@ -346,10 +359,14 @@ class Modal {
     }
     
     /**
-     * Render the complete modal
+     * Vygeneruje kompletné modálne okno
      * 
-     * @param string $submitText Text for the submit button
-     * @return string HTML for the complete modal
+     * Spojí hlavičku, telo a pätu do jedného HTML kódu
+     * Toto je metóda, ktorú zavolajú potomkovia, aby získali
+     * kompletný HTML kód modálneho okna.
+     * 
+     * @param string $submitText Text pre tlačidlo odoslania
+     * @return string HTML kód kompletného modálneho okna
      */
     public function render($submitText = 'Save') {
         $html = '<div class="modal fade" id="' . $this->modalId . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
@@ -358,13 +375,13 @@ class Modal {
         
         $html .= $this->renderHeader();
         
-        // Open the form here to include both body and footer
+        // Otvoríme formulár tu, aby zahŕňal telo aj pätu
         $html .= '<form class="form-horizontal" method="post" action="' . $this->action . '">';
         
         $html .= $this->renderBody();
         $html .= $this->renderFooter($submitText);
         
-        // Close the form here after the footer
+        // Zatvoríme formulár po päte
         $html .= '</form>';
         
         $html .= '</div>';

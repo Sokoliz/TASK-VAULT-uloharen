@@ -7,6 +7,7 @@ use Exception;
 session_start();
 
 // Kontrola ci je uzivatel prihlaseny - bezpecnostne opatrenie
+// Ak nie je, nepustíme ho ďalej a presmerujeme na login
 if (isset($_SESSION['user'])) {
 } else {
 	http_response_code(401);
@@ -15,45 +16,47 @@ if (isset($_SESSION['user'])) {
 }
 	
 // Nacitanie Database triedy
+// Používam absolútnu cestu od app adresára
 require_once(__DIR__ . '/../../../Core/Database.php');
 
 // Inicializacia spojenia s databazou
+// Používame singleton vzor pre databázové spojenie
 $db = Database::getInstance();
 
 require_once('Event.php');
 
-// Debug logging
+// Debug logovanie
+// Toto je super na odhaľovanie chýb, vypíše všetky POST dáta
 error_log('EventEdit.php called with POST data: ' . print_r($_POST, true));
 
 /**
- * Class to handle editing events
+ * Trieda na úpravu existujúcich udalostí
  */
 class EventEdit extends Event {
-	/**
-	 * Update an existing event in the database
-	 * 
-	 * @return void
-	 */
 	public function updateEvent() {
-		// Check if the delete flag is set
+		// Kontrola, či je nastavený príznak na vymazanie
+		// Ak áno, vymazáme udalosť a skončíme
 		if (isset($_POST['delete']) && !empty($_POST['id_event'])) {
 			error_log('Delete flag is set, proceeding with event deletion');
-			// Delete the event regardless of the value of the delete parameter
+			// Vymazanie udalosti bez ohľadu na hodnotu parametra delete
 			$this->deleteEvent();
 			return;
 		}
 		
 		// Spracovanie dát z AJAX volania z calendar.js
+		// Toto sa používa pri drag & drop aktualizácii v kalendári
 		if (isset($_POST['Event']) && is_array($_POST['Event']) && count($_POST['Event']) >= 3) {
 			error_log('Handling drag & drop update');
 			$this->handleDragDropUpdate();
 			return;
 		}
 		
-		// Define required fields
+		// Definovanie povinných polí
+		// Všetky tieto údaje potrebujeme na úpravu udalosti
 		$requiredFields = ['id_event', 'title', 'start_date', 'end_date'];
 		
-		// Validate required fields
+		// Validácia povinných polí
+		// Ak niečo chýba, vrátime chybu
 		if (!$this->validateFields($requiredFields, $_POST)) {
 			error_log('Missing required fields for event update');
 			http_response_code(400);
@@ -63,7 +66,8 @@ class EventEdit extends Event {
 		
 		error_log('Updating event with ID: ' . $_POST['id_event']);
 		
-		// Get data from POST
+		// Získanie dát z POST
+		// Nastavenie hodnôt pre update
 		$this->id_event = $_POST['id_event'];
 		$this->title = $_POST['title'];
 		$this->description = isset($_POST['description']) ? $_POST['description'] : '';
@@ -71,7 +75,8 @@ class EventEdit extends Event {
 		$this->end_date = $this->formatDate($_POST['end_date']);
 		$this->colour = isset($_POST['colour']) ? $_POST['colour'] : '';
 		
-		// SQL update query
+		// SQL príkaz na aktualizáciu
+		// Používam named parameters pre bezpečnosť
 		$sql = "UPDATE calendar 
 				SET title = :title, 
 					description = :description, 
@@ -80,7 +85,8 @@ class EventEdit extends Event {
 					colour = :colour 
 				WHERE id_event = :id_event";
 		
-		// Prepare and execute query
+		// Príprava a vykonanie dotazu
+		// Binding parametrov pre prepared statement
 		$query = $this->db->prepare($sql);
 		$query->bindParam(':id_event', $this->id_event);
 		$query->bindParam(':title', $this->title);
@@ -89,43 +95,49 @@ class EventEdit extends Event {
 		$query->bindParam(':end_date', $this->end_date);
 		$query->bindParam(':colour', $this->colour);
 		
+		// Vykonanie dotazu a logovanie výsledku
 		$result = $query->execute();
 		error_log('Update query result: ' . ($result ? 'success' : 'failure'));
 		
-		// Redirect to calendar page
+		// Presmerovanie na stránku kalendára
+		// Po úprave sa vrátime na kalendár, aby sme videli zmeny
 		header('Location: /calendar');
 		exit();
 	}
 	
-	/**
-	 * Handle update from drag & drop in calendar
-	 * 
-	 * @return void
-	 */
 	protected function handleDragDropUpdate() {
+		// Získanie údajov z POST pre drag & drop aktualizáciu
+		// Event[0] = id, Event[1] = začiatok, Event[2] = koniec
 		$id_event = $_POST['Event'][0];
 		$start_date = $this->formatDate($_POST['Event'][1]);
 		$end_date = $this->formatDate($_POST['Event'][2]);
 		
+		// Logovanie informácií o aktualizácii
+		// Toto je užitočné pre debugging
 		error_log("Drag & drop update for event ID: $id_event");
 		error_log("New start date: $start_date");
 		error_log("New end date: $end_date");
 		
-		// SQL update query pre aktualizáciu dátumov
+		// SQL príkaz na aktualizáciu dátumov
+		// Tu aktualizujeme len začiatok a koniec udalosti
 		$sql = "UPDATE calendar 
 				SET start_date = :start_date, 
 					end_date = :end_date
 				WHERE id_event = :id_event";
 		
-		// Prepare and execute query
+		// Príprava a vykonanie dotazu
+		// Opäť používam prepared statements pre bezpečnosť
 		$query = $this->db->prepare($sql);
 		$query->bindParam(':id_event', $id_event);
 		$query->bindParam(':start_date', $start_date);
 		$query->bindParam(':end_date', $end_date);
 		
+		// Vykonanie dotazu a logovanie výsledku
 		$result = $query->execute();
 		error_log('Drag & drop update result: ' . ($result ? 'success' : 'failure'));
 		
+		// Vrátenie odpovede pre AJAX
+		// Toto používa JavaScript na zobrazenie notifikácie
 		if ($result) {
 			echo "OK";
 		} else {
@@ -135,12 +147,9 @@ class EventEdit extends Event {
 		exit;
 	}
 	
-	/**
-	 * Delete an event from the database
-	 * 
-	 * @return void
-	 */
 	public function deleteEvent() {
+		// Kontrola, či máme ID udalosti na vymazanie
+		// Ak nie, vrátime sa na kalendár
 		if (!isset($_POST['id_event']) || empty($_POST['id_event'])) {
 			header('Location: /calendar');
 			exit();
@@ -148,27 +157,32 @@ class EventEdit extends Event {
 		
 		$this->id_event = $_POST['id_event'];
 		
-		// SQL delete query
+		// SQL príkaz na vymazanie
+		// Jednoduché vymazanie podľa ID
 		$sql = "DELETE FROM calendar WHERE id_event = :id_event";
 		
 		try {
-			// Prepare and execute query
+			// Príprava a vykonanie dotazu
+			// Používam try-catch, aby som zachytil prípadné chyby
 			$query = $this->db->prepare($sql);
 			$query->bindParam(':id_event', $this->id_event);
 			
 			$query->execute();
 			
 		} catch (Exception $e) {
-			// Silence exceptions
+			// Ignorujeme chyby - mohli by sme ich logovať
+			// Ale nechceme ich zobrazovať používateľovi
 		}
 		
-		// Redirect to calendar page
+		// Presmerovanie na stránku kalendára
+		// Po vymazaní sa vrátime na kalendár
 		header('Location: /calendar');
 		exit();
 	}
 }
 
-// Instantiate and run
+// Vytvorenie inštancie a spustenie
+// Toto je entry point pre úpravu udalosti
 $eventEdit = new EventEdit();
 $eventEdit->updateEvent();
 ?>

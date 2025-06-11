@@ -1,115 +1,86 @@
 <?php
-/**
- * Base View class for rendering pages
- */
+// Základná trieda View pre renderovanie stránok
+// Táto trieda slúži ako základ pre všetky ostatné view triedy
 class View {
-    /**
-     * Page title
-     */
+    // Titul stránky, zobrazuje sa v hlavičke prehliadača
     protected $title;
     
-    /**
-     * Whether the page is public (doesn't require login)
-     */
+    // Určuje, či je stránka verejná (nepotrebuje prihlásenie)
+    // Ak je true, tak sa používateľ nemusí prihlasovať
     protected $isPublic;
     
-    /**
-     * Data to be passed to the view
-     */
+    // Dáta, ktoré sa budú posielať do view
+    // Môže obsahovať rôzne informácie z modelu alebo kontroléra
     protected $data;
     
-    /**
-     * Constructor
-     * 
-     * @param string $title Page title
-     * @param bool $isPublic Whether the page is public
-     * @param array $data Data to be passed to the view
-     */
+    // Konštruktor triedy - inicializuje základné vlastnosti
     public function __construct($title = 'Productivity Hub', $isPublic = false, $data = []) {
         $this->title = $title;
         $this->isPublic = $isPublic;
         $this->data = $data;
     }
     
-    /**
-     * Render the head section
-     * 
-     * @return string HTML for the head section
-     */
+    // Renderuje sekciu hlavičky stránky
+    // Táto metóda načíta header.php a vráti vygenerované HTML
     protected function renderHead() {
         ob_start();
-        $title = $this->title; // For use in the included file
-        $public_page = $this->isPublic; // For use in the included file
+        $title = $this->title; // Pre použitie v includovanom súbore
+        $public_page = $this->isPublic; // Pre použitie v includovanom súbore
         require_once __DIR__."/../parts/header.php";
         return ob_get_clean();
     }
     
-    /**
-     * Render the footer section
-     * 
-     * @return string HTML for the footer section
-     */
+    // Renderuje pätičku stránky
+    // Načíta footer.php a vráti jeho obsah
     protected function renderFooter() {
-        // Include footer.php and capture its output
+        // Includneme footer.php a zachytíme jeho výstup
         ob_start();
         include_once __DIR__.'/../parts/footer.php';
         return ob_get_clean();
     }
     
-    /**
-     * Render the JavaScript imports
-     * 
-     * @return string HTML for the JavaScript imports
-     */
+    // Renderuje JavaScript importy
+    // Tieto skripty sú potrebné pre fungovanie Bootstrap komponentov
     protected function renderScripts() {
         return '<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>';
     }
     
-    /**
-     * Render the navigation bar
-     * 
-     * @param string $type Type of navbar (standard, user_info, simple)
-     * @param bool $showHomeButton Whether to show the home button
-     * @param bool $showThemeSwitch Whether to show the theme switch
-     * @return string HTML for the navigation bar
-     */
+    // Renderuje navigačný panel
+    // Rôzne typy navbarov - štandardný, s info o používateľovi, jednoduchý
     protected function renderNavbar($type = 'standard', $showHomeButton = true, $showThemeSwitch = true) {
-        // Set variables for navbar.php
+        // Nastavíme premenné pre navbar.php
         $isPublic = $this->isPublic;
         $navbarType = $type;
         
-        // Include navbar.php and capture its output
+        // Includneme navbar.php a zachytíme jeho výstup
         ob_start();
         include_once __DIR__.'/../parts/navbar.php';
         return ob_get_clean();
     }
     
-    /**
-     * Render the complete page
-     * 
-     * @return string Complete HTML for the page
-     */
+    // Renderuje celú stránku
+    // Táto metóda poskladá dokopy všetky časti stránky - hlavičku, obsah, pätičku
     public function render() {
         $html = '<!DOCTYPE html>';
         $html .= '<html lang="en">';
         
-        // Head section
+        // Sekcia head
         $html .= '<head>';
         $html .= $this->renderHead();
         $html .= '</head>';
         
-        // Body section
+        // Sekcia body
         $html .= '<body>';
         
-        // Content to be implemented by child classes
+        // Obsah implementovaný v potomkovských triedach
         $html .= $this->renderContent();
         
-        // Footer section
+        // Sekcia footer
         $html .= $this->renderFooter();
         
-        // JavaScript imports
+        // JavaScript importy
         $html .= $this->renderScripts();
         
         $html .= '</body>';
@@ -118,29 +89,20 @@ class View {
         return $html;
     }
     
-    /**
-     * Render the content section (to be implemented by child classes)
-     * 
-     * @return string HTML for the content section
-     */
+    // Renderuje obsah stránky (má byť implementovaný v potomkovských triedach)
+    // Táto metóda je prázdna, pretože každá stránka má iný obsah
     protected function renderContent() {
         return '';
     }
     
-    /**
-     * Display the page
-     */
+    // Zobrazí stránku - vypíše výsledný HTML kód
+    // Jednoduchá helper metóda, ktorá zavolá render() a echne výsledok
     public function display() {
         echo $this->render();
     }
     
-    /**
-     * Get a value from the data array
-     * 
-     * @param string $key Key to get
-     * @param mixed $default Default value if key doesn't exist
-     * @return mixed Value from the data array
-     */
+    // Získa hodnotu z poľa dát
+    // Pomáha bezpečne pristupovať k dátam, aj keď kľúč neexistuje
     protected function getData($key, $default = null) {
         return isset($this->data[$key]) ? $this->data[$key] : $default;
     }

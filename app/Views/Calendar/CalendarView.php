@@ -4,60 +4,51 @@ namespace App\Views\Calendar;
 use App\Core\Session;
 
 /**
- * CalendarView class
+ * CalendarView trieda
  * 
- * Object-oriented wrapper for the calendar view
+ * Objektovo-orientovaný wrapper pre pohľad kalendára
  */
 class CalendarView 
 {
-    /**
-     * Data to be passed to the view
-     * @var array
-     */
+    // Dáta, ktoré budú poslané do view
     private $viewData;
     
-    /**
-     * Constructor
-     * 
-     * @param array $data Data to be passed to the view
-     */
+    
     public function __construct($data = [])
     {
+        // Uloženie dát do atribútu, aby boli dostupné pri renderovaní
         $this->viewData = $data;
     }
     
-    /**
-     * Render the view
-     * 
-     * @return string The rendered HTML
-     */
+    
     public function render()
     {
         // Ochrana - ak nemáme používateľa, presmerujeme ho
+        // Toto je základné bezpečnostné opatrenie proti neoprávnenému prístupu
         if (!Session::isLoggedIn()) {
             header('Location: /login');
             exit;
         }
         
         // Extrahujeme udalosti pre kalendár ak existujú
+        // Používam ?? operátor na ošetrenie prípadu, keď kľúč neexistuje
         $events = $this->viewData['events'] ?? [];
         
-        // Load the required view class
+        // Načítanie požadovanej view triedy
+        // Tento súbor obsahuje konkrétnu implementáciu kalendára
         require_once __DIR__ . '/../page/calendar.view.php';
         
-        // Create an instance of the CalendarView class and render it
+        // Vytvorenie inštancie CalendarView a jej renderovanie
+        // Presúvam dáta do view, aby mohlo pracovať s premennými
         $calendarView = new \CalendarView($this->viewData);
         return $calendarView->render();
     }
     
-    /**
-     * Static factory method to create and render the view
-     * 
-     * @param array $data Data to be passed to the view
-     * @return string The rendered HTML
-     */
+    
     public static function display($data = [])
     {
+        // Statická metóda pre rýchle vytvorenie a zobrazenie kalendára
+        // Toto je pohodlnejšie ako vytvárať inštanciu a volať render zvlášť
         $renderer = new self($data);
         return $renderer->render();
     }

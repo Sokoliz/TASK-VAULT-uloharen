@@ -1,50 +1,36 @@
 <?php
 namespace App\Views\Project;
 
-/**
- * ProjectsView class
- * 
- * Object-oriented wrapper for the projects view
- */
+// Trieda ProjectsView - obaľuje pohľad pre projekty 
+// používa OOP prístup aby sa to krajšie integrovalo do zvyšku kódu
 class ProjectsView 
 {
-    /**
-     * Data to be passed to the view
-     * @var array
-     */
+    // Dáta, ktoré posunieme do pohľadu - taká malá krabička s vecami
     private $viewData;
     
-    /**
-     * Constructor
-     * 
-     * @param array $data Data to be passed to the view
-     */
+    // Konštruktor - len si uloží dáta, nič extra
+    // $data - pole s dátami pre pohľad, defaultne prázdne
     public function __construct($data = [])
     {
         $this->viewData = $data;
     }
     
-    /**
-     * Render the view
-     * 
-     * @return string The rendered HTML
-     */
+    // Vykreslí pohľad a vráti HTML
+    // toto je hlavná metóda, ktorú budeme volať z kontroléra
     public function render()
     {
-        // Load the required view class
+        // Načíta triedu pohľadu - tá je v inom súbore
         require_once __DIR__ . '/../page/projects.view.php';
         
-        // Create an instance of the projects view class and render it
+        // Vytvorí inštanciu triedy projekty a vykreslí ju
+        // toto je fajn, lebo delegujeme vykresľovanie na špecializovanú triedu
         $projectsView = new \ProjectsView($this->viewData);
         return $projectsView->render();
     }
     
-    /**
-     * Static factory method to create and render the view
-     * 
-     * @param array $data Data to be passed to the view
-     * @return string The rendered HTML
-     */
+    // Statická metóda pre jednoduchšie použitie - vytvorí a vykreslí pohľad v jednom kroku
+    // $data - pole s dátami pre pohľad
+    // praktické keď nechceme vytvárať inštanciu manuálne
     public static function display($data = [])
     {
         $renderer = new self($data);

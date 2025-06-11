@@ -1,24 +1,15 @@
 <?php
 require_once('View.php');
 
-/**
- * CalendarView class for rendering the calendar page
- */
+// Trieda CalendarView pre zobrazenie stránky s kalendárom
+// Kalendár nám umožňuje zobrazovať a manažovať všetky udalosti
 class CalendarView extends View {
-	/**
-	 * Constructor
-	 * 
-	 * @param array $data Data to be passed to the view
-	 */
+	
 	public function __construct($data = []) {
 		parent::__construct('Calendar', false, $data);
 	}
 	
-	/**
-	 * Render the head section with additional calendar styles
-	 * 
-	 * @return string HTML for the head section
-	 */
+	
 	protected function renderHead() {
 		$html = parent::renderHead();
 		$html .= '<script src="/public/js/theme.js"></script>';
@@ -32,11 +23,7 @@ class CalendarView extends View {
 		return $html;
 	}
 	
-	/**
-	 * Render the calendar container
-	 * 
-	 * @return string HTML for the calendar container
-	 */
+	
 	protected function renderCalendar() {
 		$html = '<div class="container bg-light text-dark rounded mt-4">';
 		
@@ -64,9 +51,9 @@ class CalendarView extends View {
 		$html .= '</div>';
 		$html .= '</div>';
 		
-		// Use external form validation script instead of inline
+		// Namiesto inline validácie používame externý skript
 		
-		// Include modal windows
+		// Includujeme modálne okná
 		ob_start();
 		require_once __DIR__ . '/../../Controllers/EventAddModalController.php';
 		require_once __DIR__ . '/../../Controllers/EventEditModalController.php';
@@ -77,11 +64,7 @@ class CalendarView extends View {
 		return $html;
 	}
 	
-	/**
-	 * Render the print button
-	 * 
-	 * @return string HTML for the print button
-	 */
+	
 	protected function renderPrintButton() {
 		return '<div class="row m-0 p-0">
 	<div class="col sm-3 d-flex justify-content-center d-print-none">
@@ -90,11 +73,7 @@ class CalendarView extends View {
 		</div>';
 	}
 	
-	/**
-	 * Render additional scripts for the calendar
-	 * 
-	 * @return string HTML for the additional scripts
-	 */
+	
 	protected function renderCalendarScripts() {
 		$html = '<script src="/public/js/jquery.js"></script>';
 		$html .= '<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>';
@@ -113,26 +92,22 @@ class CalendarView extends View {
 		$eventsCountScript = str_replace('[COUNT_PLACEHOLDER]', count($events), $eventsCountScript);
 		$html .= '<script>' . $eventsCountScript . '</script>';
 		
-		// Include calendar configuration
+		// Includujeme konfiguráciu kalendára
 		ob_start();
-		// We're removing the require for calendar2.php and directly adding the JavaScript initialization
-		// This part is now handled by Calendar2View in the controller
+		// Odstránili sme require pre calendar2.php a priamo pridávame JavaScript inicializáciu
+		// Táto časť je teraz obsluhovaná kontrolérom Calendar2View
 		$html .= ob_get_clean();
 		
-		// Add event-modal.js for handling modal events
+		// Pridávame event-modal.js pre obsluhu modálnych okien
 		$html .= '<script src="/public/js/event-modal.js"></script>';
 		
-		// Load debug script last to check everything is properly loaded
+		// Načítame debug skript ako posledný, aby sme skontrolovali, či je všetko správne načítané
 		$html .= '<script src="/public/js/calendar-debug.js"></script>';
 		
 		return $html;
 	}
 	
-	/**
-	 * Render the content section
-	 * 
-	 * @return string HTML for the content section
-	 */
+	
 	protected function renderContent() {
 		// Nastavenie premenných pre navbar.php
 		$isPublic = false;
@@ -151,27 +126,23 @@ class CalendarView extends View {
 		return $html;
 	}
 	
-	/**
-	 * Render the complete page
-	 * 
-	 * @return string Complete HTML for the page
-	 */
+	
 	public function render() {
 		$html = '<!DOCTYPE html>';
 		$html .= '<html lang="en">';
 		
-		// Head section
+		// Sekcia head
 		$html .= '<head>';
 		$html .= $this->renderHead();
 		$html .= '</head>';
 		
-		// Body section with background class
+		// Sekcia body s triedou pozadia
 		$html .= '<body class="bg">';
 		
-		// Content
+		// Obsah
 		$html .= $this->renderContent();
 		
-		// Calendar scripts
+		// Skripty kalendára
 		$html .= $this->renderCalendarScripts();
 		
 		$html .= '</body>';

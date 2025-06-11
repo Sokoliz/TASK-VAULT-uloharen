@@ -8,9 +8,10 @@ use App\Utility\Utility;
 require_once __DIR__.'/../../../../config/Utility.php';
 
 /**
- * Base Event class for handling calendar events
+ * Základná Event trieda pre prácu s udalosťami v kalendári
  */
 class Event {
+    // Databázové spojenie a vlastnosti udalosti
     protected $db;
     protected $id_event;
     protected $title;
@@ -24,12 +25,14 @@ class Event {
      * Constructor - initialize database connection
      */
     public function __construct() {
-        // Start session if not already started
+        // Spustenie session, ak ešte nie je spustená
+        // PHP_SESSION_NONE je konštanta, ktorá hovorí, že session ešte nie je spustená
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
 
-        // Check if user is logged in
+        // Kontrola, či je používateľ prihlásený
+        // Ak nie je prihlásený, presmerujem ho na login stránku
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
             header('Location: ../../login.php');
@@ -37,39 +40,35 @@ class Event {
         }
 
         // Inicializácia spojenia s databázou pomocou namespace verzie
+        // Použitie singleton vzoru, aby sme mali len jedno spojenie
         $this->db = Database::getInstance();
     }
 
-    /**
-     * Format date to database format
-     * 
-     * @param string $date Date to format
-     * @return string Formatted date
-     */
+    
     protected function formatDate($date) {
-        // Make sure we have a valid date format
+        // Zabezpečíme, že máme platný formát dátumu
+        // Ak je dátum prázdny, použijeme aktuálny čas
         if (empty($date)) {
             return date('Y-m-d H:i:s');
         }
         
-        // Try to parse the date using Utility class
+        // Pokúsime sa analyzovať dátum pomocou triedy Utility
+        // strtotime() prevádza textový dátum na timestamp
         $timestamp = strtotime($date);
         if ($timestamp === false) {
-            // If parsing fails, use current date/time
+            // Ak analýza zlyhá, použijeme aktuálny dátum/čas
+            // Toto je záložné riešenie, ak by dátum nebol v správnom formáte
             return date('Y-m-d H:i:s');
         }
         
+        // Vrátime dátum vo formáte, ktorý očakáva databáza
         return date('Y-m-d H:i:s', $timestamp);
     }
 
-    /**
-     * Validate that all required fields are present
-     * 
-     * @param array $fields Array of field names to check
-     * @param array $data Data to check fields in
-     * @return bool True if all fields exist
-     */
+    
     protected function validateFields($fields, $data) {
+        // Overenie, či sú všetky požadované polia prítomné
+        // Pre každé pole v zozname kontrolujeme, či existuje v dátach
         foreach ($fields as $field) {
             if (!isset($data[$field])) {
                 return false;
@@ -78,20 +77,18 @@ class Event {
         return true;
     }
 
-    /**
-     * Execute a query and handle errors
-     * 
-     * @param object $query PDO prepared statement
-     * @param string $errorMessage Error message to display
-     * @return bool True if query executed successfully
-     */
+    
     protected function executeQuery($query, $errorMessage = 'There was a problem') {
+        // Kontrola, či sa podarilo pripraviť dotaz
+        // Ak nie, vypisujeme chybu a končíme skript
         if ($query === false) {
             print_r($this->db->errorInfo());
             http_response_code(500);
             die($errorMessage . ' while loading');
         }
 
+        // Vykonanie dotazu a kontrola výsledku
+        // Ak sa dotaz nepodarí vykonať, vypisujeme chybu
         $result = $query->execute();
         if ($result === false) {
             print_r($query->errorInfo());
