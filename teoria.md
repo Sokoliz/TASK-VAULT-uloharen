@@ -526,3 +526,51 @@ TASK VAULT má jasnú a logickú štruktúru priečinkov, ktorá odráža MVC ar
 5. **Štandardizácia** - podobná štruktúra ako v moderných PHP frameworkoch
 
 ---
+
+1.  Controllers
+    Úloha: Spracovávajú požiadavky používateľa (napr. kliknutie na odkaz, odoslanie formulára).
+    Čo robia: Prijímajú vstupy, komunikujú s modelmi, vyberajú správny pohľad (view) a posielajú mu dáta.
+    Príklad: UserController.php môže mať metódy ako login(), register(), logout().
+
+2.  Models
+    Úloha: Pracujú s dátami a databázou.
+    Čo robia: Obsahujú logiku pre získavanie, ukladanie, úpravu a mazanie dát.
+    Príklad: User.php model môže mať metódy ako findById($id), save(), delete().
+
+3.  Views
+    Úloha: Zobrazujú dáta používateľovi.
+    Čo robia: Sú to šablóny (často HTML s PHP), ktoré zobrazujú informácie, ktoré im pošle controller.
+    Príklad: login.php, dashboard.php – HTML stránky, ktoré zobrazujú formuláre alebo tabuľky.
+
+4.  Core
+    Úloha: Obsahuje základné triedy a knižnice, ktoré využíva celý projekt.
+    Čo robia: Môže tu byť napríklad router (na smerovanie požiadaviek), základný controller, základný model, atď.
+    Príklad: Core/Controller.php, Core/Model.php, Core/Router.php.
+
+5.  Config
+    Úloha: Nastavenia projektu.
+    Čo robia: Obsahuje konfiguračné súbory, napríklad pripojenie k databáze, nastavenia aplikácie, atď.
+    Príklad: config.php, database.php.
+
+6.  index.php
+    Úloha: Vstupný bod aplikácie (tzv. front controller).
+    Čo robí:
+    Načíta základné nastavenia a knižnice (autoload, config).
+    Spustí router, ktorý rozhodne, ktorý controller a akú metódu zavolať na základe URL.
+    Typicky vyzerá takto:
+    Apply to Calendar.php
+    require_once 'config/config.php';
+    require_once 'core/Router.php';
+    // ... ďalšie require/autoload
+
+        $router = new Router();
+        $router->route($_SERVER['REQUEST_URI']);
+
+Zhrnutie: index.php je miesto, kde sa všetko začína – príde požiadavka, index.php ju spracuje a odovzdá ďalej do systému.
+Ako to celé funguje spolu?
+Používateľ zadá URL (napr. /user/login).
+index.php prijme požiadavku a spustí router (z Core).
+Router rozhodne, že má zavolať UserController a jeho metódu login().
+UserController môže zavolať metódy z User modelu (Models), ak treba pracovať s databázou.
+Controller potom vyberie správny view (napr. login.php) a pošle mu dáta.
+View zobrazí výsledok používateľovi.
