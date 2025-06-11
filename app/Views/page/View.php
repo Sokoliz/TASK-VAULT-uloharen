@@ -50,17 +50,10 @@ class View {
      * @return string HTML for the footer section
      */
     protected function renderFooter() {
-        return '<footer>
-            <div class="row m-0 p-0">
-                <div class="col-12">
-                    <div class="container d-flex justify-content-center">
-                        <ul class="list-unstyled list-inline text-center d-flex justify-content-center align-items-center">
-                            <small><span class="ml-2">Productivity Hub © 2025 All Rights Reserved.</span></small>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>';
+        // Include footer.php and capture its output
+        ob_start();
+        include_once __DIR__.'/../parts/footer.php';
+        return ob_get_clean();
     }
     
     /**
@@ -77,33 +70,20 @@ class View {
     /**
      * Render the navigation bar
      * 
-     * @param bool $showLoginButtons Whether to show login/register buttons
+     * @param string $type Type of navbar (standard, user_info, simple)
+     * @param bool $showHomeButton Whether to show the home button
+     * @param bool $showThemeSwitch Whether to show the theme switch
      * @return string HTML for the navigation bar
      */
-    protected function renderNavbar($showLoginButtons = true) {
-        $html = '<header>';
-        $html .= '<nav class="navbar navbar-expand-lg py-3 text-dark">';
-        $html .= '<div class="menu container">';
-        $html .= '<a href="index.php" class="navbar-brand">';
-        $html .= '<img src="/public/img/logo1.png" width="45" alt="Kalendar" class="d-inline-block align-middle mr-2">';
-        $html .= '<span class="logo_text align-middle">Productivity Hub</span>';
-        $html .= '</a>';
+    protected function renderNavbar($type = 'standard', $showHomeButton = true, $showThemeSwitch = true) {
+        // Set variables for navbar.php
+        $isPublic = $this->isPublic;
+        $navbarType = $type;
         
-        if ($showLoginButtons) {
-            $html .= '<button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>';
-            $html .= '<div id="navbarSupportedContent" class="collapse navbar-collapse">';
-            $html .= '<ul class="navbar-nav ml-auto">';
-            $html .= '<li><a href="/login" class="btn text-primary mr-2">Log in</a></li>';
-            $html .= '<li><a href="/register" class="btn btn-primary">Sign Up</a></li>';
-            $html .= '</ul>';
-            $html .= '</div>';
-        }
-        
-        $html .= '</div>';
-        $html .= '</nav>';
-        $html .= '</header>';
-        
-        return $html;
+        // Include navbar.php and capture its output
+        ob_start();
+        include_once __DIR__.'/../parts/navbar.php';
+        return ob_get_clean();
     }
     
     /**

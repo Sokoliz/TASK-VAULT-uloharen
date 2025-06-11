@@ -33,38 +33,6 @@ class CalendarView extends View {
 	}
 	
 	/**
-	 * Render the navigation bar with theme switch
-	 * 
-	 * @return string HTML for the navbar
-	 */
-	protected function renderNavbarWithThemeSwitch() {
-		return '<header class="m-0 p-0">
-	<nav class="navbar navbar-expand-lg pt-3 text-dark">
-		<div class="menu container">
-			<a href="index.php" class="navbar-brand">
-			 <img src="/public/img/logo1.png" width="45" alt="Kalendar" class="d-inline-block align-middle mr-2">	
-			<span class="logo_text align-middle">Productivity Hub</span>
-			</a>
-            
-			<button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
-			<div id="navbarSupportedContent" class="collapse navbar-collapse">
-				<ul class="navbar-nav ml-auto">
-                    <li><a href="/content" class="btn text-primary mr-2"><i class="fas fa-home pr-2"></i>Home</a></li>	
-					<li><a href="/logout" class="btn text-primary mr-2">Log out</a></li>
-                    <!-- Prepínač tmavého režimu -->
-					<li class="nav-item theme-switch-wrapper">
-                        <span class="mode-text btn text-primary">Mode</span>
-                        <i class="fas fa-moon mode-icon fa-lg"></i>
-                        <div id="toggle-button-ui"></div>
-                    </li>				
-				</ul>
-			</div>
-		</div>
-	</nav>
-		</header>';
-	}
-	
-	/**
 	 * Render the calendar container
 	 * 
 	 * @return string HTML for the calendar container
@@ -139,10 +107,11 @@ class CalendarView extends View {
 		
 		// Pre diagnostiku vypíšeme do konzoly JavaScript počet udalostí
 		$html .= '<script src="/public/js/calendar-debug.js"></script>';
-		$html .= '<script>document.addEventListener("DOMContentLoaded", function() { 
-			console.log("Events count from PHP: ' . count($events) . '");
-			document.getElementById("print-button").addEventListener("click", printPage);
-		});</script>';
+		
+		// Upraviť skript s počtom udalostí
+		$eventsCountScript = file_get_contents(__DIR__ . '/../../../public/js/calendar-events-handler.js');
+		$eventsCountScript = str_replace('[COUNT_PLACEHOLDER]', count($events), $eventsCountScript);
+		$html .= '<script>' . $eventsCountScript . '</script>';
 		
 		// Include calendar configuration
 		ob_start();
@@ -156,8 +125,6 @@ class CalendarView extends View {
 		// Load debug script last to check everything is properly loaded
 		$html .= '<script src="/public/js/calendar-debug.js"></script>';
 		
-		// Use calendar-debug.js instead of inline script
-		
 		return $html;
 	}
 	
@@ -167,14 +134,19 @@ class CalendarView extends View {
 	 * @return string HTML for the content section
 	 */
 	protected function renderContent() {
-		$html = $this->renderNavbarWithThemeSwitch();
+		// Nastavenie premenných pre navbar.php
+		$isPublic = false;
+		$showHomeButton = true;
+		$showThemeSwitch = true;
+		$navbarType = 'standard';
+		
+		// Include navbar.php
+		ob_start();
+		include_once __DIR__.'/../parts/navbar.php';
+		$html = ob_get_clean();
+		
 		$html .= $this->renderCalendar();
 		$html .= $this->renderPrintButton();
-		
-		// Footer
-		ob_start();
-require __DIR__.'/../parts/footer.php';
-		$html .= ob_get_clean();
 		
 		return $html;
 	}

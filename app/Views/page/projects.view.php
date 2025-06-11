@@ -38,38 +38,6 @@ class ProjectsView extends View {
     }
     
     /**
-     * Render the navigation bar with theme switch
-     * 
-     * @return string HTML for the navbar
-     */
-    protected function renderNavbarWithThemeSwitch() {
-        return '<header class="m-0 p-0">
-	<nav class="navbar navbar-expand-lg pt-3 text-dark">
-		<div class="menu container">
-			<a href="index.php" class="navbar-brand">
-			<img src="/public/img/logo1.png" width="45" alt="Kalendar" class="d-inline-block align-middle mr-2">
-			<span class="logo_text align-middle">Productivity Hub</span>
-			</a>
-            
-			<button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
-			<div id="navbarSupportedContent" class="collapse navbar-collapse">
-				<ul class="navbar-nav ml-auto">
-                    <li><a href="/content" class="btn text-primary mr-2"><i class="fas fa-home pr-2"></i>Home</a></li>	
-					<li><a href="/logout" class="btn text-primary mr-2">Log out</a></li>
-                    <!-- Prepínač tmavého režimu -->
-					<li class="nav-item theme-switch-wrapper">
-                        <span class="mode-text btn text-primary">Mode</span>
-                        <i class="fas fa-moon mode-icon fa-lg"></i>
-                        <div id="toggle-button-ui"></div>
-                    </li>				
-				</ul>
-			</div>
-		</div>
-	</nav>
-        </header>';
-    }
-    
-    /**
      * Render the projects list
      * 
      * @return string HTML for the projects list
@@ -387,8 +355,17 @@ class ProjectsView extends View {
      * @return string HTML for the content section
      */
     protected function renderContent() {
-        $html = $this->renderNavbarWithThemeSwitch();
+        // Nastavenie premenných pre navbar.php
+        $isPublic = false;
+        $showHomeButton = true;
+        $showThemeSwitch = true;
+        $navbarType = 'standard';
         
+        // Include navbar.php
+        ob_start();
+        include_once __DIR__.'/../parts/navbar.php';
+        $html = ob_get_clean();
+
         // Include new project modal
         ob_start();
         require_once __DIR__ . '/../../Controllers/ProjectAddModalController.php';

@@ -15,38 +15,6 @@ class ContentView extends View {
     }
     
     /**
-     * Render the navigation bar with user info and theme switch
-     * 
-     * @return string HTML for the navbar
-     */
-    protected function renderNavbarWithUserInfo() {
-        $html = '<header class="m-0 p-0">';
-        $html .= '<nav class="navbar navbar-expand-lg pt-3 text-dark">';
-        $html .= '<div class="menu container">';
-        $html .= '<a href="index.php" class="navbar-brand">';
-        $html .= '<img src="/public/img/logo1.png" width="45" alt="Kalendar" class="d-inline-block align-middle mr-2">';
-        $html .= '<span class="logo_text align-middle">Productivity Hub</span>';
-        $html .= '</a>';
-        
-        $html .= '<div class="navbar-nav ml-auto d-flex flex-row align-items-center">';
-        $html .= '<span class="btn text-primary mx-2 nowrap"><i class="fas fa-user pr-2"></i>Welcome ' . strtoupper($_SESSION['user']) . '!</span>';
-        $html .= '<span class="btn text-primary mx-2 nowrap"><i class="far fa-calendar-alt pr-2"></i>Date: <span class="d-inline">' . date('d. m. Y') . '</span></span>';
-        $html .= '<span class="btn text-primary mx-2 nowrap"><i class="far fa-clock pr-2"></i>Time: <span class="d-inline clock"></span></span>';
-        $html .= '<div class="theme-switch-wrapper mx-2">';
-        $html .= '<span class="mode-text btn text-primary">Mode</span>';
-        $html .= '<i class="fas fa-moon mode-icon fa-lg"></i>';
-        $html .= '</div>';
-        $html .= '<a href="/logout" class="btn text-primary mx-2 nowrap">Log out</a>';
-        $html .= '</div>';
-        
-        $html .= '</div>';
-        $html .= '</nav>';
-        $html .= '</header>';
-        
-        return $html;
-    }
-    
-    /**
      * Render the navigation cards
      * 
      * @return string HTML for the navigation cards
@@ -122,13 +90,18 @@ class ContentView extends View {
      * @return string HTML for the content section
      */
     protected function renderContent() {
-        $html = $this->renderNavbarWithUserInfo();
-        $html .= $this->renderNavigationCards();
+        // Nastavenie premenných pre navbar.php
+        $isPublic = false;
+        $showHomeButton = false; // Netreba Home tlačidlo, keďže sme na home stránke
+        $showThemeSwitch = true;
+        $navbarType = 'user_info';
         
-        // Footer
+        // Include navbar.php
         ob_start();
-        require __DIR__.'/../parts/footer.php';
-        $html .= ob_get_clean();
+        include_once __DIR__.'/../parts/navbar.php';
+        $html = ob_get_clean();
+        
+        $html .= $this->renderNavigationCards();
         
         return $html;
     }

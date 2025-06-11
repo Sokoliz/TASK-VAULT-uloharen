@@ -15,24 +15,6 @@ class RegisterView extends View {
 	}
 	
 	/**
-	 * Render the simplified navbar for register page (no login buttons)
-	 * 
-	 * @return string HTML for the navbar
-	 */
-	protected function renderSimpleNavbar() {
-		return '<header class="m-0 p-0">
-	<nav class="navbar navbar-expand-lg pt-3 text-dark">
-		<div class="menu container">
-			<a href="/" class="navbar-brand">
-			 <img src="/public/img/logo1.png" width="45" alt="Kalendar" class="d-inline-block align-middle mr-2">
-			<span class="logo_text align-middle">Productivity Hub</span>
-			</a>
-		</div>
-	</nav>
-		</header>';
-	}
-	
-	/**
 	 * Render the registration form
 	 * 
 	 * @return string HTML for the registration form
@@ -124,7 +106,16 @@ class RegisterView extends View {
 	 * @return string HTML for the content section
 	 */
 	protected function renderContent() {
-		$html = $this->renderSimpleNavbar();
+		// Nastavenie premenných pre navbar.php
+		$isPublic = true;
+		$showHomeButton = false;
+		$showThemeSwitch = false;
+		$navbarType = 'simple';
+		
+		// Include navbar.php
+		ob_start();
+		include_once __DIR__.'/../parts/navbar.php';
+		$html = ob_get_clean();
 		
 		$html .= '<div class="container">';
 		$html .= '<div class="row m-0 p-0">';

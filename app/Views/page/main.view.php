@@ -19,6 +19,7 @@ class MainView extends View {
 	 * 
 	 * @return string HTML for the features content
 	 */
+	
 	protected function renderFeatures() {
 		$html = '<div class="col-6 p-5">';
 		$html .= '<div class="container mx-5 mt-3">';
@@ -59,7 +60,16 @@ class MainView extends View {
 	 * @return string HTML for the content section
 	 */
 	protected function renderContent() {
-		$html = $this->renderNavbar(true);
+		// Nastavenie premenných pre navbar.php
+		$isPublic = true;
+		$showHomeButton = false;
+		$showThemeSwitch = false;
+		$navbarType = 'standard';
+		
+		// Include navbar.php
+		ob_start();
+		include_once __DIR__.'/../parts/navbar.php';
+		$html = ob_get_clean();
 		
 		$html .= '<div class="row m-0 p-0">';
 		$html .= $this->renderFeatures();
