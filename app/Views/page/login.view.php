@@ -81,26 +81,15 @@ class LoginView extends View {
 	 * @return string HTML for the content section
 	 */
 	protected function renderContent() {
-		// Nastavenie premenných pre navbar.php
-		$isPublic = true;
-		$showHomeButton = false;
-		$showThemeSwitch = false;
-		$navbarType = 'simple';
-		
-		// Include navbar.php
-		ob_start();
-		include_once __DIR__.'/../parts/navbar.php';
-		$html = ob_get_clean();
-		
+		require_once __DIR__.'/../parts/navbar.php';
+		$navbar = new Navbar(true, false, false, 'simple');
+		$html = $navbar->render();
 		$html .= '<div class="container">';
 		$html .= '<div class="row m-0 p-0">';
-		
 		$html .= $this->renderLoginForm();
 		$html .= $this->renderImageColumn();
-		
 		$html .= '</div>';
 		$html .= '</div>';
-		
 		return $html;
 	}
 }

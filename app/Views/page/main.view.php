@@ -47,22 +47,13 @@ class MainView extends View {
 	// Renderuje sekciu obsahu
 	// Tu poskladáme celú úvodnú stránku
 	protected function renderContent() {
-		// Nastavenie premenných pre navbar.php
-		$isPublic = true;
-		$showHomeButton = false;
-		$showThemeSwitch = false;
-		$navbarType = 'standard';
-		
-		// Include navbar.php
-		ob_start();
-		include_once __DIR__.'/../parts/navbar.php';
-		$html = ob_get_clean();
-		
+		require_once __DIR__.'/../parts/navbar.php';
+		$navbar = new Navbar(true, false, false, 'standard');
+		$html = $navbar->render();
 		$html .= '<div class="row m-0 p-0">';
 		$html .= $this->renderFeatures();
 		$html .= $this->renderImageColumn();
 		$html .= '</div>';
-		
 		return $html;
 	}
 }

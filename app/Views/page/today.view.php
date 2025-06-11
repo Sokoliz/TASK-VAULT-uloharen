@@ -137,27 +137,15 @@ class TodayView extends View {
     
     
     protected function renderContent() {
-        // Nastavenie premenných pre navbar.php
-        $isPublic = false;
-        $showHomeButton = true;
-        $showThemeSwitch = true;
-        $navbarType = 'standard';
-        
-        // Include navbar.php
-        ob_start();
-        include_once __DIR__.'/../parts/navbar.php';
-        $html = ob_get_clean();
-        
+        require_once __DIR__.'/../parts/navbar.php';
+        $navbar = new Navbar(false, true, true, 'standard');
+        $html = $navbar->render();
         $html .= '<div class="row d-flex m-4 mt-2 justify-content-center">';
         $html .= '<h2 class="col-12 text-center mb-4 text-primary">HAPPENING TODAY</h2>';
-        
-        // Renderujeme stĺpce
         $html .= $this->renderEventsColumn();
         $html .= $this->renderProjectsColumn();
         $html .= $this->renderTaskColumn();
-        
         $html .= '</div>';
-        
         return $html;
     }
     

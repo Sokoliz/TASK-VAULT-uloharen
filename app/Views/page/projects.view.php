@@ -322,38 +322,22 @@ class ProjectsView extends View {
     // Renderuje sekciu obsahu
     // Tu poskladáme celú stránku s projektami a úlohami
     protected function renderContent() {
-        // Nastavenie premenných pre navbar.php
-        $isPublic = false;
-        $showHomeButton = true;
-        $showThemeSwitch = true;
-        $navbarType = 'standard';
-        
-        // Include navbar.php
-        ob_start();
-        include_once __DIR__.'/../parts/navbar.php';
-        $html = ob_get_clean();
-
+        require_once __DIR__.'/../parts/navbar.php';
+        $navbar = new Navbar(false, true, true, 'standard');
+        $html = $navbar->render();
         // Includujeme modál pre pridanie nového projektu
         ob_start();
         require_once __DIR__ . '/../../Controllers/ProjectAddModalController.php';
         $modalContent = ob_get_clean();
-        
-        // Zobrazíme upozornenia bez kontajnera
         $html .= $this->renderAlerts();
-        
         $html .= '<div class="row d-flex m-0 p-0 mt-4">';
         $html .= $this->renderProjectsList();
         $html .= $this->renderTasksList();
         $html .= '</div>';
-        
-        // Pätička
         ob_start();
         require __DIR__ . '/../parts/footer.php';
         $html .= ob_get_clean();
-        
-        // Pridáme obsah modálu na koniec
         $html .= $modalContent;
-        
         return $html;
     }
     

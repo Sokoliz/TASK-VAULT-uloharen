@@ -50,14 +50,10 @@ class View {
     // Renderuje navigačný panel
     // Rôzne typy navbarov - štandardný, s info o používateľovi, jednoduchý
     protected function renderNavbar($type = 'standard', $showHomeButton = true, $showThemeSwitch = true) {
-        // Nastavíme premenné pre navbar.php
+        require_once __DIR__.'/../parts/navbar.php';
         $isPublic = $this->isPublic;
-        $navbarType = $type;
-        
-        // Includneme navbar.php a zachytíme jeho výstup
-        ob_start();
-        include_once __DIR__.'/../parts/navbar.php';
-        return ob_get_clean();
+        $navbar = new Navbar($isPublic, $showHomeButton, $showThemeSwitch, $type);
+        return $navbar->render();
     }
     
     // Renderuje celú stránku

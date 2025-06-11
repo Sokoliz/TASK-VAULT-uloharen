@@ -80,19 +80,10 @@ class ContentView extends View {
     // Renderuje sekciu obsahu
     // Tu poskladáme celú stránku s navigačnými kartami
     protected function renderContent() {
-        // Nastavenie premenných pre navbar.php
-        $isPublic = false;
-        $showHomeButton = false; // Netreba Home tlačidlo, keďže sme na home stránke
-        $showThemeSwitch = true;
-        $navbarType = 'user_info';
-        
-        // Include navbar.php
-        ob_start();
-        include_once __DIR__.'/../parts/navbar.php';
-        $html = ob_get_clean();
-        
+        require_once __DIR__.'/../parts/navbar.php';
+        $navbar = new Navbar(false, false, true, 'user_info');
+        $html = $navbar->render();
         $html .= $this->renderNavigationCards();
-        
         return $html;
     }
     
